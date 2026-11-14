@@ -1,6 +1,6 @@
 # Stage 7 — Core user interface
 
-Status: implemented, **unvalidated until the Stage 7 gate is approved**. Minimal, read-only (decision C2). Code: `web/src/`.
+Status: implemented; the UI has no engine capability of its own. Stage 7 was approved by the project owner (Stage 8 deferred, Stage 9 authorised). Minimal, read-only (decision C2). Code: `web/src/`.
 Screenshots from the real app against the real backend: [view_desktop.png](view_desktop.png), [view_mobile.png](view_mobile.png), [about.png](about.png).
 
 ## 1. Scope (C2) and the required workflow

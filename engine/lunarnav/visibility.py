@@ -48,6 +48,7 @@ from .ephemeris import MAX_SAMPLES, EphemerisService, format_utc
 from .errors import InvalidInputError, LunarNavError
 from .frames import destination_deg
 from .horizon import HorizonProfile, HorizonService
+from .provenance import calculation_metadata
 from .sites import validate_coordinates
 
 DEFAULT_POSITION_BAND_M = 100.0
@@ -340,6 +341,13 @@ class VisibilityService:
                         "cache_key": nominal.profile.meta.get("cache_key")},
             "bodies": out_bodies,
             "position_sensitivity": pos_block,
+            "provenance": calculation_metadata(
+                self.eph.provenance(), nominal.profile.meta,
+                {"start_utc": format_utc(start), "step_seconds": step_s, "n_samples": n_samples,
+                 "observer_height_above_surface_m": observer_height_m, "bodies": list(bodies),
+                 "position_uncertainty_m": band, "n_directions": n_directions, "refine": refine,
+                 "bisection_tolerance_s": BISECT_TOL_S, "match_window_s": MATCH_WINDOW_S,
+                 "disc_points": N_DISC_POINTS, "az_step_deg": nominal.profile.meta["parameters"]["az_step_deg"]}),
             "limitations": [
                 "Geometric line of sight / direct illumination only. Not irradiance, not link availability.",
                 "Events shorter than the sampling step that fall entirely between samples are not detected.",

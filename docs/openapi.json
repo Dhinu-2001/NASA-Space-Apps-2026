@@ -2029,6 +2029,50 @@
         ]
       }
     },
+    "/provenance": {
+      "get": {
+        "description": "What this running application is built from: code version, software, SPICE kernels and DEM windows\nwith SHA-256, the site catalogue and its sources, validation fixtures, constants and data classes.",
+        "operationId": "provenance_provenance_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Provenance Provenance Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Provenance",
+        "tags": [
+          "meta"
+        ]
+      }
+    },
     "/scenarios/compare": {
       "post": {
         "description": "Compare several sites and/or dates. Supported scenarios get deltas and rankings (with position\nbands); `terrain_data_insufficient` sites are listed separately and never ranked or scored.",

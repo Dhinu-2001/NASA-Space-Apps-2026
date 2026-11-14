@@ -89,6 +89,13 @@ Scenario results are cached in `data/results/scenarios` (git-ignored). A new sit
 ## Stage 7 UI
 Start the backend and the frontend (see Run above), open http://localhost:5173/ . The default scenario (IM-2) computes on load; the first calculation for a new site takes about a minute, then it is cached. `npm test` runs the 16 UI tests; `npm run build` makes a production bundle in `web/dist` (git-ignored).
 
+## Stage 9 reports (regenerable)
+```powershell
+.\.venv\Scripts\python.exe -I scripts\build_provenance_report.py   # docs/stage9/PROVENANCE.md from the manifests + live provenance
+.\.venv\Scripts\python.exe scripts\build_test_report.py            # runs pytest, ruff, tsc, vitest, vite build -> docs/stage9/TEST_REPORT.md
+```
+Validation suite only: `.\.venv\Scripts\python.exe -m pytest tests\validation` (golden regression and edge cases; real-data tests skip with the rebuild command if kernels/DEM are absent).
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.

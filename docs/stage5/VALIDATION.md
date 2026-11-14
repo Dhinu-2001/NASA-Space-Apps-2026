@@ -1,6 +1,6 @@
 # Stage 5 — Validation evidence and IM-2 results
 
-Status: `visibility` stays `implemented_unvalidated` until the user approves the gate.
+Status: `visibility` capability = `validated` (gate approved by the project owner; decision M1, `docs/stage9/`). "Validated" here means: implemented, tested, evidence reviewed and approved - **not** proven against measurement; see `docs/stage9/KNOWN_LIMITATIONS.md` (L-M1, L-M2).
 
 ## 1. Gate items → tests (`tests/engine/test_visibility.py`, `tests/api/test_api_stage5.py`)
 | Gate item | Evidence |

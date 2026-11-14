@@ -1,6 +1,6 @@
 # Stage 5 — Visibility, intervals and position sensitivity
 
-Status: implemented, **unvalidated until the Stage 5 gate is approved** (`visibility` = `implemented_unvalidated`).
+Status: implemented; `visibility` capability = `validated` (gate approved by the project owner; decision M1, `docs/stage9/`). "Validated" here means: implemented, tested, evidence reviewed and approved - **not** proven against measurement; see `docs/stage9/KNOWN_LIMITATIONS.md` (L-M1, L-M2).
 `ephemeris` and `horizon` are `validated` (user-approved gates, Stages 3 and 4).
 Code: `engine/lunarnav/visibility.py` (science), `api/lunarnav_api/routes_visibility.py` (HTTP only).
 Evidence: [VALIDATION.md](VALIDATION.md).

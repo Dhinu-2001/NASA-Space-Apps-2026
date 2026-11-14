@@ -1,6 +1,6 @@
 # Stage 4 — Horizon validation evidence
 
-Status: `horizon` stays `implemented_unvalidated` until the user approves the gate (decision H5).
+Status: `horizon` capability = `validated` (gate approved by the project owner; decision M1, `docs/stage9/`). "Validated" here means: implemented, tested, evidence reviewed and approved - **not** proven against measurement; see `docs/stage9/KNOWN_LIMITATIONS.md` (L-M1, L-M2).
 
 ## 1. Synthetic terrain (analytic / independently computed truth) — `tests/engine/test_horizon.py`
 | Gate item | Test | Result |

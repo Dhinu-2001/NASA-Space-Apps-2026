@@ -5,6 +5,7 @@ from __future__ import annotations
 import time
 import uuid
 from datetime import UTC, datetime
+from importlib import metadata
 
 import structlog
 from fastapi import FastAPI, Request
@@ -12,11 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from lunarnav import MODEL_VERSION
 from lunarnav.capabilities import CAPABILITIES
 from lunarnav.ephemeris import EphemerisService
-from lunarnav.errors import NotImplementedYetError
+from lunarnav.errors import DataMissingError, NotImplementedYetError
 from lunarnav.horizon import HorizonService
+from lunarnav.provenance import build_provenance
 from lunarnav.visibility import VisibilityService
 
-from .config import get_settings
+from .config import REPO_ROOT, get_settings
 from .errors import register_error_handlers
 from .logging_setup import configure_logging
 from .routes_data import build_router
@@ -105,6 +107,27 @@ def create_app() -> FastAPI:
                 for c in CAPABILITIES
             ],
         )
+
+    eph_for_provenance = EphemerisService(settings.data_dir)
+
+    @app.get("/provenance", tags=["meta"], responses=_ERROR_RESPONSES)
+    def provenance() -> dict:
+        """What this running application is built from: code version, software, SPICE kernels and DEM windows
+        with SHA-256, the site catalogue and its sources, validation fixtures, constants and data classes."""
+        try:
+            eph = eph_for_provenance.provenance()
+            eph_error = None
+        except DataMissingError as e:  # partial install: report what is missing rather than failing
+            eph, eph_error = None, e.message
+        out = build_provenance(settings.data_dir, eph, REPO_ROOT)
+        for pkg in ("fastapi", "pydantic", "uvicorn"):  # web-layer versions are added here, not in the engine
+            try:
+                out["software"][pkg] = metadata.version(pkg)
+            except metadata.PackageNotFoundError:
+                pass
+        if eph_error:
+            out["spice_kernels_error"] = eph_error
+        return out
 
     @app.post("/engineering/solar", include_in_schema=False)
     def _engineering_not_implemented():

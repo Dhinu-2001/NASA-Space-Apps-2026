@@ -187,6 +187,10 @@ class ScenarioService:
                 n_directions=spec.n_directions, refine=True, include_series=False,
                 horizon_kwargs={"az_step_deg": spec.az_step_deg}).to_dict()
         except (OutOfDemCoverageError, DataMissingError) as e:
+            # Only a TERRAIN problem makes a scenario "terrain data insufficient". Missing or modified SPICE
+            # kernels are an infrastructure failure: they must surface as DATA_MISSING, not be mislabelled.
+            if isinstance(e, DataMissingError) and e.field != "dem":
+                raise
             out = {**base, "status": INSUFFICIENT, "reason": e.message, "reason_code": e.code.value,
                    "note": "No visibility numbers are given for a site without supporting terrain data."}
             self._save(sid, out)
@@ -203,6 +207,7 @@ class ScenarioService:
                "position_sensitivity": {k: ps[k] for k in ("status", "data_class", "kind", "assumed_position_uncertainty_m",
                                                            "assumption", "n_directions", "method", "limitations")},
                "bodies": {b: self._summarise_body(res["bodies"][b]) for b in BODIES},
+               "provenance": res["provenance"],
                "limitations": res["limitations"]}
         self._save(sid, out)
         return out

@@ -1,6 +1,6 @@
 # Stage 3 — Ephemeris method and assumptions
 
-Status: implemented and validated against JPL Horizons (see `VALIDATION.md`); capability status in `/version` remains `implemented_unvalidated` until the Stage 3 gate is approved. Geometric directions only — **no terrain is applied** (Stages 4–5).
+Status: implemented and validated against JPL Horizons (see `VALIDATION.md`); `ephemeris` capability = `validated` (gate approved by the project owner; decision M1, `docs/stage9/`). "Validated" here means: implemented, tested, evidence reviewed and approved - **not** proven against measurement; see `docs/stage9/KNOWN_LIMITATIONS.md` (L-M1, L-M2).
 
 ## 1. What is computed
 For an observer fixed on the lunar surface and a UTC instant: apparent azimuth, elevation, range, light time and angular diameter of the **Sun centre** and **Earth centre** (geocentre, NAIF 399). Nothing is looked up from a table or fixed; every value is evaluated from the pinned DE440 kernels at request time.

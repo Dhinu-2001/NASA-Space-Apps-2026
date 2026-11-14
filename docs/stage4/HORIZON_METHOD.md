@@ -1,6 +1,6 @@
 # Stage 4 — Terrain horizon method
 
-Status: implemented, **unvalidated until the Stage 4 gate is approved** (`horizon` capability = `implemented_unvalidated`).
+Status: implemented; `horizon` capability = `validated` (gate approved by the project owner; decision M1, `docs/stage9/`). "Validated" here means: implemented, tested, evidence reviewed and approved - **not** proven against measurement; see `docs/stage9/KNOWN_LIMITATIONS.md` (L-M1, L-M2).
 Code: `engine/lunarnav/horizon.py` (science), `api/lunarnav_api/routes_horizon.py` (HTTP only).
 Evidence: [VALIDATION.md](VALIDATION.md), [RESOLUTION.md](RESOLUTION.md).
 

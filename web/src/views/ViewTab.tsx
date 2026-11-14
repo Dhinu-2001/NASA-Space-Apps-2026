@@ -182,7 +182,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
       <div className="stack">
         {!applied && (
           <Panel title="Results">
-            <p>Choose a site and time on the left, then press <strong>Compute</strong>. Everything shown is calculated by the validated backend; this page only displays it.</p>
+            <p>Choose a site and time on the left, then press <strong>Compute</strong>. Everything shown is calculated by the backend (capability status is shown above and on each panel); this page only displays it.</p>
           </Panel>
         )}
 
