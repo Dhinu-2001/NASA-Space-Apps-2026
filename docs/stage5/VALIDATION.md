@@ -18,7 +18,7 @@ Source: `scripts/visibility_study.py` → `im2_study.json`. All numbers are for 
 
 | | Sun (any part of disc) | Earth (disc centre) |
 |---|---|---|
-| Visible fraction (nominal) | 48.6 % (350 h) | 80.8 % (582 h) |
+| Visible fraction (nominal) | 48.6 % (350 h) | 80.8 % (581 h) |
 | Band under ±100 m | 45.4 – 48.9 % (327 – 352 h) | 80.0 – 80.9 % (576 – 582 h) |
 | Visible intervals (nominal / band) | 3 / 2–3 | 2 / 2 |
 | Longest not-visible interval | 15.4 d (closed) | 5.8 d (closed) |
