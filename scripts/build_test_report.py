@@ -34,7 +34,7 @@ def main() -> int:
     if NODE_DIR.exists():
         env["PATH"] = f"{NODE_DIR}{os.pathsep}{env['PATH']}"
     commit = subprocess.run(["git", "rev-parse", "--short=12", "HEAD"], cwd=ROOT, capture_output=True, text=True, check=False).stdout.strip()
-    dirty = bool(subprocess.run(["git", "status", "--porcelain", "--untracked-files=no"], cwd=ROOT, capture_output=True, text=True, check=False).stdout.strip())
+    dirty = bool(subprocess.run(["git", "status", "--porcelain", "--untracked-files=no", "--", ".", ":!docs/stage9"], cwd=ROOT, capture_output=True, text=True, check=False).stdout.strip())
     xml = ROOT / "docs" / "stage9" / "_junit.xml"
     rc_py, out_py, t_py = run([str(PY), "-m", "pytest", "-q", "-p", "no:cacheprovider", f"--junitxml={xml}"], ROOT, env)
     rc_ruff, out_ruff, t_ruff = run([str(PY), "-m", "ruff", "check", "."], ROOT, env)
@@ -48,11 +48,7 @@ def main() -> int:
     total = {"passed": 0, "failed": 0, "skipped": 0}
     if xml.exists():
         for tc in ET.parse(xml).getroot().iter("testcase"):
-            f = tc.get("classname", "").replace(".", "/")
-            f = re.sub(r"/test_[a-z0-9_]+$", lambda m: m.group(0), f)
-            parts = tc.get("classname", "").split(".")
-            fname = "/".join(parts[:-1]) + ".py" if parts[-1].startswith("test_") else "/".join(parts) + ".py"
-            fname = fname.replace("tests/", "tests/", 1)
+            fname = "/".join(tc.get("classname", "").split(".")) + ".py"
             if tc.find("failure") is not None or tc.find("error") is not None:
                 k = "failed"
             elif tc.find("skipped") is not None:

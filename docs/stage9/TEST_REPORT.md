@@ -1,24 +1,38 @@
 # Final test report
 
-Generated 2026-11-14 20:17 UTC by `scripts/build_test_report.py`. Commit tested: **1e912cd481a1** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
+Generated 2026-11-14 20:19 UTC by `scripts/build_test_report.py`. Commit tested: **4f353a25a0e8** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
 
 **Overall: ALL CHECKS PASSED**
 
 | Check | Result | Detail | Time |
 |---|---|---|---|
-| Backend tests (pytest) | PASS | 318 passed, 0 failed, 0 skipped | 102 s |
+| Backend tests (pytest) | PASS | 318 passed, 0 failed, 0 skipped | 117 s |
 | Lint (ruff) | PASS | All checks passed! | 0 s |
-| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 5 s |
+| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 6 s |
 | Frontend tests (vitest) | PASS | 17 passed, 0 failed | 5 s |
-| Production build (vite) | PASS | bundle builds | 5 s |
+| Production build (vite) | PASS | bundle builds | 7 s |
 
 ## Backend tests by file
 
 | File | Passed | Failed | Skipped |
 |---|---|---|---|
-| `tests/api.py` | 56 | 0 | 0 |
-| `tests/engine.py` | 212 | 0 | 0 |
-| `tests/validation.py` | 50 | 0 | 0 |
+| `tests/api/test_api_foundation.py` | 9 | 0 | 0 |
+| `tests/api/test_api_stage2.py` | 15 | 0 | 0 |
+| `tests/api/test_api_stage3.py` | 9 | 0 | 0 |
+| `tests/api/test_api_stage4.py` | 7 | 0 | 0 |
+| `tests/api/test_api_stage5.py` | 6 | 0 | 0 |
+| `tests/api/test_api_stage6.py` | 5 | 0 | 0 |
+| `tests/api/test_api_stage9.py` | 5 | 0 | 0 |
+| `tests/engine/test_dem.py` | 21 | 0 | 0 |
+| `tests/engine/test_ephemeris.py` | 33 | 0 | 0 |
+| `tests/engine/test_foundation.py` | 4 | 0 | 0 |
+| `tests/engine/test_frames.py` | 21 | 0 | 0 |
+| `tests/engine/test_horizon.py` | 52 | 0 | 0 |
+| `tests/engine/test_scenarios.py` | 21 | 0 | 0 |
+| `tests/engine/test_sites.py` | 40 | 0 | 0 |
+| `tests/engine/test_visibility.py` | 20 | 0 | 0 |
+| `tests/validation/test_edge_cases.py` | 42 | 0 | 0 |
+| `tests/validation/test_regression_golden.py` | 8 | 0 | 0 |
 | **Total** | **318** | **0** | **0** |
 
 No test was skipped: all kernels and DEM windows were present, so every real-data test ran.
