@@ -27,7 +27,10 @@ export default function App() {
     <main style={{ fontFamily: "system-ui, sans-serif", maxWidth: 760, margin: "2rem auto", padding: "0 16px" }}>
       <h1>Lunar Landing Site Navigator</h1>
       <p role="note" style={{ border: "1px solid #b58900", padding: "0.75rem", borderRadius: 6 }}>
-        <strong>Stage 1 foundation skeleton.</strong> No scientific results are produced or displayed yet.
+        <strong>Development build.</strong>{" "}
+        {state.phase === "ready"
+          ? state.version.notice
+          : "Scientific capabilities are listed with their real status once the backend responds."}
       </p>
 
       {state.phase === "loading" && <p>Connecting to backend…</p>}

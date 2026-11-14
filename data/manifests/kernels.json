@@ -1,0 +1,227 @@
+{
+  "files": {
+    "de440s.bsp": {
+      "authoritative_md5": "3917ee56769db332790c751e2168843d",
+      "authoritative_md5_source": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/spk/de440s.xml",
+      "coverage": {
+        "n_segments": 14,
+        "segments": [
+          {
+            "body_or_frame_id": 1,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 2,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 3,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 4,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 5,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 6,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 7,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 8,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 9,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 10,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 301,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 399,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 199,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          },
+          {
+            "body_or_frame_id": 299,
+            "end_date_approx": "2150-01-22",
+            "end_tdb_s_past_j2000": 4735368000.0,
+            "start_date_approx": "1849-12-26",
+            "start_tdb_s_past_j2000": -4734072000.0
+          }
+        ],
+        "union_end_date_approx": "2150-01-22",
+        "union_start_date_approx": "1849-12-26"
+      },
+      "daf_id_word": "DAF/SPK",
+      "downloaded_utc": "2026-11-14T10:49:17Z",
+      "file": "de440s.bsp",
+      "md5": "3917ee56769db332790c751e2168843d",
+      "pds4_label_url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/spk/de440s.xml",
+      "remote_last_modified": "Mon, 21 Dec 2020 19:39:26 GMT",
+      "remote_size_bytes": 32726016,
+      "role": "planetary_spk",
+      "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+      "size_bytes": 32726016,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de440s.bsp",
+      "status": "downloaded_verified"
+    },
+    "moon_de440_250416.tf": {
+      "authoritative_md5": "3556dde4bb7ca54a89917c301e650bbf",
+      "authoritative_md5_source": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/fk/moon_de440_250416.xml",
+      "downloaded_utc": "2026-11-14T10:48:53Z",
+      "file": "moon_de440_250416.tf",
+      "md5": "3556dde4bb7ca54a89917c301e650bbf",
+      "pds4_label_url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/fk/moon_de440_250416.xml",
+      "remote_last_modified": "Wed, 16 Apr 2025 12:47:17 GMT",
+      "remote_size_bytes": 19478,
+      "role": "lunar_frame_kernel",
+      "sha256": "a47c71e9c9f33796bdafb2c9d69a7ee447b6016ecad80f71cd6f3e479f9cf768",
+      "size_bytes": 19478,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "status": "downloaded_verified",
+      "version": {
+        "created_by": "Nat Bachman  (NAIF/JPL)",
+        "creation_date": "2025 April 16 05:09",
+        "doc_quote_me_vs_de421_me_max_displacement_2000_2040": "approximately 53.4 cm",
+        "doc_quote_me_vs_de421_me_max_rotation_rad_2000_2040": 3.0709840342771e-07,
+        "doc_quote_pa_vs_me_angle_deg": 0.02886,
+        "doc_quote_pa_vs_me_displacement": "approximately 875 m",
+        "frames": {
+          "MOON_ME": 31001,
+          "MOON_ME_DE440_ME421": 31009,
+          "MOON_PA": 31000,
+          "MOON_PA_DE440": 31008
+        },
+        "moon_me_is_alias_of": "MOON_ME_DE440_ME421",
+        "pairs_with_pck": "moon_pa_de440_200625.bpc"
+      }
+    },
+    "moon_pa_de440_200625.bpc": {
+      "authoritative_md5": "9f48a8c4cf1c955ac5d3a7d77a127e42",
+      "authoritative_md5_source": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/pck/moon_pa_de440_200625.xml",
+      "coverage": {
+        "n_segments": 2,
+        "segments": [
+          {
+            "body_or_frame_id": 31008,
+            "end_date_approx": "2426-02-16",
+            "end_tdb_s_past_j2000": 13447252800.0,
+            "start_date_approx": "1549-12-31",
+            "start_tdb_s_past_j2000": -14200747200.0
+          },
+          {
+            "body_or_frame_id": 31008,
+            "end_date_approx": "2650-01-25",
+            "end_tdb_s_past_j2000": 20514081600.0,
+            "start_date_approx": "2426-02-16",
+            "start_tdb_s_past_j2000": 13447252800.0
+          }
+        ],
+        "union_end_date_approx": "2650-01-25",
+        "union_start_date_approx": "1549-12-31"
+      },
+      "daf_id_word": "DAF/PCK",
+      "downloaded_utc": "2026-11-14T10:49:01Z",
+      "file": "moon_pa_de440_200625.bpc",
+      "md5": "9f48a8c4cf1c955ac5d3a7d77a127e42",
+      "pds4_label_url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/pck/moon_pa_de440_200625.xml",
+      "remote_last_modified": "Sat, 26 Jun 2021 01:49:57 GMT",
+      "remote_size_bytes": 12863488,
+      "role": "lunar_orientation_pck",
+      "sha256": "60cd55aa401ea2ea97360636f567554bfe4e37bb829f901b4460a455dfaf783f",
+      "size_bytes": 12863488,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.bpc",
+      "status": "downloaded_verified"
+    },
+    "moon_pa_de440_200625.cmt": {
+      "authoritative_md5": null,
+      "authoritative_md5_source": null,
+      "downloaded_utc": "2026-11-14T10:49:04Z",
+      "file": "moon_pa_de440_200625.cmt",
+      "md5": "fb7669a37b64329cacbfc895bef85151",
+      "pds4_label_url": null,
+      "remote_last_modified": "Fri, 15 Jul 2022 00:06:25 GMT",
+      "remote_size_bytes": 1898,
+      "role": "lunar_orientation_pck_comments",
+      "sha256": "97d3bb1e75e7807a5e0b76f836a2d1d192e0d5bde0c0a87979b4c13255aef8c1",
+      "size_bytes": 1898,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de440_200625.cmt",
+      "status": "downloaded_unverified_no_authoritative_checksum"
+    },
+    "naif0012.tls": {
+      "authoritative_md5": "25a2fff30b0dedb4d76c06727b1895b1",
+      "authoritative_md5_source": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/lsk/naif0012.xml",
+      "downloaded_utc": "2026-11-14T10:48:50Z",
+      "file": "naif0012.tls",
+      "md5": "25a2fff30b0dedb4d76c06727b1895b1",
+      "pds4_label_url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/lsk/naif0012.xml",
+      "remote_last_modified": "Fri, 15 Jul 2016 00:00:37 GMT",
+      "remote_size_bytes": 5257,
+      "role": "lsk",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+      "size_bytes": 5257,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "status": "downloaded_verified",
+      "version": {
+        "latest_leap_second": "TAI-UTC = 37 s effective 2017-JAN-1",
+        "note": "No leap seconds announced after 2017-JAN-1 are represented; future UTC is assumed to have none (same assumption JPL Horizons states)."
+      }
+    }
+  }
+}

@@ -22,10 +22,12 @@ def test_request_id_is_echoed():
 
 def test_version_lists_unbuilt_capabilities_honestly():
     body = client.get("/version").json()
-    assert body["stage"] == 1
-    assert "No scientific results" in body["notice"]
-    assert body["capabilities"]
-    assert {c["status"] for c in body["capabilities"]} == {"not_implemented"}
+    assert body["stage"] == 2
+    assert "No ephemeris, horizon or visibility results" in body["notice"]
+    by_key = {c["key"]: c["status"] for c in body["capabilities"]}
+    assert by_key["sites"] == by_key["dem"] == "implemented_unvalidated"
+    assert by_key["ephemeris"] == by_key["horizon"] == by_key["visibility"] == "not_implemented"
+    assert "validated" not in by_key.values()
 
 
 def test_not_implemented_uses_error_contract():

@@ -1,0 +1,107 @@
+{
+  "catalogue_version": "2026-11-14.1",
+  "body": "Moon",
+  "lat_convention": "planetocentric",
+  "lon_convention": "east_positive",
+  "frame": "MOON_ME",
+  "reference_sphere_radius_m": 1737400.0,
+  "policy": "Only sites whose coordinates are supported by a primary source (mission/archive/imaging team). Coordinates are copied from the cited source; none are estimated. Candidate/proposed regions without published coordinates are listed under pending_regions and are NOT selectable sites.",
+  "sites": [
+    {
+      "id": "im1-odysseus",
+      "name": "IM-1 Odysseus landing site (near Malapert A)",
+      "kind": "confirmed_landing",
+      "lat_deg": -80.12759,
+      "lon_deg_east": 1.44587,
+      "reference_height_m": 2583.0,
+      "reference_height_source": "NAIF CLPS SPICE frame kernel clps_to2im_im1_v02.tf: altitude 0.2583E+01 km above the 1737.4 km sphere (LROC states 2579 m).",
+      "notes": "Touched down 2024-02-22 UTC about 1.5 km from the intended target; resting on a ~12 degree slope (LROC).",
+      "sources": [
+        {
+          "label": "NAIF CLPS SPICE archive: IM-1 frame kernel",
+          "url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/fk/clps_to2im_im1_v02.tf",
+          "description": "NASA/JPL NAIF PDS4 archive. Defines IM1_LANDING_SITE in frame MOON_ME on a 1737.4 km sphere.",
+          "quote": "Longitude (deg): 1.4458700000000; Latitude (deg): -80.1275900000000; Altitude (km): 0.2583000000000E+01"
+        },
+        {
+          "label": "LROC (NASA/GSFC/Arizona State University) image page 1360",
+          "url": "https://www.lroc.asu.edu/images/1360",
+          "description": "LRO Camera team confirmation of the lander position from NAC imagery acquired 2024-02-24.",
+          "quote": "Odysseus came to rest at 80.13°S, 1.44°E, 2579 m elevation"
+        }
+      ]
+    },
+    {
+      "id": "im2-athena",
+      "name": "IM-2 Athena landing site (Mons Mouton)",
+      "kind": "confirmed_landing",
+      "lat_deg": -84.79059,
+      "lon_deg_east": 29.19567,
+      "reference_height_m": 5321.0,
+      "reference_height_source": "NAIF CLPS SPICE frame kernel clps_prime1_im2_v01.tf: altitude 0.5321E+01 km above the 1737.4 km sphere.",
+      "notes": "Reached the surface 2025-03-06 and ended up on its side in a ~20 m diameter crater (LROC).",
+      "sources": [
+        {
+          "label": "NAIF CLPS SPICE archive: IM-2 frame kernel",
+          "url": "https://naif.jpl.nasa.gov/pub/naif/pds/pds4/clps/clps_spice/spice_kernels/fk/clps_prime1_im2_v01.tf",
+          "description": "NASA/JPL NAIF PDS4 archive. Defines IM2_LANDING_SITE in frame MOON_ME on a 1737.4 km sphere.",
+          "quote": "Longitude (deg): 29.1956700000000; Latitude (deg): -84.7905900000000; Altitude (km): 0.5321000000000E+01"
+        },
+        {
+          "label": "LROC (NASA/GSFC/Arizona State University) image page 1408",
+          "url": "https://lroc.im-ldi.com/images/1408",
+          "description": "LRO Camera team oblique image of the landed vehicle (NAC M1495922531LR), published 2025-03-10. Same LROC site as lroc.asu.edu, which redirects here.",
+          "quote": "ended up on its side within a 20-meter diameter crater ([84.7906° S, 29.1957° E]"
+        }
+      ]
+    },
+    {
+      "id": "im2-intended",
+      "name": "IM-2 intended landing site (pre-landing target)",
+      "kind": "intended_target",
+      "lat_deg": -84.78,
+      "lon_deg_east": 29.13,
+      "notes": "Pre-landing TARGET published by LROC on 2025-02-26. Not where the lander came to rest; see im2-athena.",
+      "sources": [
+        {
+          "label": "LROC (NASA/GSFC/Arizona State University) image page 1401",
+          "url": "https://lroc.im-ldi.com/images/1401",
+          "description": "LROC 'IM-2 Landing Region', published 2025-02-26 by Mark Robinson, before touchdown.",
+          "quote": "The Intuitive Machines IM-2 intended landing site (-84.78°, 29.13°E) is 160 kilometers from the south pole"
+        }
+      ]
+    },
+    {
+      "id": "chandrayaan3-shiv-shakti",
+      "name": "Chandrayaan-3 Vikram landing site (Statio Shiv Shakti)",
+      "kind": "confirmed_landing",
+      "lat_deg": -69.3741,
+      "lon_deg_east": 32.32,
+      "reference_height_m": 532.0,
+      "reference_height_source": "LROC image page 1314 (532 m elevation; datum as stated by LROC, assumed to be the LOLA sphere-referenced height - unverified here).",
+      "notes": "Touched down 2023-08-23 (ISRO). About 600 km from the south pole, so it lies outside the 80S LOLA product; useful as an out-of-coverage test for the 20 m DEM.",
+      "sources": [
+        {
+          "label": "LROC (NASA/GSFC/Arizona State University) image page 1314",
+          "url": "https://lroc.im-ldi.com/images/1314",
+          "description": "LRO Camera team oblique image of the lander (NAC M1447750764LR), published 2023-09-05.",
+          "quote": "located about 600 kilometers from the south pole ([69.3741°S, 32.32°E, 532 m elevation]"
+        }
+      ]
+    }
+  ],
+  "pending_regions": [
+    {
+      "name": "NASA Artemis III candidate landing regions (nine, Oct 2024 update): Peak near Cabeus B, Haworth, Malapert Massif, Mons Mouton Plateau, Mons Mouton, Nobile Rim 1, Nobile Rim 2, de Gerlache Rim 2, Slater Plain",
+      "status": "pending_primary_source_coordinates",
+      "reason": "Names and the ~15 km region size are published by NASA, but no authoritative centre coordinates were located in a primary source during Stage 2. Not included as selectable sites (decision C7).",
+      "reference_url": "https://ntrs.nasa.gov/citations/20250011660"
+    },
+    {
+      "name": "Luna 25 impact site",
+      "status": "pending_primary_source_coordinates",
+      "reason": "Not an intact landing and the LROC release was not located during Stage 2.",
+      "reference_url": null
+    }
+  ]
+}

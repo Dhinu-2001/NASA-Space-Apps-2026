@@ -4,6 +4,40 @@
  */
 
 export interface paths {
+    "/dem/elevation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dem Elevation */
+        get: operations["dem_elevation_dem_elevation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/dem/windows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Windows */
+        get: operations["list_windows_dem_windows_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -15,6 +49,40 @@ export interface paths {
         get: operations["health_health_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Sites */
+        get: operations["list_sites_sites_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/sites/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Validate Site */
+        post: operations["validate_site_sites_validate_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -56,6 +124,45 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** CoordinateInput */
+        CoordinateInput: {
+            /** Lat */
+            lat: unknown;
+            /** Lon */
+            lon: unknown;
+        };
+        /** ElevationResponse */
+        ElevationResponse: {
+            /** Data Class */
+            data_class: string;
+            /** Elevation M */
+            elevation_m: number;
+            /** Lat Deg */
+            lat_deg: number;
+            /** Lon Deg East */
+            lon_deg_east: number;
+            /** Method */
+            method: string;
+            /** Pixel Size M */
+            pixel_size_m: number;
+            /** Product Id */
+            product_id: string;
+            /** Sha256 */
+            sha256: string;
+            /** Source Url */
+            source_url: string;
+            /**
+             * Units
+             * @default metres above the 1737.4 km lunar reference sphere
+             */
+            units: string;
+            /** Window Id */
+            window_id: string;
+            /** X M */
+            x_m: number;
+            /** Y M */
+            y_m: number;
+        };
         /** ErrorBody */
         ErrorBody: {
             /**
@@ -93,6 +200,82 @@ export interface components {
             /** Time Utc */
             time_utc: string;
         };
+        /** PendingRegionOut */
+        PendingRegionOut: {
+            /** Name */
+            name: string;
+            /** Reason */
+            reason: string;
+            /** Reference Url */
+            reference_url?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** SiteOut */
+        SiteOut: {
+            /** Id */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Lat Convention */
+            lat_convention: string;
+            /** Lat Deg */
+            lat_deg: number;
+            /** Lon Convention */
+            lon_convention: string;
+            /** Lon Deg East */
+            lon_deg_east: number;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes: string;
+            /** Reference Height M */
+            reference_height_m?: number | null;
+            /** Reference Height Source */
+            reference_height_source?: string | null;
+            /** Sources */
+            sources: components["schemas"]["SourceOut"][];
+        };
+        /** SitesResponse */
+        SitesResponse: {
+            /** Body */
+            body: string;
+            /** Catalogue Version */
+            catalogue_version: string;
+            /** Lat Convention */
+            lat_convention: string;
+            /** Lon Convention */
+            lon_convention: string;
+            /** Pending Regions */
+            pending_regions: components["schemas"]["PendingRegionOut"][];
+            /** Policy */
+            policy: string;
+            /** Reference Sphere Radius M */
+            reference_sphere_radius_m: number;
+            /** Sites */
+            sites: components["schemas"]["SiteOut"][];
+        };
+        /** SourceOut */
+        SourceOut: {
+            /** Description */
+            description: string;
+            /** Label */
+            label: string;
+            /** Quote */
+            quote: string;
+            /** Url */
+            url: string;
+        };
+        /** ValidateResponse */
+        ValidateResponse: {
+            /** Covering Windows */
+            covering_windows: components["schemas"]["WindowRef"][];
+            /** Dem Coverage Status */
+            dem_coverage_status: string;
+            /** Note */
+            note: string;
+            site: components["schemas"]["SiteOut"];
+        };
         /** VersionResponse */
         VersionResponse: {
             /** Api Version */
@@ -106,6 +289,54 @@ export interface components {
             /** Stage */
             stage: number;
         };
+        /** WindowOut */
+        WindowOut: {
+            /** Bottom M */
+            bottom_m: number;
+            /** File */
+            file: string;
+            /** Height */
+            height: number;
+            /** Left M */
+            left_m: number;
+            /** Nodata */
+            nodata: string;
+            /** Overview Level */
+            overview_level: number | null;
+            /** Pixel Size M */
+            pixel_size_m: number;
+            /** Product Id */
+            product_id: string;
+            /** Right M */
+            right_m: number;
+            /** Sha256 */
+            sha256: string;
+            /** Source Url */
+            source_url: string;
+            /** Top M */
+            top_m: number;
+            /** Units */
+            units: string;
+            /** Valid Fraction */
+            valid_fraction: number;
+            /** Width */
+            width: number;
+            /** Window Id */
+            window_id: string;
+            /** Z Max M */
+            z_max_m: number;
+            /** Z Min M */
+            z_min_m: number;
+        };
+        /** WindowRef */
+        WindowRef: {
+            /** Pixel Size M */
+            pixel_size_m: number;
+            /** Product Id */
+            product_id: string;
+            /** Window Id */
+            window_id: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -115,6 +346,107 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    dem_elevation_dem_elevation_get: {
+        parameters: {
+            query: {
+                /** @description Planetocentric latitude, degrees (south negative) */
+                lat: number;
+                /** @description East-positive longitude, degrees, [-180, 360] */
+                lon: number;
+                /** @description Force a specific DEM window */
+                window_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ElevationResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    list_windows_dem_windows_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WindowOut"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
     health_health_get: {
         parameters: {
             query?: never;
@@ -144,6 +476,104 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    list_sites_sites_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SitesResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    validate_site_sites_validate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CoordinateInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ValidateResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

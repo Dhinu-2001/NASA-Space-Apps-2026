@@ -49,6 +49,14 @@ cd web; npm test; npm run typecheck                           # frontend tests +
 cd web; npm run gen:api                                       # regenerates src/api/schema.d.ts
 ```
 
+## Rebuild the (git-ignored) scientific data
+```powershell
+.\.venv\Scripts\python.exe scripts\fetch_kernels.py          # NAIF kernels, MD5-verified (~45 MB)
+.\.venv\Scripts\python.exe -I scripts\inspect_kernels.py      # coverage/version metadata into the manifest
+.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py    # 3 small LOLA windows (~5 MB total)
+```
+Tests that need the windows skip with this command in their message when the files are absent.
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries (spiceypy, numpy, rasterio, pyproj) are added in the stage that first needs them.
 - Frontend: `web/package.json` + `web/package-lock.json`.

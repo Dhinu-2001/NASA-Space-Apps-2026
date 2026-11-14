@@ -34,6 +34,95 @@
         "title": "CapabilityOut",
         "type": "object"
       },
+      "CoordinateInput": {
+        "properties": {
+          "lat": {
+            "title": "Lat"
+          },
+          "lon": {
+            "title": "Lon"
+          }
+        },
+        "required": [
+          "lat",
+          "lon"
+        ],
+        "title": "CoordinateInput",
+        "type": "object"
+      },
+      "ElevationResponse": {
+        "properties": {
+          "data_class": {
+            "title": "Data Class",
+            "type": "string"
+          },
+          "elevation_m": {
+            "title": "Elevation M",
+            "type": "number"
+          },
+          "lat_deg": {
+            "title": "Lat Deg",
+            "type": "number"
+          },
+          "lon_deg_east": {
+            "title": "Lon Deg East",
+            "type": "number"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "pixel_size_m": {
+            "title": "Pixel Size M",
+            "type": "number"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          },
+          "units": {
+            "default": "metres above the 1737.4 km lunar reference sphere",
+            "title": "Units",
+            "type": "string"
+          },
+          "window_id": {
+            "title": "Window Id",
+            "type": "string"
+          },
+          "x_m": {
+            "title": "X M",
+            "type": "number"
+          },
+          "y_m": {
+            "title": "Y M",
+            "type": "number"
+          }
+        },
+        "required": [
+          "elevation_m",
+          "lat_deg",
+          "lon_deg_east",
+          "x_m",
+          "y_m",
+          "window_id",
+          "product_id",
+          "pixel_size_m",
+          "method",
+          "source_url",
+          "sha256",
+          "data_class"
+        ],
+        "title": "ElevationResponse",
+        "type": "object"
+      },
       "ErrorBody": {
         "properties": {
           "code": {
@@ -122,6 +211,230 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "PendingRegionOut": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "reference_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Url"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "reason"
+        ],
+        "title": "PendingRegionOut",
+        "type": "object"
+      },
+      "SiteOut": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "lat_convention": {
+            "title": "Lat Convention",
+            "type": "string"
+          },
+          "lat_deg": {
+            "title": "Lat Deg",
+            "type": "number"
+          },
+          "lon_convention": {
+            "title": "Lon Convention",
+            "type": "string"
+          },
+          "lon_deg_east": {
+            "title": "Lon Deg East",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string"
+          },
+          "reference_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Height M"
+          },
+          "reference_height_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Height Source"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceOut"
+            },
+            "title": "Sources",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "lat_deg",
+          "lon_deg_east",
+          "lat_convention",
+          "lon_convention",
+          "notes",
+          "sources"
+        ],
+        "title": "SiteOut",
+        "type": "object"
+      },
+      "SitesResponse": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "catalogue_version": {
+            "title": "Catalogue Version",
+            "type": "string"
+          },
+          "lat_convention": {
+            "title": "Lat Convention",
+            "type": "string"
+          },
+          "lon_convention": {
+            "title": "Lon Convention",
+            "type": "string"
+          },
+          "pending_regions": {
+            "items": {
+              "$ref": "#/components/schemas/PendingRegionOut"
+            },
+            "title": "Pending Regions",
+            "type": "array"
+          },
+          "policy": {
+            "title": "Policy",
+            "type": "string"
+          },
+          "reference_sphere_radius_m": {
+            "title": "Reference Sphere Radius M",
+            "type": "number"
+          },
+          "sites": {
+            "items": {
+              "$ref": "#/components/schemas/SiteOut"
+            },
+            "title": "Sites",
+            "type": "array"
+          }
+        },
+        "required": [
+          "catalogue_version",
+          "body",
+          "lat_convention",
+          "lon_convention",
+          "reference_sphere_radius_m",
+          "policy",
+          "sites",
+          "pending_regions"
+        ],
+        "title": "SitesResponse",
+        "type": "object"
+      },
+      "SourceOut": {
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "url",
+          "description",
+          "quote"
+        ],
+        "title": "SourceOut",
+        "type": "object"
+      },
+      "ValidateResponse": {
+        "properties": {
+          "covering_windows": {
+            "items": {
+              "$ref": "#/components/schemas/WindowRef"
+            },
+            "title": "Covering Windows",
+            "type": "array"
+          },
+          "dem_coverage_status": {
+            "title": "Dem Coverage Status",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteOut"
+          }
+        },
+        "required": [
+          "site",
+          "dem_coverage_status",
+          "covering_windows",
+          "note"
+        ],
+        "title": "ValidateResponse",
+        "type": "object"
+      },
       "VersionResponse": {
         "properties": {
           "api_version": {
@@ -157,16 +470,292 @@
         ],
         "title": "VersionResponse",
         "type": "object"
+      },
+      "WindowOut": {
+        "properties": {
+          "bottom_m": {
+            "title": "Bottom M",
+            "type": "number"
+          },
+          "file": {
+            "title": "File",
+            "type": "string"
+          },
+          "height": {
+            "title": "Height",
+            "type": "integer"
+          },
+          "left_m": {
+            "title": "Left M",
+            "type": "number"
+          },
+          "nodata": {
+            "title": "Nodata",
+            "type": "string"
+          },
+          "overview_level": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overview Level"
+          },
+          "pixel_size_m": {
+            "title": "Pixel Size M",
+            "type": "number"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "right_m": {
+            "title": "Right M",
+            "type": "number"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          },
+          "top_m": {
+            "title": "Top M",
+            "type": "number"
+          },
+          "units": {
+            "title": "Units",
+            "type": "string"
+          },
+          "valid_fraction": {
+            "title": "Valid Fraction",
+            "type": "number"
+          },
+          "width": {
+            "title": "Width",
+            "type": "integer"
+          },
+          "window_id": {
+            "title": "Window Id",
+            "type": "string"
+          },
+          "z_max_m": {
+            "title": "Z Max M",
+            "type": "number"
+          },
+          "z_min_m": {
+            "title": "Z Min M",
+            "type": "number"
+          }
+        },
+        "required": [
+          "window_id",
+          "product_id",
+          "file",
+          "sha256",
+          "pixel_size_m",
+          "width",
+          "height",
+          "left_m",
+          "top_m",
+          "right_m",
+          "bottom_m",
+          "valid_fraction",
+          "z_min_m",
+          "z_max_m",
+          "overview_level",
+          "source_url",
+          "units",
+          "nodata"
+        ],
+        "title": "WindowOut",
+        "type": "object"
+      },
+      "WindowRef": {
+        "properties": {
+          "pixel_size_m": {
+            "title": "Pixel Size M",
+            "type": "number"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "window_id": {
+            "title": "Window Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "window_id",
+          "product_id",
+          "pixel_size_m"
+        ],
+        "title": "WindowRef",
+        "type": "object"
       }
     }
   },
   "info": {
-    "description": "Stage 1 skeleton. Scientific endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
+    "description": "Stage 2: sites and DEM lookup. Sun/Earth, horizon and visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
     "title": "Lunar Landing Site Navigator API",
     "version": "0.1.0"
   },
   "openapi": "3.1.0",
   "paths": {
+    "/dem/elevation": {
+      "get": {
+        "operationId": "dem_elevation_dem_elevation_get",
+        "parameters": [
+          {
+            "description": "Planetocentric latitude, degrees (south negative)",
+            "in": "query",
+            "name": "lat",
+            "required": true,
+            "schema": {
+              "description": "Planetocentric latitude, degrees (south negative)",
+              "title": "Lat",
+              "type": "number"
+            }
+          },
+          {
+            "description": "East-positive longitude, degrees, [-180, 360]",
+            "in": "query",
+            "name": "lon",
+            "required": true,
+            "schema": {
+              "description": "East-positive longitude, degrees, [-180, 360]",
+              "title": "Lon",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Force a specific DEM window",
+            "in": "query",
+            "name": "window_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Force a specific DEM window",
+              "title": "Window Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ElevationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Dem Elevation",
+        "tags": [
+          "dem"
+        ]
+      }
+    },
+    "/dem/windows": {
+      "get": {
+        "operationId": "list_windows_dem_windows_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/WindowOut"
+                  },
+                  "title": "Response List Windows Dem Windows Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "List Windows",
+        "tags": [
+          "dem"
+        ]
+      }
+    },
     "/health": {
       "get": {
         "operationId": "health_health_get",
@@ -205,6 +794,118 @@
         "summary": "Health",
         "tags": [
           "meta"
+        ]
+      }
+    },
+    "/sites": {
+      "get": {
+        "operationId": "list_sites_sites_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SitesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "List Sites",
+        "tags": [
+          "sites"
+        ]
+      }
+    },
+    "/sites/validate": {
+      "post": {
+        "operationId": "validate_site_sites_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CoordinateInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidateResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Validate Site",
+        "tags": [
+          "sites"
         ]
       }
     },

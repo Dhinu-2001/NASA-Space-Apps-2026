@@ -1,0 +1,111 @@
+{
+  "registry_version": "2026-11-14.1",
+  "products": {
+    "LDEM_80S_20MPP_ADJ": {
+      "title": "LOLA Digital Elevation Model, 80-90 deg S, 20 m/pixel, track-adjusted",
+      "publisher": "NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team",
+      "landing_page": "https://pgda.gsfc.nasa.gov/products/90",
+      "doi": "10.60903/gsfcpgda-lola-spole",
+      "file_url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF",
+      "file_size_bytes": 2696082051,
+      "verified_utc": "2026-11-14",
+      "companion_layers_listed_on_landing_page": [
+        "LDEM_80S_20MPP_ADJ_ERR.TIF (height error, m)",
+        "LDEM_80S_20MPP_ADJ_EFFRES.TIF (effective resolution, m)",
+        "LDSM_80S_20MPP_ADJ.TIF (slope, deg)",
+        "LDSM_80S_20MPP_ADJ_ERR.TIF (slope error, deg)",
+        "LDEC_80S_20MPP_ADJ.TIF (LOLA spot count per pixel)",
+        "LDEM_80S_20MPP_ADJ_HILL.TIF (hillshade)"
+      ],
+      "raster": {
+        "verified_by": "rasterio 1.5.2 / GDAL 3.12.2 header read over HTTP range requests (no bulk download)",
+        "driver": "GTiff (Cloud-Optimized)",
+        "width": 30400,
+        "height": 30400,
+        "bands": 1,
+        "dtype": "float32",
+        "pixel_size_m": 20.0,
+        "bounds_m": {
+          "left": -304000.0,
+          "bottom": -304000.0,
+          "right": 304000.0,
+          "top": 304000.0
+        },
+        "nodata": "NaN",
+        "block_shape": [
+          512,
+          512
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "compression": "deflate",
+        "registration": "pixel-centre samples (GMT node_offset=1; PGDA: X/Y are pixel centres); GeoTIFF origin is the outer pixel edge",
+        "z_actual_range_m": [
+          -7296.787109375,
+          7027.2294921875
+        ],
+        "units": "metres (file history shows a km->m multiplication by 1000)"
+      },
+      "crs": {
+        "name": "Moon (2015) - Sphere / Ocentric / South Polar (IAU:30135)",
+        "projection": "Polar_Stereographic, latitude_of_origin=-90, central_meridian=0, false easting/northing 0, metres",
+        "sphere_radius_m": 1737400.0,
+        "datum": "Moon (2015) - Sphere (IAU:30100), radius 1737400 m, flattening 0",
+        "scale": "No scale_factor parameter present; with latitude_of_origin = -90 the true-scale latitude is the pole (k0=1)",
+        "verified_orientation": "x = rho*sin(lon_east), y = rho*cos(lon_east), rho = 2R*tan((lat+90deg)/2). Matches pyproj on the file CRS exactly; confirmed by DEM heights at two independently published sites (see height_checks)."
+      },
+      "height_datum": "Metres above the 1737.4 km reference sphere (confirmed against NAIF-published altitudes, same sphere).",
+      "frame": {
+        "stated_by": "PGDA landing page text (NOT embedded in the GeoTIFF): 'MOON_ME reference frame of the JPL DE421 ephemeris'.",
+        "compatibility_with_planned_ephemeris": "NAIF frame kernel moon_de440_250416.tf defines MOON_ME as an alias of MOON_ME_DE440_ME421, a frame 'closely aligned' with DE421's ME frame. NAIF quotes a maximum rotation difference of 3.0709840342771E-07 rad (about 53.4 cm on the surface) over 2000-2040 and 5.82E-07 rad (just over 1 m) over 1900-2051. The generic MOON_PA frame differs from MOON_ME by ~0.02886 deg (~875 m) and MUST NOT be used with this DEM.",
+        "requirement": "Stage 3 must use the SPICE frame MOON_ME (id 31001, via moon_de440_250416.tf + moon_pa_de440_200625.bpc), never MOON_PA. The residual (<=~1 m) is an uncertainty to be recorded, and its effect checked against Horizons in Stage 3.",
+        "not_verified": "Whether PGDA's LOLA tie-to-DE421 is exactly MOON_ME_DE421 beyond the product text; the file itself carries no frame metadata."
+      },
+      "height_checks": [
+        {
+          "site": "im2-athena",
+          "published_height_m": 5321.0,
+          "published_by": "NAIF CLPS kernel clps_prime1_im2_v01.tf",
+          "dem_height_m_nearest_pixel": 5322.0,
+          "note": "recorded during Stage 2 orientation test; reproduced by tests"
+        },
+        {
+          "site": "im1-odysseus",
+          "published_height_m": 2583.0,
+          "published_by": "NAIF CLPS kernel clps_to2im_im1_v02.tf (LROC: 2579 m)",
+          "dem_height_m_nearest_pixel": 2590.9,
+          "note": "recorded during Stage 2 orientation test; reproduced by tests"
+        }
+      ],
+      "coverage": {
+        "latitude": "Square grid +/-304 km. MEASURED (overview level 5, 1280 m, scripts/verify_dem_product.py): 100% of pixels are finite (no NaN), including the square's corners which reach ~75.9 S. Valid therefore does NOT mean high-quality: data outside the nominal 80-90 S circle and gap-filled areas must be judged with the LDEC/ERR/EFFRES layers (not yet fetched). Treat pixels north of 80 S as unvalidated.",
+        "sites_covered": [
+          "im1-odysseus (80.13 S, only ~0.13 deg = ~4 km inside the edge: unsuitable for horizon work)",
+          "im2-athena (84.79 S: ~150 km from the grid edge on its nearest side)"
+        ],
+        "sites_not_covered": [
+          "chandrayaan3-shiv-shakti (69.37 S): needs a 60S product (e.g. LDEM_60S_240MPP_ADJ / 120MPP / 60MPP), not yet registered"
+        ]
+      },
+      "known_limitations": [
+        "Gridded and interpolated from LOLA altimeter tracks; the LDEC (count) and EFFRES layers must be consulted to judge real resolution (PGDA: ~90% of 5 m pixels in the related 5 m products are interpolated; the equivalent fraction for the 20 m product is not yet measured by us).",
+        "Height/slope uncertainty for THIS product is in the _ERR layers, which Stage 2 does not download. PGDA's quoted 0.3-0.5 m RMS applies to the 5 m site products, not to this one.",
+        "Overview levels (factor 2-64) are area-averaged (measured, see measurements); averaging lowers peaks, so horizon obstruction from overview data is a lower bound.",
+        "Frame information is not embedded in the file (see frame.not_verified)."
+      ],
+      "measurements": {
+        "overview64_valid_fraction": 1.0,
+        "overview64_northernmost_valid_lat_deg": -75.923,
+        "nan_pixels_inside_80S_circle": 0,
+        "overview_resampling_inference": "Area-average (not nearest): at IM-2 the overview-3 (320 m) pixel = 5190.37 m; mean of its 16x16 20 m block = 5189.91 m; median 5188.20 m; nearest candidates 5163.42 m / 5193.60 m. Consistent with averaging.",
+        "overview_implication": "Averaged overviews smooth ridge peaks, so a horizon computed from them can UNDER-estimate obstruction (optimistic visibility). Far-field use in Stage 4 must quantify this."
+      }
+    }
+  }
+}
