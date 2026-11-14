@@ -106,6 +106,87 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/scenarios/compare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Compare
+         * @description Compare several sites and/or dates. Supported scenarios get deltas and rankings (with position
+         *     bands); `terrain_data_insufficient` sites are listed separately and never ranked or scored.
+         */
+        post: operations["compare_scenarios_compare_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/scenarios/delay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Delay
+         * @description Mission delay simulator: baseline window vs the same window shifted by each offset, with the position
+         *     band carried into every delta (paired per displacement).
+         */
+        post: operations["delay_scenarios_delay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/scenarios/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Evaluate
+         * @description One scenario. Returns `status: supported` with geometric and terrain-corrected results and position
+         *     bands, or `status: terrain_data_insufficient` with the reason and no numbers. The id identifies the
+         *     scenario (inputs + model + DEM); GET /scenarios/{id} returns it again.
+         */
+        post: operations["evaluate_scenarios_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/scenarios/{scenario_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Saved */
+        get: operations["get_saved_scenarios__scenario_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sites": {
         parameters: {
             query?: never;
@@ -247,12 +328,126 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** CompareRequest */
+        CompareRequest: {
+            /**
+             * Az Step Deg
+             * @description Horizon azimuth step
+             * @default 0.25
+             */
+            az_step_deg: number;
+            /**
+             * Baseline Index
+             * @description Scenario that deltas are measured from
+             * @default 0
+             */
+            baseline_index: number;
+            /**
+             * Duration Days
+             * @description Window length, days (0, 60]
+             * @default 30
+             */
+            duration_days: number;
+            /**
+             * N Directions
+             * @description Displacement directions sampled
+             * @default 8
+             */
+            n_directions: number;
+            /**
+             * Observer Height M
+             * @description Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.
+             */
+            observer_height_m?: number | null;
+            /**
+             * Position Uncertainty M
+             * @description Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.
+             * @default 100
+             */
+            position_uncertainty_m: number;
+            /**
+             * Scenarios
+             * @description Explicit scenario list (each may override the common parameters), or use sites x dates
+             */
+            scenarios?: components["schemas"]["ScenarioRequest"][] | null;
+            /**
+             * Sites
+             * @description With start_utc_list: every site x every date
+             */
+            sites?: components["schemas"]["SiteIn"][] | null;
+            /** Start Utc List */
+            start_utc_list?: string[] | null;
+            /**
+             * Step Seconds
+             * @description Sampling step; transitions are refined to 1 s
+             * @default 900
+             */
+            step_seconds: number;
+            /**
+             * Use Cache
+             * @description Serve/store results from the on-disk scenario cache
+             * @default true
+             */
+            use_cache: boolean;
+        };
         /** CoordinateInput */
         CoordinateInput: {
             /** Lat */
             lat: unknown;
             /** Lon */
             lon: unknown;
+        };
+        /** DelayRequest */
+        DelayRequest: {
+            /**
+             * Az Step Deg
+             * @description Horizon azimuth step
+             * @default 0.25
+             */
+            az_step_deg: number;
+            /** Baseline Start Utc */
+            baseline_start_utc: string;
+            /**
+             * Duration Days
+             * @description Window length, days. Default 14 d is an ASSUMPTION (about one lunar day of surface operations), not a mission requirement. A window that spans a whole synodic month (29.5 d) hides short delays: totals repeat, so only event times move.
+             * @default 14
+             */
+            duration_days: number;
+            /**
+             * N Directions
+             * @description Displacement directions sampled
+             * @default 8
+             */
+            n_directions: number;
+            /**
+             * Observer Height M
+             * @description Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.
+             */
+            observer_height_m?: number | null;
+            /**
+             * Offsets Days
+             * @description Launch/landing delays to simulate, days (0, 365], up to 10
+             */
+            offsets_days: number[];
+            /**
+             * Position Uncertainty M
+             * @description Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.
+             * @default 100
+             */
+            position_uncertainty_m: number;
+            site: components["schemas"]["SiteIn"];
+            /**
+             * Step Seconds
+             * @description Sampling step; transitions are refined to 1 s
+             * @default 900
+             */
+            step_seconds: number;
+            /**
+             * Use Cache
+             * @description Serve/store results from the on-disk scenario cache
+             * @default true
+             */
+            use_cache: boolean;
         };
         /** ElevationResponse */
         ElevationResponse: {
@@ -376,6 +571,58 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** ScenarioRequest */
+        ScenarioRequest: {
+            /**
+             * Az Step Deg
+             * @description Horizon azimuth step
+             * @default 0.25
+             */
+            az_step_deg: number;
+            /**
+             * Duration Days
+             * @description Window length, days (0, 60]
+             * @default 30
+             */
+            duration_days: number;
+            /** Label */
+            label?: string | null;
+            /**
+             * N Directions
+             * @description Displacement directions sampled
+             * @default 8
+             */
+            n_directions: number;
+            /**
+             * Observer Height M
+             * @description Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.
+             */
+            observer_height_m?: number | null;
+            /**
+             * Position Uncertainty M
+             * @description Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.
+             * @default 100
+             */
+            position_uncertainty_m: number;
+            site: components["schemas"]["SiteIn"];
+            /**
+             * Start Utc
+             * @description ISO-8601 UTC with Z; start of the window
+             */
+            start_utc: string;
+            /**
+             * Step Seconds
+             * @description Sampling step; transitions are refined to 1 s
+             * @default 900
+             */
+            step_seconds: number;
+            /**
+             * Use Cache
+             * @description Serve/store results from the on-disk scenario cache
+             * @default true
+             */
+            use_cache: boolean;
+        };
         /** SeriesRequest */
         SeriesRequest: {
             /** Bodies */
@@ -421,6 +668,24 @@ export interface components {
             units: {
                 [key: string]: string;
             };
+        };
+        /** SiteIn */
+        SiteIn: {
+            /**
+             * Lat
+             * @description Planetocentric latitude, degrees (south negative)
+             */
+            lat?: unknown;
+            /**
+             * Lon
+             * @description East-positive longitude, degrees
+             */
+            lon?: unknown;
+            /**
+             * Site Id
+             * @description Catalogue site id (see GET /sites)
+             */
+            site_id?: string | null;
         };
         /** SiteOut */
         SiteOut: {
@@ -1002,6 +1267,252 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HorizonResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    compare_scenarios_compare_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompareRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    delay_scenarios_delay_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DelayRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    evaluate_scenarios_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScenarioRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    get_saved_scenarios__scenario_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                scenario_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
                 };
             };
             /** @description Unprocessable Entity */

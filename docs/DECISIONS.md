@@ -47,3 +47,11 @@ Approved by project lead on Stage 0 review (before Stage 1). Authoritative over 
 | J5 | (Stage 5) Transitions by bisection on the predicate to 1 s; intervals tile the window; open intervals excluded from `*_closed_only` extrema and flagged when they tie or lead. Window ends at the last sample. |
 | J6 | (Stage 5) Steps with an incomplete horizon are `unverified_visible`; the body block reports `visibility_is_upper_bound`. |
 | J7 | (Stage 5, user instruction) `ephemeris` and `horizon` are `validated` (user approved those gates); `visibility` stays `implemented_unvalidated` until approved. |
+| K1 | (Stage 6, user instruction) Only sites whose terrain data support a position-sensitivity figure are compared/ranked (currently IM-2). Others are `terrain_data_insufficient`: reason, no numbers, never ranked, scored, estimated or shown with an upper-bound stand-in; an insufficient baseline gives no deltas. |
+| K2 | (Stage 6, user instruction) Geometric and terrain-corrected results appear together in every scenario, delta and delay-table row. |
+| K3 | (Stage 6, user instruction) Position bands carry into deltas: paired per displacement for the same site (one shared position error), interval arithmetic for different sites (independent errors, conservative). |
+| K4 | (Stage 6, user instruction) Totals/fractions are the headline; event timestamps always carry their band; open intervals are flagged and any extremum/delta involving one is marked as a lower bound. |
+| K5 | (Stage 6) Scenario id = SHA-256(canonical definition + model version + DEM fingerprint); label excluded; results cached as JSON in data/results/scenarios (C5; no database); stale model versions never served. |
+| K6 | (Stage 6) Scenario `position_uncertainty_m` must be > 0 so that sensitivity cannot be silently dropped. |
+| K7 | (Stage 6) Rankings: supported only; `distinguishable_from_next` true only if adjacent position bands do not overlap. |
+| K8 | (Stage 6) Delay simulator default window 14 days, an assumption (about one lunar day), labelled; a 29.5-day window hides short delays. `visibility` capability set to validated (Stage 5 approved); `scenarios` stays implemented_unvalidated. |

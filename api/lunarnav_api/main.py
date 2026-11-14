@@ -11,8 +11,10 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from lunarnav import MODEL_VERSION
 from lunarnav.capabilities import CAPABILITIES
+from lunarnav.ephemeris import EphemerisService
 from lunarnav.errors import NotImplementedYetError
 from lunarnav.horizon import HorizonService
+from lunarnav.visibility import VisibilityService
 
 from .config import get_settings
 from .errors import register_error_handlers
@@ -20,11 +22,12 @@ from .logging_setup import configure_logging
 from .routes_data import build_router
 from .routes_ephemeris import build_ephemeris_router
 from .routes_horizon import build_horizon_router
+from .routes_scenarios import build_scenario_router
 from .routes_visibility import build_visibility_router
 from .schemas import CapabilityOut, ErrorBody, HealthResponse, VersionResponse
 
 API_VERSION = "0.1.0"
-CURRENT_STAGE = 5
+CURRENT_STAGE = 6
 
 _ERROR_RESPONSES = {422: {"model": ErrorBody}, 500: {"model": ErrorBody}}
 
@@ -38,8 +41,8 @@ def create_app() -> FastAPI:
         title="Lunar Landing Site Navigator API",
         version=API_VERSION,
         description=(
-            "Stage 5: sites, DEM lookup, Sun/Earth ephemeris, terrain horizon profiles and terrain-corrected "
-            "Sun/Earth visibility with position-sensitivity bands. Scenario comparison is not implemented yet."
+            "Stage 6: sites, DEM, ephemeris, terrain horizon, terrain-corrected Sun/Earth visibility with "
+            "position-sensitivity bands, and scenario comparison / mission delay simulator."
         ),
     )
     app.add_middleware(
@@ -55,6 +58,8 @@ def create_app() -> FastAPI:
     horizon_service = HorizonService(settings.data_dir)
     app.include_router(build_horizon_router(settings.data_dir, horizon_service))
     app.include_router(build_visibility_router(settings.data_dir, horizon_service))
+    app.include_router(build_scenario_router(
+        settings.data_dir, VisibilityService(EphemerisService(settings.data_dir), horizon_service)))
 
     @app.middleware("http")
     async def request_context(request: Request, call_next):
@@ -91,9 +96,9 @@ def create_app() -> FastAPI:
             api_version=API_VERSION,
             stage=CURRENT_STAGE,
             notice=(
-                "Stage 5: terrain-corrected Sun/Earth visibility (geometric line of sight / direct "
-                "illumination only; not link availability or irradiance) with position-sensitivity bands. "
-                "Scenario comparison and the delay simulator are not implemented yet."
+                "Stage 6: scenario comparison and mission delay simulator over terrain-corrected visibility "
+                "(geometric line of sight / direct illumination only; not link availability or irradiance). "
+                "Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked."
             ),
             capabilities=[
                 CapabilityOut(key=c.key, title=c.title, stage=c.stage, status=c.status.value)
@@ -101,10 +106,10 @@ def create_app() -> FastAPI:
             ],
         )
 
-    @app.post("/scenarios/evaluate", include_in_schema=False)
-    def _scenario_not_implemented():
-        # Demonstrates the NOT_IMPLEMENTED contract; scientific endpoints arrive in later stages.
-        raise NotImplementedYetError("Scenario evaluation is planned for Stages 5-6.")
+    @app.post("/engineering/solar", include_in_schema=False)
+    def _engineering_not_implemented():
+        # Demonstrates the NOT_IMPLEMENTED contract; engineering metrics arrive in Stage 8.
+        raise NotImplementedYetError("Solar power / antenna / slope metrics are planned for Stage 8.")
 
     return app
 

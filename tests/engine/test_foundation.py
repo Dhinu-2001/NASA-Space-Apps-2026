@@ -4,19 +4,18 @@ from lunarnav.errors import ErrorCode, InvalidInputError, LunarNavError
 
 
 def test_model_version_is_set():
-    assert MODEL_VERSION.startswith("0.5.0")
+    assert MODEL_VERSION.startswith("0.6.0")
 
 
-def test_capability_statuses_are_honest_for_stage_5():
-    # Guards the "no scientific functionality falsely presented as complete" gate. Only gates the user has
-    # explicitly approved are 'validated' (ephemeris: Stage 3, horizon: Stage 4); Stage 5 awaits approval.
+def test_capability_statuses_are_honest_for_stage_6():
+    # Only gates the user has explicitly approved are 'validated' (ephemeris S3, horizon S4, visibility S5);
+    # Stage 6 awaits approval, later stages are unbuilt.
     status = {c.key: c.status for c in CAPABILITIES}
-    for key in ("sites", "dem", "visibility"):
+    for key in ("sites", "dem", "scenarios"):
         assert status[key] is CapabilityStatus.IMPLEMENTED_UNVALIDATED
-    for key in ("ephemeris", "horizon"):
+    for key in ("ephemeris", "horizon", "visibility"):
         assert status[key] is CapabilityStatus.VALIDATED
-    for key in ("scenarios", "engineering"):
-        assert status[key] is CapabilityStatus.NOT_IMPLEMENTED
+    assert status["engineering"] is CapabilityStatus.NOT_IMPLEMENTED
 
 
 def test_typed_error_carries_code_field_and_details():

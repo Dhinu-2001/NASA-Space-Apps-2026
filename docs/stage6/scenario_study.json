@@ -1,0 +1,1527 @@
+{
+ "comparison": {
+  "runtime_s": 0.09157872200012207,
+  "scenarios": [
+   {
+    "label": "im2-athena @ 2027-01-15",
+    "status": "supported",
+    "id": "23a975596e0196d68621223c3d5c44bd8244031e9dc42956b5897038cbaa657e",
+    "sun": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "nominal": 0.48646952311197916
+     },
+     "geometric_visible_fraction": 0.53326416015625,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       -204350.09765625,
+       -113685.64453125
+      ],
+      "nominal": -121291.69921875
+     },
+     "longest_not_visible_s": {
+      "including_open": 1330921.58203125,
+      "band_including_open": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-01-28T08:58:55Z",
+       "band_width_s": 39908.49609375,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-01-28T09:01:24Z",
+       "band_width_s": 0.0,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-01-28T09:15:33Z",
+       "band_width_s": 39908.49609375,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-02-12T18:57:35Z",
+       "band_width_s": 1854.4921875,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    },
+    "earth": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "nominal": 0.8075778537326389
+     },
+     "geometric_visible_fraction": 0.7347025553385417,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       169556.8359375,
+       192428.61328125
+      ],
+      "nominal": 188892.7734375
+     },
+     "longest_not_visible_s": {
+      "including_open": 498758.203125,
+      "band_including_open": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-01-27T11:00:46Z",
+       "band_width_s": 2351.953125,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-02-02T05:33:24Z",
+       "band_width_s": 20762.40234375,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    }
+   },
+   {
+    "label": "im2-athena @ 2027-03-15",
+    "status": "supported",
+    "id": "5e2922f4defe7034c167ab8214f863ef59a70bb262d223e4af1fde9f34926fad",
+    "sun": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.3961469862196181,
+       0.4415256076388889
+      ],
+      "nominal": 0.4252726236979167
+     },
+     "geometric_visible_fraction": 0.4478363037109375,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       -133978.7109375,
+       -16357.32421875
+      ],
+      "nominal": -58485.05859375
+     },
+     "longest_not_visible_s": {
+      "including_open": 1453927.1484375,
+      "band_including_open": [
+       1447565.625,
+       1524690.52734375
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-26T04:21:41Z",
+       "band_width_s": 10081.93359375,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-03-26T14:17:47Z",
+       "band_width_s": 23280.46875,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-27T12:55:38Z",
+       "band_width_s": 30199.21875,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-04-13T08:47:45Z",
+       "band_width_s": 2515.4296875,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    },
+    "earth": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.8225911458333334,
+       0.8313286675347222
+      ],
+      "nominal": 0.829783460828993
+     },
+     "geometric_visible_fraction": 0.7477623833550348,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       193956.15234375,
+       216603.80859375
+      ],
+      "nominal": 212598.6328125
+     },
+     "longest_not_visible_s": {
+      "including_open": 441201.26953125,
+      "band_including_open": [
+       437196.09375,
+       459843.75
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-23T11:29:12Z",
+       "band_width_s": 6292.96875,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-03-28T14:02:33Z",
+       "band_width_s": 18103.7109375,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    }
+   },
+   {
+    "label": "im2-intended @ 2027-01-15",
+    "status": "supported",
+    "id": "a50c24949f5d008ead454f6125fae3beb41279ac6736f65abd7aa3089d92b9e5",
+    "sun": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.4879798041449653,
+       0.4911278618706597
+      ],
+      "nominal": 0.490478515625
+     },
+     "geometric_visible_fraction": 0.5332034640842014,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       -117219.7265625,
+       -109059.9609375
+      ],
+      "nominal": -110743.06640625
+     },
+     "longest_not_visible_s": {
+      "including_open": 1320679.6875,
+      "band_including_open": [
+       1318996.58203125,
+       1327156.34765625
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-01-28T11:07:17Z",
+       "band_width_s": 6176.953125,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-02-12T17:58:37Z",
+       "band_width_s": 2015.33203125,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    },
+    "earth": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.8057623969184028,
+       0.8083607991536458
+      ],
+      "nominal": 0.8071736653645833
+     },
+     "geometric_visible_fraction": 0.7354329427083334,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       182293.9453125,
+       189029.00390625
+      ],
+      "nominal": 185951.953125
+     },
+     "longest_not_visible_s": {
+      "including_open": 499805.859375,
+      "band_including_open": [
+       496728.80859375,
+       503463.8671875
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-01-27T10:37:08Z",
+       "band_width_s": 1501.171875,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-02-02T05:27:14Z",
+       "band_width_s": 5618.84765625,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    }
+   },
+   {
+    "label": "im2-intended @ 2027-03-15",
+    "status": "supported",
+    "id": "088aeca724499eee792f2772404ed8daedb4e6881a0a7dcf599da8f334829c17",
+    "sun": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.4123623318142361,
+       0.4155965169270833
+      ],
+      "nominal": 0.4145592583550347
+     },
+     "geometric_visible_fraction": 0.4479573567708333,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       -92262.3046875,
+       -83879.296875
+      ],
+      "nominal": -86567.87109375
+     },
+     "longest_not_visible_s": {
+      "including_open": 1444627.44140625,
+      "band_including_open": [
+       1440160.83984375,
+       1455423.046875
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-26T03:17:58Z",
+       "band_width_s": 2860.83984375,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-03-26T23:23:37Z",
+       "band_width_s": 19707.71484375,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-26T23:37:08Z",
+       "band_width_s": 0.0,
+       "band_complete": false
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-03-26T23:45:24Z",
+       "band_width_s": 19707.71484375,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-27T14:52:19Z",
+       "band_width_s": 16951.46484375,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-04-13T08:09:26Z",
+       "band_width_s": 2675.390625,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    },
+    "earth": {
+     "terrain_visible_fraction": {
+      "band": [
+       0.8278269449869792,
+       0.8315134684244792
+      ],
+      "nominal": 0.8291134304470487
+     },
+     "geometric_visible_fraction": 0.7485066731770833,
+     "terrain_minus_geometric_visible_s": {
+      "band": [
+       205598.14453125,
+       215153.61328125
+      ],
+      "nominal": 208932.71484375
+     },
+     "longest_not_visible_s": {
+      "including_open": 442937.98828125,
+      "band_including_open": [
+       436717.08984375,
+       446272.55859375
+      ],
+      "includes_open_interval": false
+     },
+     "events": [
+      {
+       "type": "becomes_not_visible",
+       "time_utc": "2027-03-23T11:21:34Z",
+       "band_width_s": 4649.4140625,
+       "band_complete": true
+      },
+      {
+       "type": "becomes_visible",
+       "time_utc": "2027-03-28T14:23:52Z",
+       "band_width_s": 5117.87109375,
+       "band_complete": true
+      }
+     ],
+     "open_intervals": {
+      "not_visible": 0,
+      "note": "intervals touching the window edge are cut off; their true length is at least the value shown",
+      "visible": 2
+     }
+    }
+   },
+   {
+    "label": "im1-odysseus @ 2027-01-15",
+    "status": "terrain_data_insufficient",
+    "id": "e87f654c03d0fe7014560c60ee5d2e1cd77f8eca2507e48f34da1c213ed19ff2",
+    "reason": "terrain coverage is insufficient to certify the horizon (1440 truncated and 0 data-gap azimuths of 1440); sensitivity is not extrapolated"
+   },
+   {
+    "label": "im1-odysseus @ 2027-03-15",
+    "status": "terrain_data_insufficient",
+    "id": "b8f2e4fb01a31d99e9d9f8bdd0e6563540db466e30d522bfb212572d9cc2f84e",
+    "reason": "terrain coverage is insufficient to certify the horizon (1440 truncated and 0 data-gap azimuths of 1440); sensitivity is not extrapolated"
+   },
+   {
+    "label": "chandrayaan3-shiv-shakti @ 2027-01-15",
+    "status": "terrain_data_insufficient",
+    "id": "0200321d452597d7fe348bb568bffeaee4c3a090f8dff9ea14035b990df6a0ab",
+    "reason": "No available DEM window covers this location, so no terrain horizon can be computed. No flat-terrain or synthetic fallback is used."
+   },
+   {
+    "label": "chandrayaan3-shiv-shakti @ 2027-03-15",
+    "status": "terrain_data_insufficient",
+    "id": "37ed47915c738f084e1289d6140fb16c04a43cb09d4074884885d88b52401126",
+    "reason": "No available DEM window covers this location, so no terrain horizon can be computed. No flat-terrain or synthetic fallback is used."
+   }
+  ],
+  "excluded": [
+   {
+    "scenario_id": "e87f654c03d0fe7014560c60ee5d2e1cd77f8eca2507e48f34da1c213ed19ff2",
+    "label": "im1-odysseus @ 2027-01-15",
+    "site_id": "im1-odysseus",
+    "lat_deg": -80.12759,
+    "lon_deg_east": 1.44587,
+    "start_utc": "2027-01-15T00:00:00Z",
+    "status": "terrain_data_insufficient",
+    "reason": "terrain coverage is insufficient to certify the horizon (1440 truncated and 0 data-gap azimuths of 1440); sensitivity is not extrapolated"
+   },
+   {
+    "scenario_id": "b8f2e4fb01a31d99e9d9f8bdd0e6563540db466e30d522bfb212572d9cc2f84e",
+    "label": "im1-odysseus @ 2027-03-15",
+    "site_id": "im1-odysseus",
+    "lat_deg": -80.12759,
+    "lon_deg_east": 1.44587,
+    "start_utc": "2027-03-15T00:00:00Z",
+    "status": "terrain_data_insufficient",
+    "reason": "terrain coverage is insufficient to certify the horizon (1440 truncated and 0 data-gap azimuths of 1440); sensitivity is not extrapolated"
+   },
+   {
+    "scenario_id": "0200321d452597d7fe348bb568bffeaee4c3a090f8dff9ea14035b990df6a0ab",
+    "label": "chandrayaan3-shiv-shakti @ 2027-01-15",
+    "site_id": "chandrayaan3-shiv-shakti",
+    "lat_deg": -69.3741,
+    "lon_deg_east": 32.32,
+    "start_utc": "2027-01-15T00:00:00Z",
+    "status": "terrain_data_insufficient",
+    "reason": "No available DEM window covers this location, so no terrain horizon can be computed. No flat-terrain or synthetic fallback is used."
+   },
+   {
+    "scenario_id": "37ed47915c738f084e1289d6140fb16c04a43cb09d4074884885d88b52401126",
+    "label": "chandrayaan3-shiv-shakti @ 2027-03-15",
+    "site_id": "chandrayaan3-shiv-shakti",
+    "lat_deg": -69.3741,
+    "lon_deg_east": 32.32,
+    "start_utc": "2027-03-15T00:00:00Z",
+    "status": "terrain_data_insufficient",
+    "reason": "No available DEM window covers this location, so no terrain horizon can be computed. No flat-terrain or synthetic fallback is used."
+   }
+  ],
+  "rankings": [
+   {
+    "criterion": "sun_visible_fraction",
+    "ranking": [
+     {
+      "rank": 1,
+      "label": "im2-intended @ 2027-01-15",
+      "nominal": 0.490478515625,
+      "band": [
+       0.4879798041449653,
+       0.4911278618706597
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 2,
+      "label": "im2-athena @ 2027-01-15",
+      "nominal": 0.48646952311197916,
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": true
+     },
+     {
+      "rank": 3,
+      "label": "im2-athena @ 2027-03-15",
+      "nominal": 0.4252726236979167,
+      "band": [
+       0.3961469862196181,
+       0.4415256076388889
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 4,
+      "label": "im2-intended @ 2027-03-15",
+      "nominal": 0.4145592583550347,
+      "band": [
+       0.4123623318142361,
+       0.4155965169270833
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": null
+     }
+    ]
+   },
+   {
+    "criterion": "earth_visible_fraction",
+    "ranking": [
+     {
+      "rank": 1,
+      "label": "im2-athena @ 2027-03-15",
+      "nominal": 0.829783460828993,
+      "band": [
+       0.8225911458333334,
+       0.8313286675347222
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 2,
+      "label": "im2-intended @ 2027-03-15",
+      "nominal": 0.8291134304470487,
+      "band": [
+       0.8278269449869792,
+       0.8315134684244792
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": true
+     },
+     {
+      "rank": 3,
+      "label": "im2-athena @ 2027-01-15",
+      "nominal": 0.8075778537326389,
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 4,
+      "label": "im2-intended @ 2027-01-15",
+      "nominal": 0.8071736653645833,
+      "band": [
+       0.8057623969184028,
+       0.8083607991536458
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": null
+     }
+    ]
+   },
+   {
+    "criterion": "sun_longest_darkness",
+    "ranking": [
+     {
+      "rank": 1,
+      "label": "im2-intended @ 2027-01-15",
+      "nominal": 1320679.6875,
+      "band": [
+       1318996.58203125,
+       1327156.34765625
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 2,
+      "label": "im2-athena @ 2027-01-15",
+      "nominal": 1330921.58203125,
+      "band": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": true
+     },
+     {
+      "rank": 3,
+      "label": "im2-intended @ 2027-03-15",
+      "nominal": 1444627.44140625,
+      "band": [
+       1440160.83984375,
+       1455423.046875
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 4,
+      "label": "im2-athena @ 2027-03-15",
+      "nominal": 1453927.1484375,
+      "band": [
+       1447565.625,
+       1524690.52734375
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": null
+     }
+    ]
+   },
+   {
+    "criterion": "earth_longest_blackout",
+    "ranking": [
+     {
+      "rank": 1,
+      "label": "im2-athena @ 2027-03-15",
+      "nominal": 441201.26953125,
+      "band": [
+       437196.09375,
+       459843.75
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 2,
+      "label": "im2-intended @ 2027-03-15",
+      "nominal": 442937.98828125,
+      "band": [
+       436717.08984375,
+       446272.55859375
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": true
+     },
+     {
+      "rank": 3,
+      "label": "im2-athena @ 2027-01-15",
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": false
+     },
+     {
+      "rank": 4,
+      "label": "im2-intended @ 2027-01-15",
+      "nominal": 499805.859375,
+      "band": [
+       496728.80859375,
+       503463.8671875
+      ],
+      "includes_open_interval": false,
+      "distinguishable_from_next": null
+     }
+    ]
+   }
+  ],
+  "deltas_vs_first_scenario": [
+   {
+    "scenario_id": "5e2922f4defe7034c167ab8214f863ef59a70bb262d223e4af1fde9f34926fad",
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -6.12 percentage points (band -6.43 to -4.79; distinguishable from zero).",
+     "sun longest not-visible interval: +34.2 hours (band +30.7 to +34.5; distinguishable from zero)."
+    ],
+    "earth": [
+     "earth visible fraction: +2.22 percentage points (band +2.02 to +2.26; distinguishable from zero).",
+     "earth longest not-visible interval: -16 hours (band -16.3 to -14.5; distinguishable from zero)."
+    ]
+   },
+   {
+    "scenario_id": "a50c24949f5d008ead454f6125fae3beb41279ac6736f65abd7aa3089d92b9e5",
+    "method": "independent_interval_arithmetic",
+    "sun": [
+     "sun visible fraction: +0.401 percentage points (band -0.142 to +3.67; NOT distinguishable from zero given +/-100 m position uncertainty).",
+     "sun longest not-visible interval: -2.84 hours (band -26.4 to +1.03; NOT distinguishable from zero given +/-100 m position uncertainty)."
+    ],
+    "earth": [
+     "earth visible fraction: -0.0404 percentage points (band -0.318 to +0.824; NOT distinguishable from zero given +/-100 m position uncertainty).",
+     "earth longest not-visible interval: +0.291 hours (band -5.93 to +2.29; NOT distinguishable from zero given +/-100 m position uncertainty)."
+    ]
+   },
+   {
+    "scenario_id": "088aeca724499eee792f2772404ed8daedb4e6881a0a7dcf599da8f334829c17",
+    "method": "independent_interval_arithmetic",
+    "sun": [
+     "sun visible fraction: -7.19 percentage points (band -7.7 to -3.88; distinguishable from zero).",
+     "sun longest not-visible interval: +31.6 hours (band +7.23 to +36.7; distinguishable from zero)."
+    ],
+    "earth": [
+     "earth visible fraction: +2.15 percentage points (band +1.89 to +3.14; distinguishable from zero).",
+     "earth longest not-visible interval: -15.5 hours (band -22.6 to -13.6; distinguishable from zero)."
+    ]
+   }
+  ],
+  "notes": [
+   "4 scenario(s) excluded from deltas and rankings: terrain data insufficient."
+  ]
+ },
+ "delay_14d_window": {
+  "runtime_s": 20.16821789741516,
+  "baseline_start_utc": "2027-01-15T00:00:00Z",
+  "duration_days": 14.0,
+  "table": [
+   {
+    "offset_days": 0.0,
+    "scenario_id": "499d0b2ac7df66f3e4c067c9cf176382b752d315de16c6305cbba46b31bb12d2",
+    "start_utc": "2027-01-15T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.9560049147832961,
+      "band": [
+       0.8881040300641742,
+       0.9619674682617188
+      ]
+     },
+     "geometric_visible_fraction": 0.9408899943033854,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 53067.041015625,
+      "band": [
+       46004.150390625,
+       135349.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 71499.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.8899190993536086,
+      "band": [
+       0.8890478951590401,
+       0.8909923008510044
+      ]
+     },
+     "geometric_visible_fraction": 0.832046145484561,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 133153.857421875,
+      "band": [
+       131855.712890625,
+       134207.666015625
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 203156.982421875,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 1.0,
+    "scenario_id": "c8816c4ad4cc64fd432a5873b38cf264bc5301787d2c5a872ddd1b3123ddab41",
+    "start_utc": "2027-01-16T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.8845763433547247,
+      "band": [
+       0.8166754586356026,
+       0.8905388968331474
+      ]
+     },
+     "geometric_visible_fraction": 0.869461422874814,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 139467.041015625,
+      "band": [
+       132404.150390625,
+       221749.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 157899.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.8184905279250372,
+      "band": [
+       0.8176193237304688,
+       0.819563729422433
+      ]
+     },
+     "geometric_visible_fraction": 0.7606175740559896,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 219553.857421875,
+      "band": [
+       218255.712890625,
+       220607.666015625
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 289556.982421875,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 2.0,
+    "scenario_id": "43b4117ff60bca722b33ca37aa454c3f60429b61cfcf7f174cc459012b6587c8",
+    "start_utc": "2027-01-17T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.8131477719261533,
+      "band": [
+       0.7452468872070312,
+       0.8191103254045758
+      ]
+     },
+     "geometric_visible_fraction": 0.7980328514462426,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 225867.041015625,
+      "band": [
+       218804.150390625,
+       308149.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 244299.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.7470619564964658,
+      "band": [
+       0.7461907523018974,
+       0.7481351579938617
+      ]
+     },
+     "geometric_visible_fraction": 0.6891890026274181,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 305953.857421875,
+      "band": [
+       304655.712890625,
+       307007.666015625
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 375956.982421875,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 3.0,
+    "scenario_id": "8814a0ee3b4f6860a5cbbdf594e3bb05846046d41a1bfefba8f4386613a43f1f",
+    "start_utc": "2027-01-18T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.7417192004975819,
+      "band": [
+       0.6738183157784599,
+       0.7476817539760044
+      ]
+     },
+     "geometric_visible_fraction": 0.7266042800176711,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 312267.041015625,
+      "band": [
+       305204.150390625,
+       394549.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 330699.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.6756333850678944,
+      "band": [
+       0.6747621808733258,
+       0.6767065865652901
+      ]
+     },
+     "geometric_visible_fraction": 0.6177604311988467,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 392353.857421875,
+      "band": [
+       391055.712890625,
+       393407.666015625
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 462356.982421875,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 5.0,
+    "scenario_id": "a4b38243121ef804fb88bf0669c100d75f6055b5408329d51d0d51576063a8a6",
+    "start_utc": "2027-01-20T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.598862057640439,
+      "band": [
+       0.530961172921317,
+       0.6048246111188617
+      ]
+     },
+     "geometric_visible_fraction": 0.5837471371605283,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 485067.041015625,
+      "band": [
+       478004.150390625,
+       567349.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 503499.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.5876668294270834,
+      "band": [
+       0.5716814313616071,
+       0.5905899774460566
+      ]
+     },
+     "geometric_visible_fraction": 0.47490328834170387,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 635156.982421875,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 7.0,
+    "scenario_id": "d726d3dedcce59afbf5209ccbdabc74aa3a1f779249302fb329d3f2fda91cbdb",
+    "start_utc": "2027-01-22T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.45600491478329613,
+      "band": [
+       0.3881040300641741,
+       0.46196746826171875
+      ]
+     },
+     "geometric_visible_fraction": 0.44088999430338544,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 657867.041015625,
+      "band": [
+       650804.150390625,
+       740149.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 676299.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.5876668294270834,
+      "band": [
+       0.5716814313616071,
+       0.5905899774460566
+      ]
+     },
+     "geometric_visible_fraction": 0.43150547572544645,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 10.0,
+    "scenario_id": "f1d4f29a679cc8e4be12b78f432dc07fa7a39442524392c68a20272282a8b3db",
+    "start_utc": "2027-01-25T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.24171920049758183,
+      "band": [
+       0.17381831577845983,
+       0.24768175397600448
+      ]
+     },
+     "geometric_visible_fraction": 0.22660428001767113,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 917067.041015625,
+      "band": [
+       910004.150390625,
+       999349.365234375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 935499.462890625,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.5876668294270834,
+      "band": [
+       0.5716814313616071,
+       0.5905899774460566
+      ]
+     },
+     "geometric_visible_fraction": 0.43150547572544645,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 14.0,
+    "scenario_id": "14a0ae2145efed667af0cffe510d4bd60ec69c2e73cdd563882909b8deb19cef",
+    "start_utc": "2027-01-29T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.0,
+      "band": [
+       0.0,
+       0.0
+      ]
+     },
+     "geometric_visible_fraction": 0.05896177746000744,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1209600.0,
+      "band": [
+       1209600.0,
+       1209600.0
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1138279.833984375,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.6977477300734747,
+      "band": [
+       0.682633536202567,
+       0.6997982206798735
+      ]
+     },
+     "geometric_visible_fraction": 0.5994593302408854,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 365604.345703125,
+      "band": [
+       363124.072265625,
+       383886.474609375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 484493.994140625,
+      "includes_open_interval": true
+     }
+    }
+   },
+   {
+    "offset_days": 21.0,
+    "scenario_id": "abf83db5a4321866cefffa846784d7e6e09f0c54594a637649f4603a2c64afcf",
+    "start_utc": "2027-02-05T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 0.4435726347423735,
+      "band": [
+       0.44280751546223956,
+       0.44434066045851933
+      ]
+     },
+     "geometric_visible_fraction": 0.5589617774600074,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 673054.541015625,
+      "band": [
+       672125.537109375,
+       673980.029296875
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 533479.833984375,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "nominal": 1.0,
+      "band": [
+       1.0,
+       1.0
+      ]
+     },
+     "geometric_visible_fraction": 1.0,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": null,
+      "band": [
+       null,
+       null
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": null,
+      "includes_open_interval": false
+     }
+    }
+   }
+  ],
+  "deltas": [
+   {
+    "offset_days": 1.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -7.14 percentage points (band -7.14 to -7.14; distinguishable from zero).",
+     "sun longest not-visible interval: +24 hours (band +24 to +24; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -7.14 percentage points (band -7.14 to -7.14; distinguishable from zero).",
+     "earth longest not-visible interval: +24 hours (band +24 to +24; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 2.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -14.3 percentage points (band -14.3 to -14.3; distinguishable from zero).",
+     "sun longest not-visible interval: +48 hours (band +48 to +48; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -14.3 percentage points (band -14.3 to -14.3; distinguishable from zero).",
+     "earth longest not-visible interval: +48 hours (band +48 to +48; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 3.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -21.4 percentage points (band -21.4 to -21.4; distinguishable from zero).",
+     "sun longest not-visible interval: +72 hours (band +72 to +72; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -21.4 percentage points (band -21.4 to -21.4; distinguishable from zero).",
+     "earth longest not-visible interval: +72 hours (band +72 to +72; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 5.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -35.7 percentage points (band -35.7 to -35.7; distinguishable from zero).",
+     "sun longest not-visible interval: +120 hours (band +120 to +120; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -30.2 percentage points (band -31.7 to -30; distinguishable from zero).",
+     "earth longest not-visible interval: +102 hours (band +101 to +107; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 7.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -50 percentage points (band -50 to -50; distinguishable from zero).",
+     "sun longest not-visible interval: +168 hours (band +168 to +168; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -30.2 percentage points (band -31.7 to -30; distinguishable from zero).",
+     "earth longest not-visible interval: +102 hours (band +101 to +107; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 10.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -71.4 percentage points (band -71.4 to -71.4; distinguishable from zero).",
+     "sun longest not-visible interval: +240 hours (band +240 to +240; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -30.2 percentage points (band -31.7 to -30; distinguishable from zero).",
+     "earth longest not-visible interval: +102 hours (band +101 to +107; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 14.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -95.6 percentage points (band -96.2 to -88.8; distinguishable from zero).",
+     "sun longest not-visible interval: +321 hours (band +298 to +323; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: -19.2 percentage points (band -20.6 to -19.1; distinguishable from zero).",
+     "earth longest not-visible interval: +64.6 hours (band +64 to +69.4; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ]
+   },
+   {
+    "offset_days": 21.0,
+    "method": "paired",
+    "sun": [
+     "sun visible fraction: -51.2 percentage points (band -51.8 to -44.5; distinguishable from zero).",
+     "sun longest not-visible interval: +172 hours (band +150 to +174; distinguishable from zero); involves an interval cut off by the window edge, so the value is a lower bound."
+    ],
+    "earth": [
+     "earth visible fraction: +11 percentage points (band +10.9 to +11.1; distinguishable from zero).",
+     "earth longest not-visible interval: not comparable (metric undefined in one scenario (no such interval))."
+    ]
+   }
+  ]
+ },
+ "delay_30d_window": {
+  "table": [
+   {
+    "offset_days": 0.0,
+    "scenario_id": "23a975596e0196d68621223c3d5c44bd8244031e9dc42956b5897038cbaa657e",
+    "start_utc": "2027-01-15T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "nominal": 0.48646952311197916
+     },
+     "geometric_visible_fraction": 0.53326416015625,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1330921.58203125,
+      "band": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1209779.296875,
+      "includes_open_interval": false
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "nominal": 0.8075778537326389
+     },
+     "geometric_visible_fraction": 0.7347025553385417,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 1.0,
+    "scenario_id": "1f8d2ab8dc16d543a46a455c0e5095221cec31c90ecc65f261d0c9b6bdf557e9",
+    "start_utc": "2027-01-16T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "nominal": 0.48646952311197916
+     },
+     "geometric_visible_fraction": 0.53326416015625,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1330921.58203125,
+      "band": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1209779.296875,
+      "includes_open_interval": false
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "nominal": 0.8075778537326389
+     },
+     "geometric_visible_fraction": 0.7347025553385417,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 3.0,
+    "scenario_id": "cb290c59f7a787fad3e950efd7560dc07e3c6fabc06e97899986a01102bffe45",
+    "start_utc": "2027-01-18T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "nominal": 0.48646952311197916
+     },
+     "geometric_visible_fraction": 0.53326416015625,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1330921.58203125,
+      "band": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1209779.296875,
+      "includes_open_interval": false
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "nominal": 0.8075778537326389
+     },
+     "geometric_visible_fraction": 0.7347025553385417,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 7.0,
+    "scenario_id": "0937b887cc2781b1156ddef2185f2b7c3975912c3c86c9bfcd8bf938030ed75e",
+    "start_utc": "2027-01-22T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.4544253879123264,
+       0.4894039577907986
+      ],
+      "nominal": 0.48646952311197916
+     },
+     "geometric_visible_fraction": 0.53326416015625,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1330921.58203125,
+      "band": [
+       1323464.94140625,
+       1414129.39453125
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1209779.296875,
+      "includes_open_interval": false
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.8001180013020833,
+       0.8089419894748264
+      ],
+      "nominal": 0.8075778537326389
+     },
+     "geometric_visible_fraction": 0.7347025553385417,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 498758.203125,
+      "band": [
+       495222.36328125,
+       518094.140625
+      ],
+      "includes_open_interval": false
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 687650.9765625,
+      "includes_open_interval": false
+     }
+    }
+   },
+   {
+    "offset_days": 14.0,
+    "scenario_id": "38101765d370b4a3e4b8ad59e699e2c132b136b5990c0a6cd0d2a7c5ba893747",
+    "start_utc": "2027-01-29T00:00:00Z",
+    "sun": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.4257524278428819,
+       0.4563374837239583
+      ],
+      "nominal": 0.45521308051215276
+     },
+     "geometric_visible_fraction": 0.49494493272569445,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 1277854.541015625,
+      "band": [
+       1276925.537109375,
+       1278780.029296875
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 1138279.833984375,
+      "includes_open_interval": true
+     }
+    },
+    "earth": {
+     "terrain_corrected_visible_fraction": {
+      "band": [
+       0.71251220703125,
+       0.7236148410373264
+      ],
+      "nominal": 0.7205149332682291
+     },
+     "geometric_visible_fraction": 0.6469136555989583,
+     "terrain_corrected_longest_not_visible_s": {
+      "nominal": 365604.345703125,
+      "band": [
+       363124.072265625,
+       383886.474609375
+      ],
+      "includes_open_interval": true
+     },
+     "geometric_longest_not_visible_s": {
+      "nominal": 484493.994140625,
+      "includes_open_interval": true
+     }
+    }
+   }
+  ]
+ }
+}

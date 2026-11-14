@@ -16,6 +16,7 @@ _STATUS = {
     ErrorCode.DATA_MISSING: 503,
     ErrorCode.EPHEMERIS_OUT_OF_RANGE: 422,
     ErrorCode.NOT_IMPLEMENTED: 501,
+    ErrorCode.NOT_FOUND: 404,
     ErrorCode.INTERNAL: 500,
 }
 

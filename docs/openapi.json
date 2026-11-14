@@ -82,6 +82,110 @@
         "title": "CapabilityOut",
         "type": "object"
       },
+      "CompareRequest": {
+        "properties": {
+          "az_step_deg": {
+            "default": 0.25,
+            "description": "Horizon azimuth step",
+            "title": "Az Step Deg",
+            "type": "number"
+          },
+          "baseline_index": {
+            "default": 0,
+            "description": "Scenario that deltas are measured from",
+            "title": "Baseline Index",
+            "type": "integer"
+          },
+          "duration_days": {
+            "default": 30.0,
+            "description": "Window length, days (0, 60]",
+            "title": "Duration Days",
+            "type": "number"
+          },
+          "n_directions": {
+            "default": 8,
+            "description": "Displacement directions sampled",
+            "title": "N Directions",
+            "type": "integer"
+          },
+          "observer_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.",
+            "title": "Observer Height M"
+          },
+          "position_uncertainty_m": {
+            "default": 100.0,
+            "description": "Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.",
+            "title": "Position Uncertainty M",
+            "type": "number"
+          },
+          "scenarios": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ScenarioRequest"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Explicit scenario list (each may override the common parameters), or use sites x dates",
+            "title": "Scenarios"
+          },
+          "sites": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SiteIn"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "With start_utc_list: every site x every date",
+            "title": "Sites"
+          },
+          "start_utc_list": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Utc List"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step; transitions are refined to 1 s",
+            "title": "Step Seconds",
+            "type": "number"
+          },
+          "use_cache": {
+            "default": true,
+            "description": "Serve/store results from the on-disk scenario cache",
+            "title": "Use Cache",
+            "type": "boolean"
+          }
+        },
+        "title": "CompareRequest",
+        "type": "object"
+      },
       "CoordinateInput": {
         "properties": {
           "lat": {
@@ -96,6 +200,80 @@
           "lon"
         ],
         "title": "CoordinateInput",
+        "type": "object"
+      },
+      "DelayRequest": {
+        "properties": {
+          "az_step_deg": {
+            "default": 0.25,
+            "description": "Horizon azimuth step",
+            "title": "Az Step Deg",
+            "type": "number"
+          },
+          "baseline_start_utc": {
+            "title": "Baseline Start Utc",
+            "type": "string"
+          },
+          "duration_days": {
+            "default": 14.0,
+            "description": "Window length, days. Default 14 d is an ASSUMPTION (about one lunar day of surface operations), not a mission requirement. A window that spans a whole synodic month (29.5 d) hides short delays: totals repeat, so only event times move.",
+            "title": "Duration Days",
+            "type": "number"
+          },
+          "n_directions": {
+            "default": 8,
+            "description": "Displacement directions sampled",
+            "title": "N Directions",
+            "type": "integer"
+          },
+          "observer_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.",
+            "title": "Observer Height M"
+          },
+          "offsets_days": {
+            "description": "Launch/landing delays to simulate, days (0, 365], up to 10",
+            "items": {
+              "type": "number"
+            },
+            "title": "Offsets Days",
+            "type": "array"
+          },
+          "position_uncertainty_m": {
+            "default": 100.0,
+            "description": "Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.",
+            "title": "Position Uncertainty M",
+            "type": "number"
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteIn"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step; transitions are refined to 1 s",
+            "title": "Step Seconds",
+            "type": "number"
+          },
+          "use_cache": {
+            "default": true,
+            "description": "Serve/store results from the on-disk scenario cache",
+            "title": "Use Cache",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "site",
+          "baseline_start_utc",
+          "offsets_days"
+        ],
+        "title": "DelayRequest",
         "type": "object"
       },
       "ElevationResponse": {
@@ -441,6 +619,83 @@
         "title": "PendingRegionOut",
         "type": "object"
       },
+      "ScenarioRequest": {
+        "properties": {
+          "az_step_deg": {
+            "default": 0.25,
+            "description": "Horizon azimuth step",
+            "title": "Az Step Deg",
+            "type": "number"
+          },
+          "duration_days": {
+            "default": 30.0,
+            "description": "Window length, days (0, 60]",
+            "title": "Duration Days",
+            "type": "number"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "n_directions": {
+            "default": 8,
+            "description": "Displacement directions sampled",
+            "title": "N Directions",
+            "type": "integer"
+          },
+          "observer_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.",
+            "title": "Observer Height M"
+          },
+          "position_uncertainty_m": {
+            "default": 100.0,
+            "description": "Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.",
+            "title": "Position Uncertainty M",
+            "type": "number"
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteIn"
+          },
+          "start_utc": {
+            "description": "ISO-8601 UTC with Z; start of the window",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step; transitions are refined to 1 s",
+            "title": "Step Seconds",
+            "type": "number"
+          },
+          "use_cache": {
+            "default": true,
+            "description": "Serve/store results from the on-disk scenario cache",
+            "title": "Use Cache",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "site",
+          "start_utc"
+        ],
+        "title": "ScenarioRequest",
+        "type": "object"
+      },
       "SeriesRequest": {
         "properties": {
           "bodies": {
@@ -536,6 +791,32 @@
           "provenance"
         ],
         "title": "SeriesResponse",
+        "type": "object"
+      },
+      "SiteIn": {
+        "properties": {
+          "lat": {
+            "description": "Planetocentric latitude, degrees (south negative)",
+            "title": "Lat"
+          },
+          "lon": {
+            "description": "East-positive longitude, degrees",
+            "title": "Lon"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Catalogue site id (see GET /sites)",
+            "title": "Site Id"
+          }
+        },
+        "title": "SiteIn",
         "type": "object"
       },
       "SiteOut": {
@@ -1165,7 +1446,7 @@
     }
   },
   "info": {
-    "description": "Stage 5: sites, DEM lookup, Sun/Earth ephemeris, terrain horizon profiles and terrain-corrected Sun/Earth visibility with position-sensitivity bands. Scenario comparison is not implemented yet.",
+    "description": "Stage 6: sites, DEM, ephemeris, terrain horizon, terrain-corrected Sun/Earth visibility with position-sensitivity bands, and scenario comparison / mission delay simulator.",
     "title": "Lunar Landing Site Navigator API",
     "version": "0.1.0"
   },
@@ -1745,6 +2026,302 @@
         "summary": "Horizon Profile",
         "tags": [
           "horizon"
+        ]
+      }
+    },
+    "/scenarios/compare": {
+      "post": {
+        "description": "Compare several sites and/or dates. Supported scenarios get deltas and rankings (with position\nbands); `terrain_data_insufficient` sites are listed separately and never ranked or scored.",
+        "operationId": "compare_scenarios_compare_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Compare Scenarios Compare Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Compare",
+        "tags": [
+          "scenarios"
+        ]
+      }
+    },
+    "/scenarios/delay": {
+      "post": {
+        "description": "Mission delay simulator: baseline window vs the same window shifted by each offset, with the position\nband carried into every delta (paired per displacement).",
+        "operationId": "delay_scenarios_delay_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DelayRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Delay Scenarios Delay Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Delay",
+        "tags": [
+          "scenarios"
+        ]
+      }
+    },
+    "/scenarios/evaluate": {
+      "post": {
+        "description": "One scenario. Returns `status: supported` with geometric and terrain-corrected results and position\nbands, or `status: terrain_data_insufficient` with the reason and no numbers. The id identifies the\nscenario (inputs + model + DEM); GET /scenarios/{id} returns it again.",
+        "operationId": "evaluate_scenarios_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScenarioRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Evaluate Scenarios Evaluate Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Evaluate",
+        "tags": [
+          "scenarios"
+        ]
+      }
+    },
+    "/scenarios/{scenario_id}": {
+      "get": {
+        "operationId": "get_saved_scenarios__scenario_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scenario_id",
+            "required": true,
+            "schema": {
+              "title": "Scenario Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Get Saved Scenarios  Scenario Id  Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Get Saved",
+        "tags": [
+          "scenarios"
         ]
       }
     },

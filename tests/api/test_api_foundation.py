@@ -22,16 +22,16 @@ def test_request_id_is_echoed():
 
 def test_version_lists_unbuilt_capabilities_honestly():
     body = client.get("/version").json()
-    assert body["stage"] == 5
-    assert "not link availability or irradiance" in body["notice"]
+    assert body["stage"] == 6
+    assert "terrain_data_insufficient" in body["notice"]
     by_key = {c["key"]: c["status"] for c in body["capabilities"]}
-    assert by_key["sites"] == by_key["dem"] == by_key["visibility"] == "implemented_unvalidated"
-    assert by_key["ephemeris"] == by_key["horizon"] == "validated"
-    assert by_key["scenarios"] == by_key["engineering"] == "not_implemented"
+    assert by_key["sites"] == by_key["dem"] == by_key["scenarios"] == "implemented_unvalidated"
+    assert by_key["ephemeris"] == by_key["horizon"] == by_key["visibility"] == "validated"
+    assert by_key["engineering"] == "not_implemented"
 
 
 def test_not_implemented_uses_error_contract():
-    r = client.post("/scenarios/evaluate", json={})
+    r = client.post("/engineering/solar", json={})
     assert r.status_code == 501
     body = r.json()
     assert body["code"] == "NOT_IMPLEMENTED"

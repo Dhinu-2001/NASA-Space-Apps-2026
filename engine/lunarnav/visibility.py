@@ -58,6 +58,11 @@ BISECT_TOL_S = 1.0
 MATCH_WINDOW_S = 12 * 3600.0
 HEADLINE = {"sun": "any_part", "earth": "centre"}
 STATE_NAMES = ("centre", "any_part", "fully")
+BAND_METRIC_KEYS = (
+    "total_visible_s", "visible_fraction", "n_visible_intervals",
+    "longest_visible_s_closed_only", "longest_visible_s_including_open",
+    "longest_not_visible_s_closed_only", "longest_not_visible_s_including_open",
+)
 
 
 # ---------------------------------------------------------------- horizon lookup and disc states
@@ -225,6 +230,15 @@ class VisibilityService:
             b = r.bodies[body]
             return bool(disc_states(run.profile, np.array(b.azimuth_deg), np.array(b.elevation_deg),
                                     np.array(b.angular_diameter_deg) / 2.0)[state][0])
+        return pred
+
+    def _geo_predicate(self, run: _Run, body: str, head: str, start: datetime) -> Callable[[float], bool]:
+        def pred(t_s: float) -> bool:
+            r = self.eph.series(run.lat, run.lon, start + timedelta(seconds=t_s), 1.0, 1, (body,),
+                                run.h_radius_m)
+            b = r.bodies[body]
+            el = b.elevation_deg[0]
+            return bool(el + b.angular_diameter_deg[0] / 2.0 > 0.0) if head == "any_part" else bool(el > 0.0)
         return pred
 
     def _transitions(self, run: _Run, body: str, state: str, times_s: np.ndarray, start: datetime,
@@ -417,6 +431,25 @@ class VisibilityService:
                 if have_sens:
                     self._attach_bands(entry, start)
             res["states"][name] = entry
+        # Geometric (terrain-free) counterpart: same body/definition, horizon = local horizontal (0 deg).
+        # Kept alongside the terrain-corrected result everywhere so the gap is always visible. It does not
+        # depend on the terrain; shifting the observer 100 m rotates the local vertical by only ~0.003 deg.
+        geo = (nom.el[body] + nom.rho[body] > 0) if head == "any_part" else (nom.el[body] > 0)
+        geo_pred = self._geo_predicate(nom, body, head, start) if refine else None
+        g_trans = find_transitions(times_s, geo, geo_pred)
+        g_true, g_false = build_intervals(0.0, window_s, bool(geo[0]), g_trans)
+        res["geometric"] = {
+            "definition": f"{head}_visible against the local horizontal (elevation > 0), no terrain",
+            "intervals": [self._fmt_interval(i, start) for i in g_true],
+            "not_visible_intervals": [self._fmt_interval(i, start) for i in g_false],
+            "transitions": [{"time_utc": _utc(start, t), "time_s": t, "to": "visible" if s else "not_visible"}
+                            for t, s in g_trans],
+            "metrics": interval_metrics(g_true, g_false, window_s),
+            "position_sensitivity": {
+                "status": "not_applicable",
+                "reason": "terrain-independent; a 100 m observer shift rotates the local vertical by "
+                          f"{math.degrees(100.0 / 1_737_400.0):.4f} deg"},
+        }
         res["headline"] = {"state": f"{head}_visible", "intervals": res["states"][head]["intervals"],
                            "not_visible_intervals": res["states"][head]["not_visible_intervals"],
                            "metrics": res["states"][head]["metrics"],
@@ -475,9 +508,13 @@ class VisibilityService:
             "status": "computed", "data_class": "calculated",
             "boundary_bands": bands,
             "events_only_in_displaced_runs": extra,
-            "metric_bands": {k: span(k) for k in (
-                "total_visible_s", "visible_fraction", "n_visible_intervals",
-                "longest_visible_s_closed_only", "longest_not_visible_s_closed_only")},
+            "metric_bands": {k: span(k) for k in BAND_METRIC_KEYS},
+            # Metrics of each displaced run (same direction order as `directions_deg`) and of the nominal run.
+            # A comparison of two dates at the SAME site uses these pairwise: the position error is one physical
+            # offset shared by both dates, so deltas must be formed per displacement, not from two bands.
+            "directions_deg": [360.0 * k / len(shifts) for k in range(len(shifts))],
+            "per_displacement_metrics": [{k: m[k] for k in BAND_METRIC_KEYS} for m in runs_metrics],
+            "nominal_metrics": {k: nom_metrics[k] for k in BAND_METRIC_KEYS},
             "max_boundary_band_width_s": max((b["band_width_s"] for b in bands), default=0.0),
         }
 

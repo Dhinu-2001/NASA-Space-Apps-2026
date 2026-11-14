@@ -16,6 +16,7 @@ class ErrorCode(StrEnum):
     DATA_MISSING = "DATA_MISSING"
     EPHEMERIS_OUT_OF_RANGE = "EPHEMERIS_OUT_OF_RANGE"
     NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
+    NOT_FOUND = "NOT_FOUND"
     INTERNAL = "INTERNAL"
 
 
@@ -51,6 +52,10 @@ class DataMissingError(LunarNavError):
 
 class EphemerisOutOfRangeError(LunarNavError):
     code = ErrorCode.EPHEMERIS_OUT_OF_RANGE
+
+
+class NotFoundError(LunarNavError):
+    code = ErrorCode.NOT_FOUND
 
 
 class NotImplementedYetError(LunarNavError):

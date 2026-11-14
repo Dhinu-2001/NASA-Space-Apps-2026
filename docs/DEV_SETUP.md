@@ -80,6 +80,12 @@ Horizon profiles are cached in `data/results/horizon` (git-ignored, regenerable)
 ```
 The first `/visibility/*` call for a site computes the nominal + 8 displaced horizon profiles (about 60 s for IM-2 at 0.25 degrees); they are cached in `data/results/horizon`.
 
+## Stage 6 scenarios
+```powershell
+.\.venv\Scripts\python.exe -I scripts\scenario_study.py --json docs\stage6\scenario_study.json   # example comparison + delay sweep
+```
+Scenario results are cached in `data/results/scenarios` (git-ignored). A new site's first scenario computes its horizon profiles (about 60 s).
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.
