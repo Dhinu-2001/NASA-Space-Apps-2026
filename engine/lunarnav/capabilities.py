@@ -26,9 +26,9 @@ class Capability:
 
 CAPABILITIES: tuple[Capability, ...] = (
     Capability("sites", "Site catalogue and coordinate validation", 2,
-               CapabilityStatus.IMPLEMENTED_UNVALIDATED),
+               CapabilityStatus.VALIDATED),
     Capability("dem", "LOLA DEM ingestion and elevation lookup", 2,
-               CapabilityStatus.IMPLEMENTED_UNVALIDATED),
+               CapabilityStatus.VALIDATED),
     Capability("ephemeris", "Sun and Earth azimuth/elevation (SPICE)", 3,
                CapabilityStatus.VALIDATED),
     Capability("horizon", "Terrain horizon profile", 4,
