@@ -1,0 +1,253 @@
+{
+  "components": {
+    "schemas": {
+      "CapabilityOut": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "stage": {
+            "title": "Stage",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "not_implemented",
+              "implemented_unvalidated",
+              "validated"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "title",
+          "stage",
+          "status"
+        ],
+        "title": "CapabilityOut",
+        "type": "object"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "enum": [
+              "INVALID_INPUT",
+              "OUT_OF_DEM_COVERAGE",
+              "DATA_MISSING",
+              "EPHEMERIS_OUT_OF_RANGE",
+              "NOT_IMPLEMENTED",
+              "INTERNAL"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Details",
+            "type": "object"
+          },
+          "field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorBody",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "env": {
+            "title": "Env",
+            "type": "string"
+          },
+          "model_version": {
+            "title": "Model Version",
+            "type": "string"
+          },
+          "service": {
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "title": "Status",
+            "type": "string"
+          },
+          "time_utc": {
+            "title": "Time Utc",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "service",
+          "model_version",
+          "env",
+          "time_utc"
+        ],
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "VersionResponse": {
+        "properties": {
+          "api_version": {
+            "title": "Api Version",
+            "type": "string"
+          },
+          "capabilities": {
+            "items": {
+              "$ref": "#/components/schemas/CapabilityOut"
+            },
+            "title": "Capabilities",
+            "type": "array"
+          },
+          "model_version": {
+            "title": "Model Version",
+            "type": "string"
+          },
+          "notice": {
+            "title": "Notice",
+            "type": "string"
+          },
+          "stage": {
+            "title": "Stage",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "model_version",
+          "api_version",
+          "stage",
+          "notice",
+          "capabilities"
+        ],
+        "title": "VersionResponse",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "Stage 1 skeleton. Scientific endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
+    "title": "Lunar Landing Site Navigator API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "meta"
+        ]
+      }
+    },
+    "/version": {
+      "get": {
+        "operationId": "version_version_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Version",
+        "tags": [
+          "meta"
+        ]
+      }
+    }
+  }
+}

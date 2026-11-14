@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.env
+node_modules/
+web/dist/
+# Large/generated scientific data must never be committed (decision G1)
+data/kernels/*
+data/dem_cache/*
+data/results/*
+!data/**/.gitkeep
+*.tif
+*.TIF
+*.bsp
+*.bpc
+.DS_Store

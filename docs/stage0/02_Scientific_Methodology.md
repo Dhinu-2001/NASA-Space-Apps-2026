@@ -81,7 +81,14 @@ Per timestep, body *b* ∈ {Sun, Earth}:
 - `geometric = elev_center > 0°`
 - `limb_corrected = elev_center > −δ(h)` (reported separately)
 - `terrain_visible = elev_center > h_t(az)` — **centre-point** criterion for the Sun and Earth in MVP
-- Disk effects (STRETCH, B2): Sun (≈ 0.53°) and Earth (≈ 1.9°; 6806″ observed in live query) are extended; report `fully_visible` (lower limb > h_t over the disk's azimuth span), `partial`, `blocked`. MVP reports centre-based result and labels it such; at the south pole, where the Sun is within ~1.5° of the horizon, this matters and will be a named limitation until implemented.
+- **Disk visibility definition (decided at Stage 1, per approval condition; implemented in Stage 5).** Sun (≈ 0.53°) and Earth (≈ 1.9°; 6806″ observed in live query) are extended discs, with angular radius from the ephemeris range. The engine computes **three** states per timestep and always labels which one a metric uses:
+  - `centre_visible`: disc centre elevation > h_t(az_centre).
+  - `any_part_visible`: the disc's upper limb exceeds the terrain horizon anywhere across the disc's azimuth span, i.e. some part of the disc is in view (disc approximated as a circle on the sky; terrain sampled across its azimuth span).
+  - `fully_visible`: the entire disc is above the terrain horizon.
+  - **Headline Sun/sunlight metric = `any_part_visible`** (any direct illumination reaches the observer), with `partial` periods reported separately and a `fully_visible` total alongside.
+  - **Headline Earth metric = `centre_visible`** (antenna pointing is at the disc centre), with `any_part` and `fully` reported alongside. This is geometric line of sight, not link availability.
+  - Until Stage 5 lands, Stage 3–4 outputs expose only centre-based elevation; no visibility claim is made before then.
+  - Limitation: partial-disc *fraction* of illumination is not computed in MVP (visible fraction ≠ irradiance ratio without limb-darkening/area integration).
 - Operational communication (B2) adds an antenna elevation mask: `comm_geometric = terrain_visible AND elev > mask`. Never labelled "link available".
 
 Metrics from boolean series: intervals by edge detection, refined by bisection; longest run of False (darkness/blackout); totals and fractions; time-to-next transition from any query instant. Edge handling: intervals touching the window boundary are marked `open_start`/`open_end` and excluded from "longest" claims unless flagged, so truncation is never presented as a true duration.
