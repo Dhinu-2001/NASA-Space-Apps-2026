@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-14 20:35 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **feed46af324c**.
+Generated 2026-11-14 22:09 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **74cd73e21aea**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -84,6 +84,10 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+74cd73e feat: Stage 10 (core) time player, Learn mode, mission profiles, accessibility pass
+d8f7be1 docs: add live API spot-check evidence (IM-2, 2027-01-15, 30 d, 15-min)
+09929ff docs: fix Earth visible hours rounding in Stage 5 validation (582 h -> 581 h)
+fe6893b docs: regenerate provenance and test reports at the Stage 8 commit
 feed46a feat: Stage 8 (narrow) idealised direct-beam solar-energy upper bound
 e6d4d32 docs: final Stage 9 reports from a clean tree
 07420d8 fix: test report generator per-file table and dirty-tree detection
