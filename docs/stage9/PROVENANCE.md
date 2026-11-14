@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-14 20:04 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.9.0-stage9**, code commit **37c8858a14c2**.
+Generated 2026-11-14 20:05 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.9.0-stage9**, code commit **03b75d2bdc7c**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -75,12 +75,16 @@ Project assumptions (labelled wherever shown): observer height 2.0 m above the D
 | spiceypy | 8.4.0 |
 | rasterio | 1.5.2 |
 | pyproj | 3.8.0 |
+| fastapi (API layer) | 0.162.7 |
+| pydantic (API layer) | 2.14.3 |
+| uvicorn (API layer) | 0.54.0 |
 
 Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.json` (frontend). CSPICE toolkit: CSPICE_N0067.
 
 ## 8. Code history (Git)
 
 ```
+03b75d2 feat: Stage 9 validation consolidation, provenance and regression suite
 37c8858 chore: sites and dem capabilities set to validated (owner review of Stages 2-7)
 f34502f feat: Stage 7 read-only web UI over the validated engine
 07ee010 feat: Stage 6 scenarios, multi-site/date comparison and mission delay simulator

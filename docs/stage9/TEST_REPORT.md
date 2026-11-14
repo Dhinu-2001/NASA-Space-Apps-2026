@@ -1,25 +1,25 @@
 # Final test report
 
-Generated 2026-11-14 20:04 UTC by `scripts/build_test_report.py`. Commit tested: **37c8858a14c2** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
+Generated 2026-11-14 20:07 UTC by `scripts/build_test_report.py`. Commit tested: **03b75d2bdc7c** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
 
-**Overall: FAILURES PRESENT**
+**Overall: ALL CHECKS PASSED**
 
 | Check | Result | Detail | Time |
 |---|---|---|---|
-| Backend tests (pytest) | FAIL | 316 passed, 1 failed, 0 skipped | 92 s |
+| Backend tests (pytest) | PASS | 317 passed, 0 failed, 0 skipped | 90 s |
 | Lint (ruff) | PASS | All checks passed! | 0 s |
-| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 6 s |
-| Frontend tests (vitest) | PASS | 16 passed, 0 failed | 5 s |
-| Production build (vite) | PASS | bundle builds | 5 s |
+| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 5 s |
+| Frontend tests (vitest) | PASS | 16 passed, 0 failed | 4 s |
+| Production build (vite) | PASS | bundle builds | 6 s |
 
 ## Backend tests by file
 
 | File | Passed | Failed | Skipped |
 |---|---|---|---|
 | `tests/api.py` | 55 | 0 | 0 |
-| `tests/engine.py` | 211 | 1 | 0 |
+| `tests/engine.py` | 212 | 0 | 0 |
 | `tests/validation.py` | 50 | 0 | 0 |
-| **Total** | **316** | **1** | **0** |
+| **Total** | **317** | **0** | **0** |
 
 No test was skipped: all kernels and DEM windows were present, so every real-data test ran.
 
