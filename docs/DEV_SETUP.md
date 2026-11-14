@@ -53,7 +53,8 @@ cd web; npm run gen:api                                       # regenerates src/
 ```powershell
 .\.venv\Scripts\python.exe scripts\fetch_kernels.py          # NAIF kernels, MD5-verified (~45 MB)
 .\.venv\Scripts\python.exe -I scripts\inspect_kernels.py      # coverage/version metadata into the manifest
-.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py    # 3 small LOLA windows (~5 MB total)
+.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py    # LOLA windows; the default set includes the 80 km / 20 m IM-2 window (~190 MB download)
+.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py im2_20m_r10km im2_320m_r160km im1_20m_r2km   # only the 3 small windows (~5 MB)
 ```
 Tests that need the windows (or the kernels) skip with the rebuild command in their message when the files are absent.
 
@@ -64,6 +65,14 @@ $env:PYTHONPATH="scripts"; .\.venv\Scripts\python.exe scripts\validate_ephemeris
 $env:PYTHONPATH="scripts"; .\.venv\Scripts\python.exe scripts\ephemeris_sensitivity.py  # size of each modelling choice
 ```
 The Horizons fixture is tracked (small); re-fetching is only needed to extend the grid.
+
+## Stage 4 terrain horizon
+```powershell
+.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py im2_20m_r80km     # 80 km @ 20 m, ~190 MB, checkpointed: re-run resumes after a dropped connection
+.\.venv\Scripts\python.exe -I scripts\validate_horizon.py --json docs\stage4\validation_summary.json   # engine vs independent implementation (exit 1 on failure)
+.\.venv\Scripts\python.exe -I scripts\horizon_resolution_study.py --json docs\stage4\resolution_study.json  # resolution / sampling / position limits (a few minutes)
+```
+Horizon profiles are cached in `data/results/horizon` (git-ignored, regenerable). Real-DEM tests skip with the rebuild command when the windows are absent.
 
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).

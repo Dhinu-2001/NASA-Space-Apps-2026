@@ -55,4 +55,7 @@ web ──HTTP/JSON──► api ──imports──► engine
 | Heavy data | Never in Git; fetched/extracted by scripts into `/data` with SHA-256 manifests |
 
 ## Module boundaries still to be created (by stage)
-`horizon` (S4) · `visibility`, `metrics` (S5) · `scenario`, `comparison` (S6) · `provenance` registry (S5). Each lands with its own tests and its own entry flipped in `capabilities.py`.
+`visibility`, `metrics` (S5) · `scenario`, `comparison` (S6) · `provenance` registry (S5). Each lands with its own tests and its own entry flipped in `capabilities.py`.
+
+
+**Stage 4 added:** `engine/lunarnav/horizon.py` (terrain sampler, horizon engine, cache) and `api/lunarnav_api/routes_horizon.py`; see [stage4/HORIZON_METHOD.md](stage4/HORIZON_METHOD.md).

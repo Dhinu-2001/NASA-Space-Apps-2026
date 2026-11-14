@@ -89,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/horizon/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Horizon Profile */
+        get: operations["horizon_profile_horizon_profile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/sites": {
         parameters: {
             query?: never;
@@ -247,31 +264,47 @@ export interface components {
             /** Time Utc */
             time_utc: string;
         };
-        /** ObserverOut */
-        ObserverOut: {
-            /**
-             * Frame
-             * @default MOON_ME
-             */
-            frame: string;
-            /** Height M */
-            height_m: number;
-            /**
-             * Lat Convention
-             * @default planetocentric
-             */
-            lat_convention: string;
-            /** Lat Deg */
-            lat_deg: number;
-            /**
-             * Lon Convention
-             * @default east_positive
-             */
-            lon_convention: string;
-            /** Lon Deg East */
-            lon_deg_east: number;
-            /** Site Id */
-            site_id: string | null;
+        /** HorizonResponse */
+        HorizonResponse: {
+            /** Azimuth Deg */
+            azimuth_deg: number[];
+            /** Data Class */
+            data_class: string;
+            /** Data Gap */
+            data_gap: boolean[];
+            /** Horizon Distance Km */
+            horizon_distance_km: (number | null)[];
+            /** Horizon Elevation Deg */
+            horizon_elevation_deg: (number | null)[];
+            /** Limiting Pixel Size M */
+            limiting_pixel_size_m: (number | null)[];
+            /** N Azimuths */
+            n_azimuths: number;
+            /** N Missing Samples */
+            n_missing_samples: number[];
+            /** Notes */
+            notes: string[];
+            observer: components["schemas"]["lunarnav_api__routes_horizon__ObserverOut"];
+            /** Provenance */
+            provenance: {
+                [key: string]: unknown;
+            };
+            /** Range Covered Km */
+            range_covered_km: number[];
+            /** Served From */
+            served_from: string;
+            /** Summary */
+            summary: {
+                [key: string]: unknown;
+            };
+            /** Truncated */
+            truncated: boolean[];
+            /** Units */
+            units: {
+                [key: string]: string;
+            };
+            /** Unseen Bound Deg */
+            unseen_bound_deg: number[];
         };
         /** PendingRegionOut */
         PendingRegionOut: {
@@ -318,7 +351,7 @@ export interface components {
             n_samples: number;
             /** Notes */
             notes: string[];
-            observer: components["schemas"]["ObserverOut"];
+            observer: components["schemas"]["lunarnav_api__routes_ephemeris__ObserverOut"];
             /** Provenance */
             provenance: {
                 [key: string]: unknown;
@@ -482,6 +515,66 @@ export interface components {
             product_id: string;
             /** Window Id */
             window_id: string;
+        };
+        /** ObserverOut */
+        lunarnav_api__routes_ephemeris__ObserverOut: {
+            /**
+             * Frame
+             * @default MOON_ME
+             */
+            frame: string;
+            /** Height M */
+            height_m: number;
+            /**
+             * Lat Convention
+             * @default planetocentric
+             */
+            lat_convention: string;
+            /** Lat Deg */
+            lat_deg: number;
+            /**
+             * Lon Convention
+             * @default east_positive
+             */
+            lon_convention: string;
+            /** Lon Deg East */
+            lon_deg_east: number;
+            /** Site Id */
+            site_id: string | null;
+        };
+        /** ObserverOut */
+        lunarnav_api__routes_horizon__ObserverOut: {
+            /** Catalogue Reference Height M */
+            catalogue_reference_height_m?: number | null;
+            /**
+             * Frame
+             * @default MOON_ME
+             */
+            frame: string;
+            /** Ground Height M */
+            ground_height_m: number;
+            /**
+             * Lat Convention
+             * @default planetocentric
+             */
+            lat_convention: string;
+            /** Lat Deg */
+            lat_deg: number;
+            /**
+             * Lon Convention
+             * @default east_positive
+             */
+            lon_convention: string;
+            /** Lon Deg East */
+            lon_deg_east: number;
+            /** Observer Height Above Surface M */
+            observer_height_above_surface_m: number;
+            /** Observer Height Is Default Assumption */
+            observer_height_is_default_assumption: boolean;
+            /** Observer Radius Height M */
+            observer_radius_height_m: number;
+            /** Site Id */
+            site_id: string | null;
         };
     };
     responses: never;
@@ -733,6 +826,70 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    horizon_profile_horizon_profile_get: {
+        parameters: {
+            query?: {
+                /** @description Catalogue site id (see GET /sites) */
+                site_id?: string | null;
+                /** @description Planetocentric latitude, degrees (south negative) */
+                lat?: number | null;
+                /** @description East-positive longitude, degrees */
+                lon?: number | null;
+                /** @description Observer height above the DEM surface, metres. If omitted the default assumption 2.0 m (decision C9) is used and reported as such. */
+                observer_height_m?: number | null;
+                /** @description Azimuth step; must divide 360 */
+                az_step_deg?: number;
+                /** @description Radial sampling step, m (default: finest pixel size) */
+                step_m?: number | null;
+                /** @description Cap on ray length (default: DEM coverage) */
+                max_range_km?: number | null;
+                /** @description Serve/store the cached profile */
+                use_cache?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HorizonResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

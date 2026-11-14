@@ -4,7 +4,7 @@ The engine is framework-free (no web imports) so every calculation can be tested
 Stage 1 contains only the shared foundations: version/provenance identity and typed errors.
 """
 
-MODEL_VERSION = "0.3.0-stage3"
+MODEL_VERSION = "0.4.0-stage4"
 """Recorded in every scientific result's provenance. Bump when any calculation changes."""
 
 __all__ = ["MODEL_VERSION"]

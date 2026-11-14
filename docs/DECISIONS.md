@@ -32,3 +32,12 @@ Approved by project lead on Stage 0 review (before Stage 1). Authoritative over 
 | E6 | (Stage 3) Body radii for angular diameter are IAU 2015 nominal values (Sun 695 700 km, Earth equatorial 6378.1 km), recorded as assumptions in provenance. |
 | E7 | (Stage 3) Stage 3 acceptance criterion pre-declared before results: angular separation vs Horizons ≤ 0.01° on every row (PRD). `ephemeris` capability stays `implemented_unvalidated` until the user approves the gate. |
 | E8 | (Stage 3) Horizons reference values are recorded once into a small tracked fixture (`data/validation/`) so tests are offline and reproducible; the fixture is re-fetchable with `scripts/fetch_horizons_reference.py`. |
+| H1 | (Stage 4) Horizon = max over great-circle ray samples of the exact spherical elevation `atan2((R+Ht)cosθ−(R+Ho), (R+Ht)sinθ)`; bilinear DEM lookup identical to Stage 2; no floor/smoothing; curvature is exact, not a correction term. |
+| H2 | (Stage 4) Observer radius = DEM height at the site (not the catalogue height) + observer height above the surface; default 2.0 m per C9, reported in every response as an assumption. |
+| H3 | (Stage 4) Multi-resolution: finest window containing a sample wins; NoData is never filled from a coarser window; redundant nested windows are dropped (S7). |
+| H4 | (Stage 4) `truncated` = terrain beyond DEM coverage could still raise the horizon, decided by an explicit elevation bound using a stated height ceiling = highest value in any window the project holds (data-derived, not a global guarantee). `data_gap` = NoData met. Both mean "lower bound". |
+| H5 | (Stage 4) Independent check criterion pre-declared before running: ≤ 1e-3° vs a hand-written implementation (pyproj geodesics, PROJ projection, GeoTIFF affine, 3-D vectors). It validates geometry/indexing/interpolation, not the DEM; `horizon` stays `implemented_unvalidated` until user approval. |
+| H6 | (Stage 4, user instruction) 20 m DEM fetched out to 80 km around IM-2 at native resolution (no resampling), as window `im2_20m_r80km`; fetch is checkpointed/resumable; file not committed (G1), manifest tracked. |
+| H7 | (Stage 4) Stage 0 limb-dip figure corrected: h = 2 m dips 0.087° (not 0.05°). |
+| H8 | (Stage 4) Horizon cache key includes every DEM window SHA-256, all parameters, the height ceiling and the algorithm version; disk entries are git-ignored and never trusted if unreadable. |
+

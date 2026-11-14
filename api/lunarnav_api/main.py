@@ -18,10 +18,11 @@ from .errors import register_error_handlers
 from .logging_setup import configure_logging
 from .routes_data import build_router
 from .routes_ephemeris import build_ephemeris_router
+from .routes_horizon import build_horizon_router
 from .schemas import CapabilityOut, ErrorBody, HealthResponse, VersionResponse
 
 API_VERSION = "0.1.0"
-CURRENT_STAGE = 3
+CURRENT_STAGE = 4
 
 _ERROR_RESPONSES = {422: {"model": ErrorBody}, 500: {"model": ErrorBody}}
 
@@ -35,8 +36,8 @@ def create_app() -> FastAPI:
         title="Lunar Landing Site Navigator API",
         version=API_VERSION,
         description=(
-            "Stage 3: sites, DEM lookup and Sun/Earth ephemeris (geometric, no terrain). Horizon "
-            "and visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet."
+            "Stage 4: sites, DEM lookup, Sun/Earth ephemeris (geometric) and terrain horizon profiles. "
+            "Visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet."
         ),
     )
     app.add_middleware(
@@ -49,6 +50,7 @@ def create_app() -> FastAPI:
     register_error_handlers(app)
     app.include_router(build_router(settings.data_dir))
     app.include_router(build_ephemeris_router(settings.data_dir))
+    app.include_router(build_horizon_router(settings.data_dir))
 
     @app.middleware("http")
     async def request_context(request: Request, call_next):
@@ -85,8 +87,8 @@ def create_app() -> FastAPI:
             api_version=API_VERSION,
             stage=CURRENT_STAGE,
             notice=(
-                "Stage 3: site catalogue, DEM elevation lookup and geometric Sun/Earth ephemeris. "
-                "No terrain horizon or terrain-corrected visibility results are produced yet."
+                "Stage 4: site catalogue, DEM lookup, geometric Sun/Earth ephemeris and terrain horizon "
+                "profiles. No terrain-corrected Sun/Earth visibility results are produced yet."
             ),
             capabilities=[
                 CapabilityOut(key=c.key, title=c.title, stage=c.stage, status=c.status.value)

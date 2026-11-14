@@ -62,7 +62,7 @@ Apparent vs. astrometric: Horizons `a-app` applies light-time, aberration, light
 
 Definitions (resolves ambiguity C6):
 - **Local-horizontal (0°)**: plane ⟂ surface normal. "Astronomical" sunrise = Sun centre crosses 0°.
-- **Spherical-limb horizon**: for observer height *h* over smooth sphere R, the limb dips by `δ = arccos(R/(R+h)) ≈ sqrt(2h/R)`. For h = 2 m this is ≈ 0.05° (negligible but implemented, tested at larger h).
+- **Spherical-limb horizon**: for observer height *h* over smooth sphere R, the limb dips by `δ = arccos(R/(R+h)) ≈ sqrt(2h/R)`. For h = 2 m this is ≈ 0.087° (0.19° at 10 m, 0.43° at 50 m) — small but implemented and tested. *(Stage 0 originally said ≈ 0.05°, which was wrong; corrected in Stage 4.)*
 - **Terrain horizon** `h_t(az)` = maximum elevation angle of any DEM point along the ray, including curvature.
 
 Algorithm (Stage 4): for each azimuth, sample the great-circle path outward from the observer. For a terrain point at great-circle angular distance θ = d/R and height H_t above the reference sphere, with observer at radius R+H_o:

@@ -259,54 +259,152 @@
         "title": "HealthResponse",
         "type": "object"
       },
-      "ObserverOut": {
+      "HorizonResponse": {
         "properties": {
-          "frame": {
-            "default": "MOON_ME",
-            "title": "Frame",
+          "azimuth_deg": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Azimuth Deg",
+            "type": "array"
+          },
+          "data_class": {
+            "title": "Data Class",
             "type": "string"
           },
-          "height_m": {
-            "title": "Height M",
-            "type": "number"
+          "data_gap": {
+            "items": {
+              "type": "boolean"
+            },
+            "title": "Data Gap",
+            "type": "array"
           },
-          "lat_convention": {
-            "default": "planetocentric",
-            "title": "Lat Convention",
+          "horizon_distance_km": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Horizon Distance Km",
+            "type": "array"
+          },
+          "horizon_elevation_deg": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Horizon Elevation Deg",
+            "type": "array"
+          },
+          "limiting_pixel_size_m": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Limiting Pixel Size M",
+            "type": "array"
+          },
+          "n_azimuths": {
+            "title": "N Azimuths",
+            "type": "integer"
+          },
+          "n_missing_samples": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "N Missing Samples",
+            "type": "array"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "observer": {
+            "$ref": "#/components/schemas/lunarnav_api__routes_horizon__ObserverOut"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "title": "Provenance",
+            "type": "object"
+          },
+          "range_covered_km": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Range Covered Km",
+            "type": "array"
+          },
+          "served_from": {
+            "title": "Served From",
             "type": "string"
           },
-          "lat_deg": {
-            "title": "Lat Deg",
-            "type": "number"
+          "summary": {
+            "additionalProperties": true,
+            "title": "Summary",
+            "type": "object"
           },
-          "lon_convention": {
-            "default": "east_positive",
-            "title": "Lon Convention",
-            "type": "string"
+          "truncated": {
+            "items": {
+              "type": "boolean"
+            },
+            "title": "Truncated",
+            "type": "array"
           },
-          "lon_deg_east": {
-            "title": "Lon Deg East",
-            "type": "number"
+          "units": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Units",
+            "type": "object"
           },
-          "site_id": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Site Id"
+          "unseen_bound_deg": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Unseen Bound Deg",
+            "type": "array"
           }
         },
         "required": [
-          "site_id",
-          "lat_deg",
-          "lon_deg_east",
-          "height_m"
+          "data_class",
+          "observer",
+          "n_azimuths",
+          "azimuth_deg",
+          "horizon_elevation_deg",
+          "horizon_distance_km",
+          "limiting_pixel_size_m",
+          "range_covered_km",
+          "n_missing_samples",
+          "unseen_bound_deg",
+          "truncated",
+          "data_gap",
+          "summary",
+          "units",
+          "notes",
+          "provenance",
+          "served_from"
         ],
-        "title": "ObserverOut",
+        "title": "HorizonResponse",
         "type": "object"
       },
       "PendingRegionOut": {
@@ -405,7 +503,7 @@
             "type": "array"
           },
           "observer": {
-            "$ref": "#/components/schemas/ObserverOut"
+            "$ref": "#/components/schemas/lunarnav_api__routes_ephemeris__ObserverOut"
           },
           "provenance": {
             "additionalProperties": true,
@@ -825,11 +923,137 @@
         ],
         "title": "WindowRef",
         "type": "object"
+      },
+      "lunarnav_api__routes_ephemeris__ObserverOut": {
+        "properties": {
+          "frame": {
+            "default": "MOON_ME",
+            "title": "Frame",
+            "type": "string"
+          },
+          "height_m": {
+            "title": "Height M",
+            "type": "number"
+          },
+          "lat_convention": {
+            "default": "planetocentric",
+            "title": "Lat Convention",
+            "type": "string"
+          },
+          "lat_deg": {
+            "title": "Lat Deg",
+            "type": "number"
+          },
+          "lon_convention": {
+            "default": "east_positive",
+            "title": "Lon Convention",
+            "type": "string"
+          },
+          "lon_deg_east": {
+            "title": "Lon Deg East",
+            "type": "number"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Id"
+          }
+        },
+        "required": [
+          "site_id",
+          "lat_deg",
+          "lon_deg_east",
+          "height_m"
+        ],
+        "title": "ObserverOut",
+        "type": "object"
+      },
+      "lunarnav_api__routes_horizon__ObserverOut": {
+        "properties": {
+          "catalogue_reference_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Catalogue Reference Height M"
+          },
+          "frame": {
+            "default": "MOON_ME",
+            "title": "Frame",
+            "type": "string"
+          },
+          "ground_height_m": {
+            "title": "Ground Height M",
+            "type": "number"
+          },
+          "lat_convention": {
+            "default": "planetocentric",
+            "title": "Lat Convention",
+            "type": "string"
+          },
+          "lat_deg": {
+            "title": "Lat Deg",
+            "type": "number"
+          },
+          "lon_convention": {
+            "default": "east_positive",
+            "title": "Lon Convention",
+            "type": "string"
+          },
+          "lon_deg_east": {
+            "title": "Lon Deg East",
+            "type": "number"
+          },
+          "observer_height_above_surface_m": {
+            "title": "Observer Height Above Surface M",
+            "type": "number"
+          },
+          "observer_height_is_default_assumption": {
+            "title": "Observer Height Is Default Assumption",
+            "type": "boolean"
+          },
+          "observer_radius_height_m": {
+            "title": "Observer Radius Height M",
+            "type": "number"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Id"
+          }
+        },
+        "required": [
+          "site_id",
+          "lat_deg",
+          "lon_deg_east",
+          "ground_height_m",
+          "observer_height_above_surface_m",
+          "observer_radius_height_m",
+          "observer_height_is_default_assumption"
+        ],
+        "title": "ObserverOut",
+        "type": "object"
       }
     }
   },
   "info": {
-    "description": "Stage 3: sites, DEM lookup and Sun/Earth ephemeris (geometric, no terrain). Horizon and visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
+    "description": "Stage 4: sites, DEM lookup, Sun/Earth ephemeris (geometric) and terrain horizon profiles. Visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
     "title": "Lunar Landing Site Navigator API",
     "version": "0.1.0"
   },
@@ -1224,6 +1448,191 @@
         "summary": "Health",
         "tags": [
           "meta"
+        ]
+      }
+    },
+    "/horizon/profile": {
+      "get": {
+        "operationId": "horizon_profile_horizon_profile_get",
+        "parameters": [
+          {
+            "description": "Catalogue site id (see GET /sites)",
+            "in": "query",
+            "name": "site_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Catalogue site id (see GET /sites)",
+              "title": "Site Id"
+            }
+          },
+          {
+            "description": "Planetocentric latitude, degrees (south negative)",
+            "in": "query",
+            "name": "lat",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Planetocentric latitude, degrees (south negative)",
+              "title": "Lat"
+            }
+          },
+          {
+            "description": "East-positive longitude, degrees",
+            "in": "query",
+            "name": "lon",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "East-positive longitude, degrees",
+              "title": "Lon"
+            }
+          },
+          {
+            "description": "Observer height above the DEM surface, metres. If omitted the default assumption 2.0 m (decision C9) is used and reported as such.",
+            "in": "query",
+            "name": "observer_height_m",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Observer height above the DEM surface, metres. If omitted the default assumption 2.0 m (decision C9) is used and reported as such.",
+              "title": "Observer Height M"
+            }
+          },
+          {
+            "description": "Azimuth step; must divide 360",
+            "in": "query",
+            "name": "az_step_deg",
+            "required": false,
+            "schema": {
+              "default": 0.25,
+              "description": "Azimuth step; must divide 360",
+              "title": "Az Step Deg",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Radial sampling step, m (default: finest pixel size)",
+            "in": "query",
+            "name": "step_m",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Radial sampling step, m (default: finest pixel size)",
+              "title": "Step M"
+            }
+          },
+          {
+            "description": "Cap on ray length (default: DEM coverage)",
+            "in": "query",
+            "name": "max_range_km",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Cap on ray length (default: DEM coverage)",
+              "title": "Max Range Km"
+            }
+          },
+          {
+            "description": "Serve/store the cached profile",
+            "in": "query",
+            "name": "use_cache",
+            "required": false,
+            "schema": {
+              "default": true,
+              "description": "Serve/store the cached profile",
+              "title": "Use Cache",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorizonResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Horizon Profile",
+        "tags": [
+          "horizon"
         ]
       }
     },

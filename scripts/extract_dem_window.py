@@ -12,6 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import shutil
 import sys
 import time
 from datetime import UTC, datetime
@@ -39,6 +40,8 @@ SPECS = [
     ("im2_20m_r10km", IM2, 10_000.0, None),
     ("im2_320m_r160km", IM2, 160_000.0, 3),  # overview level 3 = factor 16 = 320 m/pixel
     ("im1_20m_r2km", IM1, 2_000.0, None),
+    # Stage 4: far field at full 20 m resolution (no area-averaging) out to 80 km, ~190 MB download.
+    ("im2_20m_r80km", IM2, 80_000.0, None),
 ]
 
 
@@ -66,15 +69,45 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
         win = Window(col0, row0, n, n)
         if col0 < 0 or row0 < 0 or col0 + n > ds.width or row0 + n > ds.height:
             raise RuntimeError(f"{window_id}: window exceeds the raster bounds")
-        data = ds.read(1, window=win).astype(np.float32)
         transform = ds.window_transform(win)
+    # Strips are read over a *fresh* connection each, checkpointed to disk, and retried: a dropped
+    # connection costs one strip, and a re-run resumes where it stopped. (A single dataset handle that
+    # has seen an HTTP error was observed to stay broken, so it is never reused after a failure.)
+    part = CACHE / f"{window_id}.partial"
+    part.mkdir(parents=True, exist_ok=True)
+    data = np.empty((n, n), dtype=np.float32)
+    strip = 250
+    for r in range(0, n, strip):
+        h = min(strip, n - r)
+        f = part / f"strip_{r:05d}.npy"
+        if f.exists():
+            try:
+                data[r : r + h] = np.load(f)
+                continue
+            except Exception:  # noqa: BLE001  (corrupt checkpoint: re-read it)
+                f.unlink()
+        for attempt in range(10):
+            try:
+                with rasterio.open(URL, **kwargs) as ds:
+                    block = ds.read(1, window=Window(col0, row0 + r, n, h)).astype(np.float32)
+                data[r : r + h] = block
+                np.save(f, block)
+                break
+            except Exception as e:
+                if attempt == 9:
+                    raise
+                print(f"  strip {r}: attempt {attempt + 1} failed ({type(e).__name__}); retrying", flush=True)
+                time.sleep(10)
+        if n > 2000:
+            print(f"  strip {r + h}/{n} rows done", flush=True)
+    with rasterio.open(URL, **kwargs) as ds:
         crs = ds.crs
-        profile = {
-            "driver": "GTiff", "dtype": "float32", "count": 1, "width": n, "height": n,
-            "crs": crs, "transform": transform, "nodata": float("nan"),
-            "compress": "deflate", "predictor": 3, "tiled": True,
-            "blockxsize": 256, "blockysize": 256,
-        }
+    profile = {
+        "driver": "GTiff", "dtype": "float32", "count": 1, "width": n, "height": n,
+        "crs": crs, "transform": transform, "nodata": float("nan"),
+        "compress": "deflate", "predictor": 3, "tiled": True,
+        "blockxsize": 256, "blockysize": 256,
+    }
     CACHE.mkdir(parents=True, exist_ok=True)
     out = CACHE / f"{window_id}.tif"
     with rasterio.open(out, "w", **profile) as dst:
@@ -84,6 +117,7 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
             NOTE="Extracted by scripts/extract_dem_window.py; heights in metres above the "
             "1737.4 km sphere; NoData=NaN",
         )
+    shutil.rmtree(part, ignore_errors=True)  # checkpoints are only needed until the window is assembled
     valid = np.isfinite(data)
     left, top = transform.c, transform.f
     entry = {

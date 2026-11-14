@@ -1,0 +1,49 @@
+{
+ "window": "im2_20m_r80km",
+ "criterion_deg": 0.001,
+ "cases": [
+  {
+   "observer_height_m": 0.0,
+   "n_azimuths": 63,
+   "ground_height_m": 5321.888637098503,
+   "engine_ground_height_m": 5321.888637098499,
+   "max_abs_diff_deg": 1.128837023856022e-09,
+   "rms_diff_deg": 2.739714915879799e-10,
+   "max_abs_limiting_distance_diff_km": 0.0,
+   "horizon_range_deg": [
+    -1.3889472704813484,
+    3.9838327531170883
+   ],
+   "passed": true
+  },
+  {
+   "observer_height_m": 2.0,
+   "n_azimuths": 63,
+   "ground_height_m": 5321.888637098503,
+   "engine_ground_height_m": 5321.888637098499,
+   "max_abs_diff_deg": 3.4335242982130865e-11,
+   "rms_diff_deg": 1.1295503291811228e-11,
+   "max_abs_limiting_distance_diff_km": 0.0,
+   "horizon_range_deg": [
+    -1.424806855296659,
+    3.976278240816425
+   ],
+   "passed": true
+  },
+  {
+   "observer_height_m": 30.0,
+   "n_azimuths": 63,
+   "ground_height_m": 5321.888637098503,
+   "engine_ground_height_m": 5321.888637098499,
+   "max_abs_diff_deg": 1.1078027384314737e-11,
+   "rms_diff_deg": 2.2364265655522484e-12,
+   "max_abs_limiting_distance_diff_km": 0.0,
+   "horizon_range_deg": [
+    -1.5322407934245383,
+    3.870500646260857
+   ],
+   "passed": true
+  }
+ ],
+ "passed": true
+}

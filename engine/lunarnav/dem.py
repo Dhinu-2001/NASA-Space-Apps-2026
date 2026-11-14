@@ -187,6 +187,32 @@ class DemWindow:
         return float(top * (1 - fr) + bot * fr)
 
 
+    def sample_xy_array(self, x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+        """Vectorised bilinear lookup identical to `elevation_xy` (same pixel-centre convention).
+
+        Returns (z, inside). `inside` is True where the point has four neighbouring pixel centres
+        in this window. `z` is NaN where the point is outside OR any neighbour is NoData; the
+        caller tells the two cases apart with `inside`. Nothing is ever filled in.
+        """
+        m = self.meta
+        col = (np.asarray(x, dtype=float) - m.left_m) / m.pixel_size_m - 0.5
+        row = (m.top_m - np.asarray(y, dtype=float)) / m.pixel_size_m - 0.5
+        inside = (col >= 0.0) & (col <= m.width - 1) & (row >= 0.0) & (row <= m.height - 1)
+        z = np.full(col.shape, np.nan, dtype=float)
+        if not inside.any():
+            return z, inside
+        c = col[inside]
+        r = row[inside]
+        c0 = np.minimum(np.floor(c).astype(np.intp), m.width - 2)
+        r0 = np.minimum(np.floor(r).astype(np.intp), m.height - 2)
+        fc, fr = c - c0, r - r0
+        d = self.data
+        top = d[r0, c0] * (1 - fc) + d[r0, c0 + 1] * fc
+        bot = d[r0 + 1, c0] * (1 - fc) + d[r0 + 1, c0 + 1] * fc
+        z[inside] = top * (1 - fr) + bot * fr  # NaN propagates from any NaN neighbour
+        return z, inside
+
+
 # ---------------------------------------------------------------- registry
 
 class DemRegistry:
@@ -201,6 +227,12 @@ class DemRegistry:
         else:
             doc = json.loads(manifest.read_text(encoding="utf-8"))
             self.windows = {k: DemWindowMeta.from_dict(k, v) for k, v in doc["windows"].items()}
+
+    def window(self, window_id: str) -> DemWindow:
+        """The checksum-verified window (loaded once, then cached in memory)."""
+        if window_id not in self.windows:
+            raise InvalidInputError(f"Unknown DEM window '{window_id}'.", field="window_id")
+        return self._window(window_id)
 
     def _window(self, window_id: str) -> DemWindow:
         if window_id not in self._cache:
