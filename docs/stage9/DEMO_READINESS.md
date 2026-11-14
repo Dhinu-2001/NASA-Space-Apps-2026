@@ -22,6 +22,8 @@ Pre-flight: `curl http://127.0.0.1:8000/health` and `GET /provenance` (must list
 | Delay (IM-2, 14-day window, 4 delays) | ≈ 25 s | ≈ 10 s cold scenario cache, **0.0 s** once cached |
 Every slow path shows a spinner with elapsed seconds and, after 4 s, an explanation. Horizon profiles are cached on disk (`data/results/horizon`) and survive restarts; scenario results likewise (`data/results/scenarios`); neither is committed (decision G1).
 
+> **Stage 10 update:** there is now a fifth tab (Learn), a time player in the Terrain horizon panel, Learn mode, mission profiles and an accessibility pass; rehearsal evidence in `docs/stage10/` (clean console on the View tab with the player and Learn mode, the Learn tab, and a 500 px view). Deep links added: `&learn=1` (explanations on) and `&scrub=<sample>` (start the player at a sample), e.g. `/?autorun=1&learn=1&scrub=1250#view`.
+
 ## 3. The four tabs, verified in a real browser with real data
 | Tab | Verified | Evidence |
 |---|---|---|

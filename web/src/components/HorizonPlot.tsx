@@ -95,7 +95,7 @@ export function HorizonPlot({
 
   return (
     <figure style={{ margin: 0 }}>
-      <svg className="plot" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Terrain horizon profile with Sun and Earth paths">
+      <svg className="plot" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`Terrain horizon profile around the site${typeof profile.summary.horizon_min_deg === "number" && typeof profile.summary.horizon_max_deg === "number" ? `, from ${profile.summary.horizon_min_deg.toFixed(1)} to ${profile.summary.horizon_max_deg.toFixed(1)} degrees elevation` : ""}, with the Sun and Earth paths. The same information is in the tables below.`}>
         {ticks.map((t) => (
           <g key={t}>
             <line x1={M.l} x2={W - M.r} y1={y(t)} y2={y(t)} className="axis" strokeDasharray={t === 0 ? "5 4" : undefined} opacity={t === 0 ? 1 : 0.5} />

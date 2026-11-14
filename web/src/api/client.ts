@@ -8,6 +8,7 @@ import type {
   EphemerisPositionResponse,
   HorizonResponse,
   ProvenanceResponse,
+  ScenarioResult,
   SitesResponse,
   SolarEnergyResponse,
   VisibilityResponse,
@@ -153,6 +154,18 @@ export const api = {
         observer_height_m: observerHeightM,
         position_uncertainty_m: positionUncertaintyM,
         ...panel,
+      },
+      signal,
+    ),
+  scenarioEvaluate: (sel: SiteSel, startUtc: string, durationDays: number, positionUncertaintyM: number, signal?: AbortSignal) =>
+    request<ScenarioResult>(
+      "POST",
+      "/scenarios/evaluate",
+      {
+        site: { site_id: sel.site_id ?? null, lat: sel.lat ?? null, lon: sel.lon ?? null },
+        start_utc: startUtc,
+        duration_days: durationDays,
+        position_uncertainty_m: positionUncertaintyM,
       },
       signal,
     ),

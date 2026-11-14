@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api, type SiteSel } from "../api/client";
 import { fmtBand, fmtEnergy, fmtHours, fmtPower } from "../format";
 import { useAsync } from "../hooks";
+import { Explain } from "../learn";
 import { ErrorBox, Insufficient, Loading, Panel, StatusTag } from "../ui";
 
 // Read-only display of the backend's idealised direct-beam solar-energy result for the scenario currently shown.
@@ -52,6 +53,7 @@ export function SolarPanel({ scenario }: { scenario: SolarScenario }) {
 
   return (
     <Panel title="6 · Idealised solar energy (upper bound)" tags={<><StatusTag cap="engineering" /><StatusTag cap="visibility" /></>}>
+      <Explain id="solar" />
       <p className="help">
         Direct-beam energy a panel <em>could</em> collect if it faced the Sun whenever any part of the Sun is above the terrain, for the window and position above. It is an
         <strong> upper bound, not a power budget and not battery state</strong>. You must supply the panel: there is no hidden default.

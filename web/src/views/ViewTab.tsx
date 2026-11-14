@@ -6,9 +6,12 @@ import { HorizonPlot, type NowPoint } from "../components/HorizonPlot";
 import { MetricsPanel } from "../components/MetricsPanel";
 import { SiteMap } from "../components/SiteMap";
 import { SolarPanel } from "../components/SolarPanel";
+import { TimePlayer, sampleTimeUtc } from "../components/TimePlayer";
 import { Timeline, type TimelineRow } from "../components/Timeline";
 import { addSecondsIso, fmtDeg, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
+import { Explain } from "../learn";
+import { ProfilePicker } from "../profiles";
 import { ErrorBox, Insufficient, Loading, Panel, StatusTag } from "../ui";
 
 interface Applied {
@@ -35,6 +38,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
   const [formError, setFormError] = useState<string | null>(null);
   const [applied, setApplied] = useState<Applied | null>(null);
   const [timeUtc, setTimeUtc] = useState("2027-01-20T12:00:00Z");
+  const [scrub, setScrub] = useState<number | null>(null);   // sample index chosen with the time player (null = the chosen time)
 
   const site = sites.find((s) => s.id === siteId) ?? null;
   const customPoint = useCustom && Number.isFinite(Number(lat)) && Number.isFinite(Number(lon)) ? { lat: Number(lat), lon: Number(lon) } : null;
@@ -49,6 +53,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
     if (h !== null && !Number.isFinite(h)) return setFormError("Observer height must be a number of metres (or empty for the 2.0 m default assumption).");
     if (!startLocal || !timeLocal) return setFormError("Choose a window start and a time (UTC).");
     setFormError(null);
+    setScrub(null);
     setTimeUtc(localInputToUtc(timeLocal));
     setApplied({
       sel: useCustom ? { lat: Number(lat), lon: Number(lon) } : { site_id: siteId },
@@ -62,7 +67,12 @@ export function ViewTab({ sites }: { sites: Site[] }) {
 
   // Show the default scenario straight away (not in unit tests, which drive the form explicitly).
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { if (import.meta.env.MODE !== "test") compute(); }, []);
+  useEffect(() => {
+    if (import.meta.env.MODE === "test") return;
+    compute();
+    const n = Number(new URLSearchParams(window.location.search).get("scrub"));
+    if (Number.isInteger(n) && n >= 0) setScrub(n);   // demo deep link: ?scrub=<sample index>
+  }, []);
 
   const key = applied ? JSON.stringify(applied) : null;
   const horizon = useAsync(applied ? (s) => api.horizon(applied.sel, applied.height, s) : null, key);
@@ -113,6 +123,27 @@ export function ViewTab({ sites }: { sites: Site[] }) {
     return out;
   }, [at, eph]);
 
+  // While the player is used, the markers/cursors show the scrubbed backend sample (no extra API call, no interpolation).
+  const scrubNow = useMemo(() => {
+    if (scrub === null || !vis) return null;
+    const out: { sun?: NowPoint; earth?: NowPoint } = {};
+    for (const b of ["sun", "earth"] as const) {
+      const s = vis.bodies[b]?.series;
+      if (s && scrub < s.times_s.length) out[b] = { az: s.azimuth_deg[scrub], el: s.elevation_deg[scrub], rho: s.angular_radius_deg[scrub] };
+    }
+    return out;
+  }, [scrub, vis]);
+  const nowForPlot = scrubNow ?? nowPoints;
+  const scrubSeries = vis?.bodies?.sun?.series ?? vis?.bodies?.earth?.series;
+  const scrubS = scrub !== null && scrubSeries && scrub < scrubSeries.times_s.length ? scrubSeries.times_s[scrub] : null;
+  const cursorShown = scrubS ?? cursorIn;
+  const cardSrc =
+    scrub !== null && vis && !insufficient && scrubSeries && scrub < scrubSeries.times_s.length
+      ? { data: vis, idx: scrub, t: sampleTimeUtc(vis, scrub) }
+      : atData
+        ? { data: atData, idx: 0, t: timeUtc }
+        : null;
+
   const rows = (b: "sun" | "earth"): TimelineRow[] => {
     const body = vis!.bodies[b];
     const colour = b === "sun" ? "var(--sun)" : "var(--earth)";
@@ -156,6 +187,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
         </Panel>
 
         <Panel title="2 · Date and time">
+          <ProfilePicker idPrefix="view-profile" current={{ days, height: heightStr, band: bandStr }} onApply={(v) => { setDays(v.days); setHeightStr(v.height); setBandStr(v.band); }} />
           <label htmlFor="start">Window start (UTC)</label>
           <input id="start" type="datetime-local" value={startLocal} min="2025-01-01T00:00" max="2035-12-31T23:59" onChange={(e) => setStartLocal(e.target.value)} />
           <div className="row">
@@ -189,29 +221,31 @@ export function ViewTab({ sites }: { sites: Site[] }) {
 
         {applied && (
           <>
-            <Panel title={`3 · Sun and Earth at ${fmtUtc(timeUtc)}`} tags={<><StatusTag cap="ephemeris" /><StatusTag cap="visibility" /></>}>
-              <p className="help">{applied.siteLabel}</p>
-              {at.phase === "loading" && eph.phase !== "ready" && <Loading startedAt={at.startedAt} label="Calculating positions" hint={FIRST_CALL_HINT} />}
-              {at.phase === "error" && eph.phase !== "ready" && <ErrorBox error={at.error} what="Position calculation" />}
-              {(at.phase === "ready" || eph.phase === "ready") && (
+            <Panel title={`3 · Sun and Earth at ${fmtUtc(cardSrc ? cardSrc.t : timeUtc)}`} tags={<><StatusTag cap="ephemeris" /><StatusTag cap="visibility" /></>}>
+              <p className="help">{applied.siteLabel}{scrub !== null ? " · showing the sample chosen with the time player" : ""}</p>
+              <Explain id="sunEarthNow" />
+              {at.phase === "loading" && eph.phase !== "ready" && !cardSrc && <Loading startedAt={at.startedAt} label="Calculating positions" hint={FIRST_CALL_HINT} />}
+              {at.phase === "error" && eph.phase !== "ready" && !cardSrc && <ErrorBox error={at.error} what="Position calculation" />}
+              {(cardSrc || eph.phase === "ready") && (
                 <div className="cards">
                   {(["sun", "earth"] as const).map((b) => {
-                    const p = nowPoints[b];
-                    const s = at.phase === "ready" ? at.data.bodies[b].series : undefined;
+                    const p = nowForPlot[b];
+                    const s = cardSrc ? cardSrc.data.bodies[b].series : undefined;
+                    const k = cardSrc ? cardSrc.idx : 0;
                     return (
                       <div className="card" key={b} data-testid={`now-${b}`}>
                         <h3 className={b === "sun" ? "sun-c" : "earth-c"}>{b === "sun" ? "Sun" : "Earth"}</h3>
                         {p ? <div className="big">az {fmtDeg(p.az, 1)} · el {fmtDeg(p.el, 2, true)}</div> : null}
-                        {s ? (
+                        {s && cardSrc ? (
                           <ul className="plain">
-                            <li>Terrain horizon at that azimuth: <strong>{fmtDeg(s.terrain_horizon_at_centre_deg[0], 2, true)}</strong>
-                              {s.position_sensitivity_deg ? <span className="band">could change by up to {fmtDeg(s.position_sensitivity_deg[0], 2)} for a ±{atData!.position_sensitivity.assumed_position_uncertainty_m} m position error</span> : null}</li>
-                            <li>Centre {s.centre_visible[0] ? "above" : "below"} the terrain · any part of disc {s.any_part_visible[0] ? "visible" : "blocked"} · whole disc {s.fully_visible[0] ? "visible" : "not fully visible"}</li>
-                            <li>Headline ({atData!.bodies[b].headline_state.replaceAll("_", " ")}): <strong>{s.headline_visible[0] ? "VISIBLE" : "BLOCKED"}</strong>
-                              {s.headline_state_robust_to_position && !s.headline_state_robust_to_position[0] ? <span className="flag">changes with position</span> : s.headline_state_robust_to_position ? <span className="flag good">same at all sampled positions</span> : null}
-                              {!s.horizon_complete[0] && <span className="flag bad">horizon incomplete: upper bound</span>}
+                            <li>Terrain horizon at that azimuth: <strong>{fmtDeg(s.terrain_horizon_at_centre_deg[k], 2, true)}</strong>
+                              {s.position_sensitivity_deg ? <span className="band">could change by up to {fmtDeg(s.position_sensitivity_deg[k], 2)} for a ±{cardSrc.data.position_sensitivity.assumed_position_uncertainty_m} m position error</span> : null}</li>
+                            <li>Centre {s.centre_visible[k] ? "above" : "below"} the terrain · any part of disc {s.any_part_visible[k] ? "visible" : "blocked"} · whole disc {s.fully_visible[k] ? "visible" : "not fully visible"}</li>
+                            <li>Headline ({cardSrc.data.bodies[b].headline_state.replaceAll("_", " ")}): <strong>{s.headline_visible[k] ? "VISIBLE" : "BLOCKED"}</strong>
+                              {s.headline_state_robust_to_position && !s.headline_state_robust_to_position[k] ? <span className="flag">changes with position</span> : s.headline_state_robust_to_position ? <span className="flag good">same at all sampled positions</span> : null}
+                              {!s.horizon_complete[k] && <span className="flag bad">horizon incomplete: upper bound</span>}
                             </li>
-                            <li>Geometric (no terrain): {s.geometric_headline_above_local_horizontal[0] ? "above" : "below"} the local horizontal</li>
+                            <li>Geometric (no terrain): {s.geometric_headline_above_local_horizontal[k] ? "above" : "below"} the local horizontal</li>
                           </ul>
                         ) : (
                           <p className="help">Terrain-corrected state unavailable for this location. The direction is astronomy only (observer on the reference sphere).</p>
@@ -226,9 +260,11 @@ export function ViewTab({ sites }: { sites: Site[] }) {
             <Panel title="4 · Terrain horizon" tags={<StatusTag cap="horizon" />}>
               {horizon.phase === "loading" && <Loading startedAt={horizon.startedAt} label="Computing terrain horizon" hint={FIRST_CALL_HINT} />}
               {horizon.phase === "error" && (insufficientFromError(horizon.error) ? <Insufficient reason={horizon.error.message} /> : <ErrorBox error={horizon.error} what="Horizon" />)}
+              <Explain id="horizon" />
+              {vis && !insufficient && <TimePlayer vis={vis} index={scrub} onIndex={setScrub} />}
               {horizon.phase === "ready" && (
                 <>
-                  <HorizonPlot profile={horizon.data} tracks={vis?.bodies?.sun ? { sun: vis.bodies.sun.series, earth: vis.bodies.earth?.series } : undefined} now={nowPoints} />
+                  <HorizonPlot profile={horizon.data} tracks={vis?.bodies?.sun ? { sun: vis.bodies.sun.series, earth: vis.bodies.earth?.series } : undefined} now={nowForPlot} />
                   <p className="help">
                     Ground height {horizon.data.observer.ground_height_m.toFixed(1)} m (from the DEM) · observer {horizon.data.observer.observer_height_above_surface_m} m above it
                     {horizon.data.observer.observer_height_is_default_assumption ? <span className="assump"> (default assumption)</span> : ""} · {horizon.data.summary.n_truncated ?? 0} azimuths truncated, {horizon.data.summary.n_data_gap ?? 0} with data gaps · DEM: {horizon.data.provenance.windows.map((w) => `${w.pixel_size_m} m`).join(" + ")}
@@ -243,6 +279,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
               {insufficient && <Insufficient reason={insufficientReason} />}
               {vis && !insufficient && (
                 <>
+                  <Explain id="timelines" />
                   <p className="help">
                     {fmtUtc(vis.window.start_utc)} → {fmtUtc(vis.window.end_utc)} · terrain-corrected bars with the boundary-uncertainty whiskers for a ±{bandM} m position error; geometric (no terrain) beneath. Click a timeline to move the time marker.
                   </p>
@@ -250,9 +287,10 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                     startUtc={vis.window.start_utc}
                     windowS={windowS}
                     rows={[...rows("sun"), ...rows("earth")]}
-                    cursorS={cursorIn}
+                    cursorS={cursorShown}
                     onPick={(sec) => {
                       const step = vis.window.step_seconds;
+                      setScrub(Math.round(sec / step));
                       setTimeUtc(addSecondsIso(vis.window.start_utc, Math.round(sec / step) * step));
                       setTimeLocal(addSecondsIso(vis.window.start_utc, Math.round(sec / step) * step).replace("Z", "").slice(0, 16));
                     }}
@@ -260,9 +298,10 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                   {(["sun", "earth"] as const).map((b) => vis.bodies[b].series && (
                     <div key={b}>
                       <h3 className={b === "sun" ? "sun-c" : "earth-c"}>{b === "sun" ? "Sun" : "Earth"}: elevation vs terrain horizon</h3>
-                      <ElevationChart series={vis.bodies[b].series!} windowS={windowS} color={b === "sun" ? "var(--sun)" : "var(--earth)"} label={b === "sun" ? "Sun" : "Earth"} cursorS={cursorIn} bandM={bandM} />
+                      <ElevationChart series={vis.bodies[b].series!} windowS={windowS} color={b === "sun" ? "var(--sun)" : "var(--earth)"} label={b === "sun" ? "Sun" : "Earth"} cursorS={cursorShown} bandM={bandM} />
                     </div>
                   ))}
+                  <Explain id="bands" />
                   <div className="cards" style={{ marginTop: 12 }}>
                     <MetricsPanel name="sun" body={vis.bodies.sun} bandM={bandM} sensStatus={vis.position_sensitivity.status} />
                     <MetricsPanel name="earth" body={vis.bodies.earth} bandM={bandM} sensStatus={vis.position_sensitivity.status} />

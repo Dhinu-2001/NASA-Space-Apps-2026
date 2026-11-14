@@ -21,5 +21,7 @@ For each important output: the method that produces it, the evidence for it, the
 | 15 | UI display rules (C4, bands visible, insufficient label, status visible) | — | `stage7/UI.md` | grep audit of `web/src`; real backend JSON rendered through the components | `web/src/App.test.tsx` (16) | L-P2, L-P4, L-P6 | the UI |
 | 16 | Idealised solar energy (energy, mean power, illuminated time, longest dark, geometric, bracket) - **Stage 8, added after this matrix, `implemented_unvalidated`** | `calculated` + `assumption` (panel, 1361 W/m²) | `stage8/SOLAR_ENERGY.md` | analytic identities; equals factor x the reused scenario's visible time (API cross-check); reuse rule enforced by a static test | `test_engineering.py`, `test_api_stage8.py`, `SolarPanel.test.tsx` | L-M15, L-M16, L-M8 | `/engineering/solar`, UI panel 6 |
 
+| 17 | Time player, Learn mode, mission profiles, accessibility (Stage 10 core, added after this matrix) | — | `stage10/ADVANCED_UI.md` | scrubbing makes zero requests (request-count test); mutation check; axe on every tab; contrast from the real stylesheet | `TimePlayer.test.tsx`, `Stage10.test.tsx`, `a11y.test.tsx` | L-P7, L-P8, L-P4 | Site & time player, Learn tab, profile pickers |
+
 ## Claims audit
 The gate says no unverified claim may be presented as validated. Every place the application or its documents says "validated" was reviewed in Stage 9 against the evidence above; the outcome is in [VALIDATION_REPORT.md §6](VALIDATION_REPORT.md).

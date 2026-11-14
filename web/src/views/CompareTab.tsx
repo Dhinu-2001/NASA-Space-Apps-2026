@@ -3,6 +3,8 @@ import { api } from "../api/client";
 import type { CompareResponse, ScenarioResult } from "../api/types";
 import { DASH, fmtBand, fmtDur, fmtPct, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
+import { Explain } from "../learn";
+import { ProfilePicker } from "../profiles";
 import { ErrorBox, Loading, Panel, StatusTag } from "../ui";
 import type { Site } from "../api/types";
 
@@ -187,6 +189,7 @@ export function CompareTab({ sites }: { sites: Site[] }) {
   return (
     <div className="layout">
       <Panel title="Scenarios to compare">
+        <ProfilePicker idPrefix="cmp-profile" showHeight={false} current={{ days: duration, height: "", band }} onApply={(v) => { setDuration(v.days); setBand(v.band); }} />
         <p className="help">Sites × start dates. Only sites whose terrain data support a position-sensitivity figure are compared; others are shown as “terrain data insufficient”.</p>
         <fieldset style={{ border: "none", padding: 0, margin: 0 }}>
           <legend className="help">Sites</legend>
@@ -234,6 +237,7 @@ export function CompareTab({ sites }: { sites: Site[] }) {
       </Panel>
 
       <Panel title="Comparison" tags={<><StatusTag cap="scenarios" /><StatusTag cap="visibility" /></>}>
+        <Explain id="compare" />
         {!applied && <p>Choose scenarios and press <strong>Compare</strong>.</p>}
         {state.phase === "loading" && <Loading startedAt={state.startedAt} label="Comparing scenarios" hint={HINT} />}
         {state.phase === "error" && <ErrorBox error={state.error} what="Comparison" />}

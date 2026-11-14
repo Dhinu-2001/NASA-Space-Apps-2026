@@ -32,7 +32,7 @@ export function SiteMap({
   const placed = new Map<string, number>();
   return (
     <figure style={{ margin: 0 }}>
-      <svg className="plot" viewBox={`0 0 ${SIZE} ${SIZE}`} role="img" aria-label="Map of catalogue sites around the lunar south pole">
+      <svg className="plot" viewBox={`0 0 ${SIZE} ${SIZE}`} role="group" aria-label="Map of catalogue sites around the lunar south pole: select a site with Enter or Space, or use the Catalogue site list">
         {[10, 20, 30].map((d) => (
           <g key={d}>
             <circle cx={C} cy={C} r={(d / MAX_COLAT) * R} fill="none" className="axis" />

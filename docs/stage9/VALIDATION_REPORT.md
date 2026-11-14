@@ -63,7 +63,7 @@ Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `
 | 8 Permanently shadowed terrain | synthetic crater (rim ≈ 26°, floor 1.5 km below): Sun and Earth never visible for 30 days, band [0, 0], longest not-visible = whole window flagged open, while geometry says the Sun is up ~half the month (terrain removes 100 %). **No real PSR data** (L-D6) | same |
 | 9 Missing datasets | missing kernels → `DATA_MISSING` with rebuild hint; modified kernel/DEM refused by checksum; missing DEM → scenario labelled insufficient (`DATA_MISSING`), API 503 with `field: dem`; `/provenance` degrades gracefully on a partial install | `test_edge_cases.py`, `test_api_stage9.py` |
 | 10 Numerical tolerances | every criterion, achieved value, margin and rationale in one table | [TOLERANCES.md](TOLERANCES.md) |
-| 11 Known limitations | 31 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
+| 11 Known limitations | 33 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
 | 12 Data provenance | generated report: kernels, DEM windows, catalogue, Horizons fixture, software, git history | [PROVENANCE.md](PROVENANCE.md), `GET /provenance` |
 | 13 Reproducible calculation metadata | deterministic `provenance` block (model version, kernel + DEM SHA-256, frame, aberration, algorithm version, every parameter, no timestamps) in every visibility/scenario result; identical inputs ⇒ identical metadata (asserted) | `engine/lunarnav/provenance.py` |
 
@@ -91,6 +91,9 @@ Searched code, API descriptions, UI strings, README and all documents for "valid
 | Any document | "accurate", "proven", "guarantee", "independently validated" | **none found** except "not a proven bound" (a negation) | — |
 
 Claims the project does **not** make: agreement with measurement; a link budget, power or thermal figure; a bound on position error; any statement about a real permanently shadowed region; any result outside 2025–2035; any figure for IM-1 or Chandrayaan-3.
+
+### Addendum: Stage 10 text claims
+The Learn tab and Learn-mode explanations were checked claim by claim against the project's own evidence (table in `docs/stage10/ADVANCED_UI.md` §2); none states more than the documented results support, and the content is explicitly marked as not independently reviewed (L-P8). Stage 10 adds no engine capability and no number that is computed in the browser.
 
 ## 7. Verdict against the Stage 9 gate
 * Every important output has a traceable methodology, evidence, tests and documented limitations (§5).

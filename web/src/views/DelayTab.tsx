@@ -3,6 +3,8 @@ import { api } from "../api/client";
 import type { DelayBodyRow, DelayResponse, Site } from "../api/types";
 import { fmtBand, fmtDur, fmtPct, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
+import { Explain } from "../learn";
+import { ProfilePicker } from "../profiles";
 import { ErrorBox, Insufficient, Loading, Panel, StatusTag } from "../ui";
 
 const HINT = "Each delay is a separate scenario; the first run for a site computes terrain profiles and can take a minute or more.";
@@ -157,6 +159,7 @@ export function DelayTab({ sites }: { sites: Site[] }) {
   return (
     <div className="layout">
       <Panel title="Mission delay simulator">
+        <ProfilePicker idPrefix="delay-profile" showHeight={false} current={{ days: duration, height: "", band }} onApply={(v) => { setDuration(v.days); setBand(v.band); }} />
         <label htmlFor="dsite">Landing site</label>
         <select id="dsite" value={siteId} onChange={(e) => setSiteId(e.target.value)}>
           {sites.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
@@ -180,6 +183,7 @@ export function DelayTab({ sites }: { sites: Site[] }) {
         <button className="btn" onClick={run}>Simulate delays</button>
       </Panel>
       <Panel title="Effect of delay" tags={<><StatusTag cap="scenarios" /><StatusTag cap="visibility" /></>}>
+        <Explain id="delay" />
         {!applied && <p>Choose a site and delays, then press <strong>Simulate delays</strong>.</p>}
         {state.phase === "loading" && <Loading startedAt={state.startedAt} label="Simulating delays" hint={HINT} />}
         {state.phase === "error" && <ErrorBox error={state.error} what="Delay simulation" />}

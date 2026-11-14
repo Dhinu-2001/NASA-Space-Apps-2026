@@ -4,7 +4,7 @@ Status: implemented; the UI has no engine capability of its own. Stage 7 was app
 Screenshots from the real app against the real backend (Stage 9 final polish): [final_view.png](final_view.png), [final_compare.png](final_compare.png), [final_delay.png](final_delay.png), [final_about.png](final_about.png), [final_mobile.png](final_mobile.png) (500 px). Rehearsal evidence: [../stage9/DEMO_READINESS.md](../stage9/DEMO_READINESS.md).
 
 ## 1. Scope (C2) and the required workflow
-One page, four tabs. Nothing beyond the C2 list: site, UTC time, Sun/Earth az/el, horizon profile, terrain-corrected visibility, sunlight and Earth timelines — plus the comparison, delay and data/assumptions views the Stage 7 task list names. No 3D, no animation, no editing of scientific data.
+One page, five tabs (Stage 10 added **Learn**; see `docs/stage10/ADVANCED_UI.md`). Nothing beyond the C2 list: site, UTC time, Sun/Earth az/el, horizon profile, terrain-corrected visibility, sunlight and Earth timelines — plus the comparison, delay and data/assumptions views the Stage 7 task list names. No 3D, no animation, no editing of scientific data.
 
 | Gate step | Where |
 |---|---|
