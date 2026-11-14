@@ -51,3 +51,18 @@ export function secondsBetween(fromIso: string, toIso: string): number {
 export function addSecondsIso(iso: string, s: number): string {
   return new Date(Date.parse(iso) + s * 1000).toISOString().replace(".000Z", "Z");
 }
+
+/** Wh -> "143.0 kWh" / "820 Wh" (presentation only). */
+export function fmtEnergy(wh: number | null | undefined): string {
+  if (wh === null || wh === undefined) return DASH;
+  return Math.abs(wh) >= 1000 ? `${(wh / 1000).toFixed(1)} kWh` : `${wh.toFixed(0)} Wh`;
+}
+
+export function fmtPower(w: number | null | undefined): string {
+  return w === null || w === undefined ? DASH : `${w.toFixed(1)} W`;
+}
+
+export function fmtHours(h: number | null | undefined): string {
+  if (h === null || h === undefined) return DASH;
+  return Math.abs(h) >= 48 ? `${(h / 24).toFixed(1)} d` : `${h.toFixed(1)} h`;
+}

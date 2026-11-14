@@ -52,3 +52,11 @@ UTC → ET at J2000 = 64.18392728 s (SPICE); an instant 1 s apart across the 201
 
 ## 7. Numerical precision notes
 DEM heights are float32 (resolution ~0.0005 m at 5 km) and computations are float64; the observed repeatability of every result is bit-exact on this machine (asserted). Cross-platform bit-exactness is **not** claimed (decision S5): the tolerances above are the cross-platform contract.
+
+## 8. Solar energy (Stage 8, added after the Stage 9 tables) - `docs/stage8/SOLAR_ENERGY.md`
+| Quantity | Declared | Achieved | Why |
+|---|---|---|---|
+| Energy = efficiency x area x irradiance x illuminated time | exact arithmetic identity (tested to the default relative tolerance of 1e-6; hand check to 1e-9) | 143 010.364 Wh by hand vs 143 010.365 Wh from the API | a product of validated inputs: no new numerical method is introduced |
+| Energy band | the visible-time band multiplied by the same constant | equal (tested) | energy is linear in illuminated time; no uncertainty is invented or dropped |
+| Input ranges | area (0, 10 000] m2, efficiency (0, 1], irradiance [1000, 1500] W/m2 | boundary values accepted, outside rejected | physical plausibility; stops unit mistakes (e.g. percent given as a fraction) |
+Modelling assumptions that are NOT tolerances (constant 1361 W/m2, sun-tracking panel, any-part = full illumination) are listed in `KNOWN_LIMITATIONS.md` L-M15 and L-M16.

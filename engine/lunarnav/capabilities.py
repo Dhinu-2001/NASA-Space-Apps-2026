@@ -37,5 +37,6 @@ CAPABILITIES: tuple[Capability, ...] = (
                CapabilityStatus.VALIDATED),
     Capability("scenarios", "Scenario comparison and delay simulator", 6,
                CapabilityStatus.VALIDATED),
-    Capability("engineering", "Solar power, antenna mask, slope", 8),
+    Capability("engineering", "Solar energy availability (idealised direct-beam upper bound)", 8,
+               CapabilityStatus.IMPLEMENTED_UNVALIDATED),
 )

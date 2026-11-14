@@ -38,6 +38,29 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/engineering/solar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solar
+         * @description Idealised direct-beam solar ENERGY availability for a site and window: an upper bound (sun-tracking panel,
+         *     any part of the Sun's disc counts as full illumination), with the position-sensitivity band carried from the
+         *     visibility result, the geometric (no-terrain) counterpart, the terrain penalty and the longest period without
+         *     sunlight. Sites without supporting terrain data return `terrain_data_insufficient` and no figures.
+         */
+        post: operations["solar_engineering_solar_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ephemeris/position": {
         parameters: {
             query?: never;
@@ -779,6 +802,73 @@ export interface components {
             /** Sites */
             sites: components["schemas"]["SiteOut"][];
         };
+        /** SolarRequest */
+        SolarRequest: {
+            /**
+             * Area M2
+             * @description Panel area, m^2, in (0, 10000]. Required: there is no hidden default panel.
+             */
+            area_m2: unknown;
+            /**
+             * Az Step Deg
+             * @description Horizon azimuth step
+             * @default 0.25
+             */
+            az_step_deg: number;
+            /**
+             * Duration Days
+             * @description Window length, days (0, 60]
+             * @default 30
+             */
+            duration_days: number;
+            /**
+             * Efficiency
+             * @description Electrical conversion efficiency as a fraction in (0, 1], e.g. 0.30. Required.
+             */
+            efficiency: unknown;
+            /**
+             * Irradiance W M2
+             * @description Irradiance while illuminated, W/m^2 in [1000.0, 1500.0]. Default 1361 (nominal solar constant at 1 AU) is an ASSUMPTION and is reported as such.
+             */
+            irradiance_w_m2?: unknown;
+            /** Label */
+            label?: string | null;
+            /**
+             * N Directions
+             * @description Displacement directions sampled
+             * @default 8
+             */
+            n_directions: number;
+            /**
+             * Observer Height M
+             * @description Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.
+             */
+            observer_height_m?: number | null;
+            /**
+             * Position Uncertainty M
+             * @description Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.
+             * @default 100
+             */
+            position_uncertainty_m: number;
+            site: components["schemas"]["SiteIn"];
+            /**
+             * Start Utc
+             * @description ISO-8601 UTC with Z; start of the window
+             */
+            start_utc: string;
+            /**
+             * Step Seconds
+             * @description Sampling step; transitions are refined to 1 s
+             * @default 900
+             */
+            step_seconds: number;
+            /**
+             * Use Cache
+             * @description Serve/store results from the on-disk scenario cache
+             * @default true
+             */
+            use_cache: boolean;
+        };
         /** SourceOut */
         SourceOut: {
             /** Description */
@@ -1075,6 +1165,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WindowOut"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    solar_engineering_solar_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SolarRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Not Found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
                 };
             };
             /** @description Unprocessable Entity */

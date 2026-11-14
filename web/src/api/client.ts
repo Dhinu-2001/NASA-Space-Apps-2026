@@ -9,6 +9,7 @@ import type {
   HorizonResponse,
   ProvenanceResponse,
   SitesResponse,
+  SolarEnergyResponse,
   VisibilityResponse,
 } from "./types";
 
@@ -130,6 +131,28 @@ export const api = {
         observer_height_m: observerHeightM,
         position_uncertainty_m: positionUncertaintyM,
         include_series: true,
+      },
+      signal,
+    ),
+  solarEnergy: (
+    sel: SiteSel,
+    startUtc: string,
+    durationDays: number,
+    observerHeightM: number | null,
+    positionUncertaintyM: number,
+    panel: { area_m2: number; efficiency: number; irradiance_w_m2: number | null },
+    signal?: AbortSignal,
+  ) =>
+    request<SolarEnergyResponse>(
+      "POST",
+      "/engineering/solar",
+      {
+        site: { site_id: sel.site_id ?? null, lat: sel.lat ?? null, lon: sel.lon ?? null },
+        start_utc: startUtc,
+        duration_days: durationDays,
+        observer_height_m: observerHeightM,
+        position_uncertainty_m: positionUncertaintyM,
+        ...panel,
       },
       signal,
     ),

@@ -63,9 +63,9 @@ class DelayRequest(ScenarioParams):
     offsets_days: list[float] = Field(..., description="Launch/landing delays to simulate, days (0, 365], up to 10")
 
 
-def build_scenario_router(data_dir: Path, visibility: VisibilityService) -> APIRouter:
+def build_scenario_router(data_dir: Path, visibility: VisibilityService, service: ScenarioService | None = None) -> APIRouter:
     router = APIRouter()
-    service = ScenarioService(data_dir, visibility)
+    service = service or ScenarioService(data_dir, visibility)
 
     def common(p: ScenarioParams) -> dict[str, Any]:
         return {"duration_days": p.duration_days, "step_seconds": p.step_seconds,
@@ -118,3 +118,13 @@ def build_scenario_router(data_dir: Path, visibility: VisibilityService) -> APIR
                              use_cache=req.use_cache, **common(req))
 
     return router
+
+
+def spec_factory(service: ScenarioService):
+    """A `make_spec(req)` for any request that extends ScenarioRequest (shared with the engineering route)."""
+    def make_spec(r: ScenarioRequest) -> ScenarioSpec:
+        return service.make_spec(r.site.model_dump(), r.start_utc, label=r.label, duration_days=r.duration_days,
+                                 step_seconds=r.step_seconds, observer_height_m=r.observer_height_m,
+                                 position_uncertainty_m=r.position_uncertainty_m, n_directions=r.n_directions,
+                                 az_step_deg=r.az_step_deg)
+    return make_spec

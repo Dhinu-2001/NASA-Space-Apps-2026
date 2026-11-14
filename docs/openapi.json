@@ -983,6 +983,97 @@
         "title": "SitesResponse",
         "type": "object"
       },
+      "SolarRequest": {
+        "properties": {
+          "area_m2": {
+            "description": "Panel area, m^2, in (0, 10000]. Required: there is no hidden default panel.",
+            "title": "Area M2"
+          },
+          "az_step_deg": {
+            "default": 0.25,
+            "description": "Horizon azimuth step",
+            "title": "Az Step Deg",
+            "type": "number"
+          },
+          "duration_days": {
+            "default": 30.0,
+            "description": "Window length, days (0, 60]",
+            "title": "Duration Days",
+            "type": "number"
+          },
+          "efficiency": {
+            "description": "Electrical conversion efficiency as a fraction in (0, 1], e.g. 0.30. Required.",
+            "title": "Efficiency"
+          },
+          "irradiance_w_m2": {
+            "description": "Irradiance while illuminated, W/m^2 in [1000.0, 1500.0]. Default 1361 (nominal solar constant at 1 AU) is an ASSUMPTION and is reported as such.",
+            "title": "Irradiance W M2"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "n_directions": {
+            "default": 8,
+            "description": "Displacement directions sampled",
+            "title": "N Directions",
+            "type": "integer"
+          },
+          "observer_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Above the DEM surface. Omitted => 2.0 m default ASSUMPTION (C9), reported as such.",
+            "title": "Observer Height M"
+          },
+          "position_uncertainty_m": {
+            "default": 100.0,
+            "description": "Assumed observer-position uncertainty, metres, > 0. Every scenario result carries the position sensitivity.",
+            "title": "Position Uncertainty M",
+            "type": "number"
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteIn"
+          },
+          "start_utc": {
+            "description": "ISO-8601 UTC with Z; start of the window",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step; transitions are refined to 1 s",
+            "title": "Step Seconds",
+            "type": "number"
+          },
+          "use_cache": {
+            "default": true,
+            "description": "Serve/store results from the on-disk scenario cache",
+            "title": "Use Cache",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "site",
+          "start_utc",
+          "area_m2",
+          "efficiency"
+        ],
+        "title": "SolarRequest",
+        "type": "object"
+      },
       "SourceOut": {
         "properties": {
           "description": {
@@ -1597,6 +1688,80 @@
         "summary": "List Windows",
         "tags": [
           "dem"
+        ]
+      }
+    },
+    "/engineering/solar": {
+      "post": {
+        "description": "Idealised direct-beam solar ENERGY availability for a site and window: an upper bound (sun-tracking panel,\nany part of the Sun's disc counts as full illumination), with the position-sensitivity band carried from the\nvisibility result, the geometric (no-terrain) counterpart, the terrain penalty and the longest period without\nsunlight. Sites without supporting terrain data return `terrain_data_insufficient` and no figures.",
+        "operationId": "solar_engineering_solar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SolarRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Solar Engineering Solar Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Solar",
+        "tags": [
+          "engineering"
         ]
       }
     },

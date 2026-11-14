@@ -389,3 +389,35 @@ export interface ProvenanceResponse {
   constants: Record<string, number | string>;
   data_classes: Record<string, string>;
 }
+
+export interface SolarEnergyResponse {
+  status: "supported" | "terrain_data_insufficient";
+  reason?: string;
+  reason_code?: string;
+  note?: string;
+  data_class?: string;
+  kind?: string;
+  scenario_id: string;
+  panel?: {
+    area_m2: number;
+    efficiency: number;
+    irradiance_w_m2: number;
+    irradiance_is_default_assumption: boolean;
+    peak_electrical_power_w: number;
+    formula: string;
+  };
+  window_hours?: number;
+  terrain_corrected?: {
+    headline_state: string;
+    energy_wh: { nominal: number; band: [number | null, number | null] };
+    mean_power_w: { nominal: number; band: [number | null, number | null] };
+    sunlit_hours: { nominal: number; band: [number | null, number | null] };
+    longest_without_direct_sunlight: { hours: number | null; band_hours: [number | null, number | null]; includes_open_interval: boolean; note: string };
+  };
+  geometric?: { energy_wh: number; mean_power_w: number; sunlit_hours: number; note: string };
+  terrain_effect?: { energy_wh_terrain_minus_geometric: number; note: string };
+  partial_disc_bracket?: { whole_disc_energy_wh: number; any_part_energy_wh: number; note: string } | null;
+  position_sensitivity?: { status: string; assumption: string | null; assumed_position_uncertainty_m: number | null };
+  assumptions?: string[];
+  limitations?: string[];
+}

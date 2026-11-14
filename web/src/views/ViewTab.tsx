@@ -5,6 +5,7 @@ import { ElevationChart } from "../components/ElevationChart";
 import { HorizonPlot, type NowPoint } from "../components/HorizonPlot";
 import { MetricsPanel } from "../components/MetricsPanel";
 import { SiteMap } from "../components/SiteMap";
+import { SolarPanel } from "../components/SolarPanel";
 import { Timeline, type TimelineRow } from "../components/Timeline";
 import { addSecondsIso, fmtDeg, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
@@ -279,6 +280,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                 </>
               )}
             </Panel>
+            <SolarPanel scenario={{ sel: applied.sel, startUtc: applied.startUtc, days: applied.days, height: applied.height, bandM: applied.bandM }} />
           </>
         )}
       </div>

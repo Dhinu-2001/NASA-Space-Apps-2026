@@ -18,7 +18,8 @@ const version = {
     { key: "ephemeris", title: "Sun and Earth azimuth/elevation (SPICE)", stage: 3, status: "validated" },
     { key: "visibility", title: "Terrain-corrected Sun/Earth visibility", stage: 5, status: "validated" },
     { key: "scenarios", title: "Scenario comparison and delay simulator", stage: 6, status: "implemented_unvalidated" },
-    { key: "engineering", title: "Solar power, antenna mask, slope", stage: 8, status: "not_implemented" },
+    { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "implemented_unvalidated" },
+    { key: "antenna", title: "Antenna masks (fixture entry for a deferred capability)", stage: 8, status: "not_implemented" },
   ],
 };
 const sites = {
@@ -56,7 +57,7 @@ describe("App shell", () => {
     expect(await screen.findByTestId("health-status")).toHaveTextContent("ok");
     const strip = screen.getByLabelText("Capability status");
     expect(within(strip).getAllByText("validated").length).toBe(2);
-    expect(within(strip).getAllByText("implemented unvalidated").length).toBe(1);
+    expect(within(strip).getAllByText("implemented unvalidated").length).toBe(2);   // scenarios, engineering (fixture)
     expect(within(strip).getByText("not implemented")).toBeInTheDocument();
     expect(screen.getByRole("note")).toHaveTextContent(/never ranked/);
   });

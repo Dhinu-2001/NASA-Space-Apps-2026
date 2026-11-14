@@ -4,7 +4,7 @@ from lunarnav.errors import ErrorCode, InvalidInputError, LunarNavError
 
 
 def test_model_version_is_set():
-    assert MODEL_VERSION.startswith("0.9.0")
+    assert MODEL_VERSION.startswith("0.10.0")
 
 
 def test_capability_statuses_are_honest_for_stage_8():

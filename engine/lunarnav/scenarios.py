@@ -250,6 +250,7 @@ class ScenarioService:
                 "n_visible_intervals": {"nominal": m["n_visible_intervals"], "band": mb["n_visible_intervals"]},
                 "longest_visible_s": longest("visible"),
                 "longest_not_visible_s": longest("not_visible"),
+                "state_fractions": {k: b["states"][k]["metrics"]["visible_fraction"] for k in ("centre", "any_part", "fully")},
                 "events": events,
                 "intervals": head["intervals"], "not_visible_intervals": head["not_visible_intervals"],
                 "open_intervals": {

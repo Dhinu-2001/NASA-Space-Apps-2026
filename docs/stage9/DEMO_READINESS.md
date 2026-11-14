@@ -31,7 +31,7 @@ Every slow path shows a spinner with elapsed seconds and, after 4 s, an explanat
 | Data & assumptions | all 7 capabilities with status; definitions; assumptions labelled; catalogue sources as links with SHA-256; all four DEM windows and four kernels with **full SHA-256**; frame; Horizons comparison with its independence caveat; model version, code commit, software versions; data classes | `final_about.png` |
 
 **Browser console:** captured with `--enable-logging` on all four tabs plus the 500 px view. The only messages are INFO (Vite connecting, a React DevTools hint, an unrelated browser extension). **No errors, no warnings.**
-**Capability status:** every status shown comes from `GET /version` (all of sites, dem, ephemeris, horizon, visibility, scenarios `validated`; engineering `not implemented`).
+**Capability status:** every status shown comes from `GET /version` (all of sites, dem, ephemeris, horizon, visibility, scenarios `validated`; engineering `implemented unvalidated`: the narrow solar-energy upper bound, added after this rehearsal; see `docs/stage8/`).
 
 ## 4. Fixed during polish
 | Item | Fix |

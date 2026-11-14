@@ -16,12 +16,14 @@ from lunarnav.ephemeris import EphemerisService
 from lunarnav.errors import DataMissingError, NotImplementedYetError
 from lunarnav.horizon import HorizonService
 from lunarnav.provenance import build_provenance
+from lunarnav.scenarios import ScenarioService
 from lunarnav.visibility import VisibilityService
 
 from .config import REPO_ROOT, get_settings
 from .errors import register_error_handlers
 from .logging_setup import configure_logging
 from .routes_data import build_router
+from .routes_engineering import build_engineering_router
 from .routes_ephemeris import build_ephemeris_router
 from .routes_horizon import build_horizon_router
 from .routes_scenarios import build_scenario_router
@@ -60,8 +62,10 @@ def create_app() -> FastAPI:
     horizon_service = HorizonService(settings.data_dir)
     app.include_router(build_horizon_router(settings.data_dir, horizon_service))
     app.include_router(build_visibility_router(settings.data_dir, horizon_service))
-    app.include_router(build_scenario_router(
-        settings.data_dir, VisibilityService(EphemerisService(settings.data_dir), horizon_service)))
+    visibility_service = VisibilityService(EphemerisService(settings.data_dir), horizon_service)
+    scenario_service = ScenarioService(settings.data_dir, visibility_service)
+    app.include_router(build_scenario_router(settings.data_dir, visibility_service, scenario_service))
+    app.include_router(build_engineering_router(scenario_service))
 
     @app.middleware("http")
     async def request_context(request: Request, call_next):
@@ -101,7 +105,7 @@ def create_app() -> FastAPI:
                 "Stage 9: terrain-corrected Sun/Earth visibility, scenario comparison and mission delay simulator "
                 "(geometric line of sight / direct illumination only; not link availability or irradiance). "
                 "Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked. "
-                "Engineering assessments (solar power, antenna, slope, temperature) are not built."
+                "Engineering is limited to an idealised direct-beam solar-energy upper bound; antenna, slope and temperature assessments are not built."
             ),
             capabilities=[
                 CapabilityOut(key=c.key, title=c.title, stage=c.stage, status=c.status.value)
@@ -130,10 +134,10 @@ def create_app() -> FastAPI:
             out["spice_kernels_error"] = eph_error
         return out
 
-    @app.post("/engineering/solar", include_in_schema=False)
-    def _engineering_not_implemented():
-        # Demonstrates the NOT_IMPLEMENTED contract; engineering metrics arrive in Stage 8.
-        raise NotImplementedYetError("Solar power / antenna / slope metrics are planned for Stage 8.")
+    @app.post("/engineering/antenna", include_in_schema=False)
+    def _antenna_not_implemented():
+        # Demonstrates the NOT_IMPLEMENTED contract: antenna masks, slope and temperature are deferred.
+        raise NotImplementedYetError("Antenna masks, slope/aspect and temperature assessments are deferred (not built).")
 
     return app
 

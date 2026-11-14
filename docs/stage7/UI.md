@@ -1,6 +1,6 @@
 # Stage 7 — Core user interface
 
-Status: implemented; the UI has no engine capability of its own. Stage 7 was approved by the project owner (Stage 8 deferred, Stage 9 authorised). Minimal, read-only (decision C2). Code: `web/src/`.
+Status: implemented; the UI has no engine capability of its own. Stage 7 was approved by the project owner (Stage 8 deferred, Stage 9 authorised). Minimal, read-only (decision C2); Stage 8 later added one read-only panel (`SolarPanel`) to the Site & time tab. Code: `web/src/`.
 Screenshots from the real app against the real backend (Stage 9 final polish): [final_view.png](final_view.png), [final_compare.png](final_compare.png), [final_delay.png](final_delay.png), [final_about.png](final_about.png), [final_mobile.png](final_mobile.png) (500 px). Rehearsal evidence: [../stage9/DEMO_READINESS.md](../stage9/DEMO_READINESS.md).
 
 ## 1. Scope (C2) and the required workflow

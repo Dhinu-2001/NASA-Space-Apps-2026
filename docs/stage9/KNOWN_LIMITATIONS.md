@@ -33,6 +33,8 @@ One list for the whole project. Each limitation has an ID, what it means for a r
 | L-M11 | The `truncated` test uses a height ceiling taken from the DEM windows the project holds (IM-2: 7.0 km), not a global maximum | A taller unseen peak outside every window could exist | `stage4/HORIZON_METHOD.md` §7 |
 | L-M12 | Rankings use position-band overlap (conservative); a paired comparison can separate scenarios that bands do not | Ranks may be "not distinguishable" when a paired delta is distinguishable | `stage6/SCENARIO_METHOD.md` §6 |
 | L-M13 | The mission-delay window default (14 d) is an assumption; a window spanning the whole synodic month (29.5 d) hides short delays | Choose the window to match the operation | `stage6/SCENARIO_METHOD.md` §7 |
+| L-M15 | **Solar energy is an upper bound**: sun-tracking panel (no incidence loss), a partly visible Sun counts as full illumination (whole-disc bracket about 4 % lower at IM-2, nominal only), constant efficiency, no temperature/degradation/dust/self-shadowing | not a power budget and not battery state; the user must supply panel area and efficiency | `stage8/SOLAR_ENERGY.md` §6 |
+| L-M16 | Solar energy uses a constant irradiance (default 1361 W/m², an assumption); the ±3.4 % Earth–Sun distance variation over the year (±6.9 % irradiance) is not modelled | energy could be about 7 % higher or lower depending on the season | `stage8/SOLAR_ENERGY.md` §6 |
 | L-M14 | SPICE is process-global and not thread-safe; computations are serialised by locks | Fine for the demo; does not scale across threads | `stage3/EPHEMERIS_METHOD.md` |
 
 ## Product
@@ -41,7 +43,7 @@ One list for the whole project. Each limitation has an ID, what it means for a r
 |---|---|---|
 | L-P1 | The first calculation for a new site computes terrain profiles at the site and 8 displaced positions (~60 s); later requests are cached on disk | The UI shows a loading state with an explanation; the default site can be pre-warmed |
 | L-P2 | The UI is minimal and read-only (decision C2): no 3D surface, no animation, no saved-scenario browser, no export | by decision; Stage 10 scope |
-| L-P3 | **Stage 8 (engineering: solar power, antenna masks, slope, temperature) is not built**; the `engineering` capability is `not_implemented` | no power, link or thermal figure exists anywhere |
+| L-P3 | **Stage 8 is deliberately narrow**: only an idealised direct-beam solar-energy upper bound exists (`engineering` = `implemented_unvalidated`). Antenna masks, slope/aspect/roughness, temperature and incidence-angle power are **not built** | no link, thermal, battery or fixed-panel power figure exists anywhere; see `stage8/SOLAR_ENERGY.md` |
 | L-P4 | No formal accessibility audit; small-screen charts shrink with the page | landmarks, labels and text alternatives are present |
 | L-P5 | Results are verified on one machine/OS (Windows 11, Python 3.12); cross-platform bit-exactness is not claimed (decision S5) | tolerances in `TOLERANCES.md` are the cross-platform contract |
 | L-P6 | UI verified in one browser engine (headless Edge/Chromium): all four tabs screenshotted with real data, console clean; no cross-browser testing | `stage9/DEMO_READINESS.md` |

@@ -50,9 +50,9 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
           <li>The ephemeris check against JPL Horizons shares JPL’s ephemerides, so it validates the implementation, not the ephemerides themselves; no physically independent horizon or visibility dataset was available.</li>
           <li>Events shorter than the sampling step that fall between samples are not detected (checked at IM-2: 15-minute and 5-minute runs agree).</li>
           <li>Not modelled: gravitational light bending (≤ 6×10⁻⁷°), Earth oblateness, refraction (none on the Moon).</li>
-          <li>Engineering assessments (solar power, antenna masks, slope, temperature) are not built (deferred).</li>
+          <li>Engineering is limited to an <strong>idealised direct-beam solar-energy upper bound</strong> (sun-tracking panel, any part of the Sun counts as full illumination, constant irradiance: the default 1361 W/m² is an assumption). It is not a power budget or battery state. Antenna masks, slope/aspect, temperature data and incidence-angle power are not built (deferred).</li>
         </ul>
-        <p className="help">Full list with evidence: <code>docs/stage9/KNOWN_LIMITATIONS.md</code> (29 items) · validation evidence: <code>docs/stage9/VALIDATION_REPORT.md</code> · numerical tolerances: <code>docs/stage9/TOLERANCES.md</code>.</p>
+        <p className="help">Full list with evidence: <code>docs/stage9/KNOWN_LIMITATIONS.md</code> (31 items) · validation evidence: <code>docs/stage9/VALIDATION_REPORT.md</code> · numerical tolerances: <code>docs/stage9/TOLERANCES.md</code>.</p>
       </Panel>
 
       <Panel title="Scientific data sources">

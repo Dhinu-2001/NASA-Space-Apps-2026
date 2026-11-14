@@ -27,11 +27,11 @@ def test_version_lists_unbuilt_capabilities_honestly():
     by_key = {c["key"]: c["status"] for c in body["capabilities"]}
     for k in ("sites", "dem", "ephemeris", "horizon", "visibility", "scenarios"):
         assert by_key[k] == "validated", k
-    assert by_key["engineering"] == "not_implemented"
+    assert by_key["engineering"] == "implemented_unvalidated"
 
 
 def test_not_implemented_uses_error_contract():
-    r = client.post("/engineering/solar", json={})
+    r = client.post("/engineering/antenna", json={})
     assert r.status_code == 501
     body = r.json()
     assert body["code"] == "NOT_IMPLEMENTED"

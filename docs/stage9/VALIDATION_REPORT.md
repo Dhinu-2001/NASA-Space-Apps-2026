@@ -1,11 +1,11 @@
 # Scientific validation report (Stage 9)
 
-Covers Stages 0–7 (Stage 8, engineering assessment, is deferred and **not built**). Written so that a reviewer can see, for each important output, what was checked, against what, how independent that check is, and what it does *not* show. Companion documents: [TOLERANCES.md](TOLERANCES.md), [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md), [TRACEABILITY.md](TRACEABILITY.md), [PROVENANCE.md](PROVENANCE.md), [TEST_REPORT.md](TEST_REPORT.md).
+Covers Stages 0–7 and Stage 9. Stage 8 (engineering) was built afterwards in a deliberately narrow form and is **not** part of the validated set: it is `implemented_unvalidated` pending owner approval (`docs/stage8/SOLAR_ENERGY.md`). Written so that a reviewer can see, for each important output, what was checked, against what, how independent that check is, and what it does *not* show. Companion documents: [TOLERANCES.md](TOLERANCES.md), [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md), [TRACEABILITY.md](TRACEABILITY.md), [PROVENANCE.md](PROVENANCE.md), [TEST_REPORT.md](TEST_REPORT.md).
 
 ## 1. What "validated" means in this project
 A capability is marked `validated` when **(a)** it is implemented and tested, **(b)** its acceptance criteria were declared before the checks were run, **(c)** the evidence is recorded in `docs/stageN/VALIDATION.md`, and **(d)** the project owner reviewed it and approved the stage gate. It does **not** mean "proven against measurement". The independence of each check is stated below; the two largest gaps are L-M1 (the ephemeris check shares JPL's ephemerides) and L-M2 (no physically independent horizon or visibility dataset).
 
-Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `horizon`, `visibility`, `scenarios` = validated; `engineering` = not implemented.
+Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `horizon`, `visibility`, `scenarios` = validated; `engineering` = implemented unvalidated (Stage 8, narrow: an idealised solar-energy upper bound; evidence in `docs/stage8/SOLAR_ENERGY.md`; not part of the validated set).
 
 ## 2. Independence of the evidence
 
@@ -63,7 +63,7 @@ Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `
 | 8 Permanently shadowed terrain | synthetic crater (rim ≈ 26°, floor 1.5 km below): Sun and Earth never visible for 30 days, band [0, 0], longest not-visible = whole window flagged open, while geometry says the Sun is up ~half the month (terrain removes 100 %). **No real PSR data** (L-D6) | same |
 | 9 Missing datasets | missing kernels → `DATA_MISSING` with rebuild hint; modified kernel/DEM refused by checksum; missing DEM → scenario labelled insufficient (`DATA_MISSING`), API 503 with `field: dem`; `/provenance` degrades gracefully on a partial install | `test_edge_cases.py`, `test_api_stage9.py` |
 | 10 Numerical tolerances | every criterion, achieved value, margin and rationale in one table | [TOLERANCES.md](TOLERANCES.md) |
-| 11 Known limitations | 29 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
+| 11 Known limitations | 31 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
 | 12 Data provenance | generated report: kernels, DEM windows, catalogue, Horizons fixture, software, git history | [PROVENANCE.md](PROVENANCE.md), `GET /provenance` |
 | 13 Reproducible calculation metadata | deterministic `provenance` block (model version, kernel + DEM SHA-256, frame, aberration, algorithm version, every parameter, no timestamps) in every visibility/scenario result; identical inputs ⇒ identical metadata (asserted) | `engine/lunarnav/provenance.py` |
 
