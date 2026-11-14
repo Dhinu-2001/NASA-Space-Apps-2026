@@ -1,6 +1,54 @@
 {
   "components": {
     "schemas": {
+      "BodySeriesOut": {
+        "properties": {
+          "angular_diameter_deg": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Angular Diameter Deg",
+            "type": "array"
+          },
+          "azimuth_deg": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Azimuth Deg",
+            "type": "array"
+          },
+          "elevation_deg": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Elevation Deg",
+            "type": "array"
+          },
+          "light_time_s": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Light Time S",
+            "type": "array"
+          },
+          "range_km": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Range Km",
+            "type": "array"
+          }
+        },
+        "required": [
+          "azimuth_deg",
+          "elevation_deg",
+          "range_km",
+          "angular_diameter_deg",
+          "light_time_s"
+        ],
+        "title": "BodySeriesOut",
+        "type": "object"
+      },
       "CapabilityOut": {
         "properties": {
           "key": {
@@ -211,6 +259,56 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "ObserverOut": {
+        "properties": {
+          "frame": {
+            "default": "MOON_ME",
+            "title": "Frame",
+            "type": "string"
+          },
+          "height_m": {
+            "title": "Height M",
+            "type": "number"
+          },
+          "lat_convention": {
+            "default": "planetocentric",
+            "title": "Lat Convention",
+            "type": "string"
+          },
+          "lat_deg": {
+            "title": "Lat Deg",
+            "type": "number"
+          },
+          "lon_convention": {
+            "default": "east_positive",
+            "title": "Lon Convention",
+            "type": "string"
+          },
+          "lon_deg_east": {
+            "title": "Lon Deg East",
+            "type": "number"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Id"
+          }
+        },
+        "required": [
+          "site_id",
+          "lat_deg",
+          "lon_deg_east",
+          "height_m"
+        ],
+        "title": "ObserverOut",
+        "type": "object"
+      },
       "PendingRegionOut": {
         "properties": {
           "name": {
@@ -243,6 +341,103 @@
           "reason"
         ],
         "title": "PendingRegionOut",
+        "type": "object"
+      },
+      "SeriesRequest": {
+        "properties": {
+          "bodies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Bodies",
+            "type": "array"
+          },
+          "end_utc": {
+            "description": "Inclusive end if aligned to the step",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "site": {
+            "$ref": "#/components/schemas/SiteSelector"
+          },
+          "start_utc": {
+            "description": "ISO-8601 UTC with Z, e.g. 2027-01-15T00:00:00Z",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step, seconds (1..2592000)",
+            "title": "Step Seconds",
+            "type": "number"
+          }
+        },
+        "required": [
+          "site",
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "SeriesRequest",
+        "type": "object"
+      },
+      "SeriesResponse": {
+        "properties": {
+          "bodies": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BodySeriesOut"
+            },
+            "title": "Bodies",
+            "type": "object"
+          },
+          "data_class": {
+            "title": "Data Class",
+            "type": "string"
+          },
+          "n_samples": {
+            "title": "N Samples",
+            "type": "integer"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "observer": {
+            "$ref": "#/components/schemas/ObserverOut"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "title": "Provenance",
+            "type": "object"
+          },
+          "times_utc": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Times Utc",
+            "type": "array"
+          },
+          "units": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Units",
+            "type": "object"
+          }
+        },
+        "required": [
+          "data_class",
+          "observer",
+          "n_samples",
+          "times_utc",
+          "bodies",
+          "units",
+          "notes",
+          "provenance"
+        ],
+        "title": "SeriesResponse",
         "type": "object"
       },
       "SiteOut": {
@@ -321,6 +516,38 @@
           "sources"
         ],
         "title": "SiteOut",
+        "type": "object"
+      },
+      "SiteSelector": {
+        "description": "Either a catalogue `site_id`, or custom `lat` + `lon`. Typed loosely; the engine validates.",
+        "properties": {
+          "height_m": {
+            "default": 0.0,
+            "description": "Observer height above the 1737.4 km reference sphere, metres (assumed 0 unless given; DEM-derived height arrives in Stage 5)",
+            "title": "Height M"
+          },
+          "lat": {
+            "description": "Planetocentric latitude, degrees (south negative)",
+            "title": "Lat"
+          },
+          "lon": {
+            "description": "East-positive longitude, degrees [-180, 360]",
+            "title": "Lon"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Catalogue site id (see GET /sites)",
+            "title": "Site Id"
+          }
+        },
+        "title": "SiteSelector",
         "type": "object"
       },
       "SitesResponse": {
@@ -602,7 +829,7 @@
     }
   },
   "info": {
-    "description": "Stage 2: sites and DEM lookup. Sun/Earth, horizon and visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
+    "description": "Stage 3: sites, DEM lookup and Sun/Earth ephemeris (geometric, no terrain). Horizon and visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
     "title": "Lunar Landing Site Navigator API",
     "version": "0.1.0"
   },
@@ -753,6 +980,209 @@
         "summary": "List Windows",
         "tags": [
           "dem"
+        ]
+      }
+    },
+    "/ephemeris/position": {
+      "get": {
+        "operationId": "ephemeris_position_ephemeris_position_get",
+        "parameters": [
+          {
+            "description": "ISO-8601 UTC with Z",
+            "in": "query",
+            "name": "time_utc",
+            "required": true,
+            "schema": {
+              "description": "ISO-8601 UTC with Z",
+              "title": "Time Utc",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Catalogue site id",
+            "in": "query",
+            "name": "site_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Catalogue site id",
+              "title": "Site Id"
+            }
+          },
+          {
+            "description": "Latitude, degrees (planetocentric)",
+            "in": "query",
+            "name": "lat",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Latitude, degrees (planetocentric)",
+              "title": "Lat"
+            }
+          },
+          {
+            "description": "East-positive longitude, degrees",
+            "in": "query",
+            "name": "lon",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "East-positive longitude, degrees",
+              "title": "Lon"
+            }
+          },
+          {
+            "description": "Observer height above the reference sphere, m",
+            "in": "query",
+            "name": "height_m",
+            "required": false,
+            "schema": {
+              "default": 0.0,
+              "description": "Observer height above the reference sphere, m",
+              "title": "Height M",
+              "type": "number"
+            }
+          },
+          {
+            "description": "sun | earth | both",
+            "in": "query",
+            "name": "body",
+            "required": false,
+            "schema": {
+              "default": "both",
+              "description": "sun | earth | both",
+              "title": "Body",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeriesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Ephemeris Position",
+        "tags": [
+          "ephemeris"
+        ]
+      }
+    },
+    "/ephemeris/series": {
+      "post": {
+        "operationId": "ephemeris_series_ephemeris_series_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SeriesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SeriesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Ephemeris Series",
+        "tags": [
+          "ephemeris"
         ]
       }
     },

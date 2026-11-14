@@ -1,0 +1,15 @@
+{
+ "sun": {
+  "no_light_time_no_aberration (NONE)": 0.005825671334417184,
+  "light_time_only (LT)": 0.005824403896398998,
+  "geocentric (observer at Moon centre, LT+S)": 0.0006781573229603501,
+  "wrong_frame MOON_PA (same lat/lon)": 0.028209898705310103
+ },
+ "earth": {
+  "no_light_time_no_aberration (NONE)": 0.0002041250168263554,
+  "light_time_only (LT)": 0.005444516155477359,
+  "geocentric (observer at Moon centre, LT+S)": 0.2690890936604273,
+  "wrong_frame MOON_PA (same lat/lon)": 0.028992403565281398
+ },
+ "naif_quoted_me_vs_de421_me_max_deg": 1.7595442411613678e-05
+}

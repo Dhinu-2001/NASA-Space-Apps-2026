@@ -1,0 +1,47 @@
+{
+ "n_rows": 220,
+ "tolerance_deg": 0.01,
+ "bodies": {
+  "sun": {
+   "n": 110,
+   "sep_max_deg": 1.3533323153018361e-08,
+   "sep_rms_deg": 7.516634086658094e-09,
+   "sep_worst_case": {
+    "site_id": "im2-athena-h5321",
+    "time_utc": "2029-10-01T18:45:00Z",
+    "sep_deg": 1.3533323153018361e-08
+   },
+   "el_abs_max_deg": 1.3240349261423034e-08,
+   "az_abs_max_deg_(any_el)": 1.7924890016729478e-08,
+   "range_abs_max_km": 0.0024213194847106934,
+   "range_rel_max": 1.617672181649026e-11,
+   "ddiam_abs_max_arcsec": 0.0004989020472745409,
+   "horizons_implied_radius_km": {
+    "min": 695699.8214851879,
+    "max": 695700.1820320945,
+    "engine_assumed": 695700.0
+   }
+  },
+  "earth": {
+   "n": 110,
+   "sep_max_deg": 6.003215323447945e-07,
+   "sep_rms_deg": 4.28558805151192e-07,
+   "sep_worst_case": {
+    "site_id": "equator-nearside",
+    "time_utc": "2033-12-25T12:00:00Z",
+    "sep_deg": 6.003215323447945e-07
+   },
+   "el_abs_max_deg": 4.3642566538437677e-07,
+   "az_abs_max_deg_(any_el)": 6.5980730425962975e-06,
+   "range_abs_max_km": 0.0037256343639455736,
+   "range_rel_max": 9.649376839704577e-09,
+   "ddiam_abs_max_arcsec": 0.041560846946353536,
+   "horizons_implied_radius_km": {
+    "min": 6378.136154816538,
+    "max": 6378.137063426947,
+    "engine_assumed": 6378.1
+   }
+  }
+ },
+ "pass": true
+}

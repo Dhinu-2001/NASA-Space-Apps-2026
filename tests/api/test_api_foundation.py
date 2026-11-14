@@ -22,11 +22,11 @@ def test_request_id_is_echoed():
 
 def test_version_lists_unbuilt_capabilities_honestly():
     body = client.get("/version").json()
-    assert body["stage"] == 2
-    assert "No ephemeris, horizon or visibility results" in body["notice"]
+    assert body["stage"] == 3
+    assert "No terrain horizon or terrain-corrected visibility" in body["notice"]
     by_key = {c["key"]: c["status"] for c in body["capabilities"]}
-    assert by_key["sites"] == by_key["dem"] == "implemented_unvalidated"
-    assert by_key["ephemeris"] == by_key["horizon"] == by_key["visibility"] == "not_implemented"
+    assert by_key["sites"] == by_key["dem"] == by_key["ephemeris"] == "implemented_unvalidated"
+    assert by_key["horizon"] == by_key["visibility"] == "not_implemented"
     assert "validated" not in by_key.values()
 
 

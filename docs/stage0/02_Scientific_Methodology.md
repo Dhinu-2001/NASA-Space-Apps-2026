@@ -28,7 +28,7 @@ Compare with terrain horizon h(az) from DEM  ──►  visible / not visible
 | Latitude | Planetocentric, degrees, south negative; Moon treated as sphere R = 1737.4 km (LOLA/Horizons reference) | Moon's flattening is negligible (~0.0003) relative to terrain relief; geodetic ≡ planetocentric on a sphere |
 | Longitude | **East-positive**, stored −180…180 (accept 0…360, normalise) | IAU/LRO convention; Horizons labels `E-lon` |
 | Height | Metres above the 1737.4 km reference sphere (LOLA convention); observer height is **above local DEM surface** | Matches LOLA heights |
-| Azimuth | Degrees **clockwise from local north** (north = direction toward the lunar north pole along the local meridian), 0–360 | Horizons-compatible. **Tie-break** at exactly lat = ±90°: meridian of lon = 0 defines north; documented and tested |
+| Azimuth | Degrees **clockwise from local north** (north = direction toward the lunar north pole along the local meridian), 0–360 | Horizons-compatible. **Tie-break** at exactly lat = ±90°: meridian of lon = 0 defines north; documented and tested. *Stage 3 refinement (decision E4): the supplied longitude defines north (limit along that meridian), identical for lon = 0; verified against Horizons at both poles.* |
 | Elevation | Degrees above the local horizontal plane (perpendicular to the local sphere normal), −90…90 | |
 | DEM grid | **South polar stereographic**, metres, MOON_ME (read exact CRS parameters/true-scale latitude from the GeoTIFF; do **not** assume) | PGDA states "south polar stereographic X/Y in meters, MOON_ME, DE421" |
 | Time | UTC in, UTC out, ISO-8601 with `Z`; internal TDB seconds past J2000; display timezone UTC only in MVP | Explicit, no local-time ambiguity |
@@ -102,7 +102,7 @@ Metrics from boolean series: intervals by edge detection, refined by bisection; 
 `model_version`, git commit, kernel file names + SHA-256, DEM product name + SHA-256 + pixel size + CRS, time step, observer height, masks, bisection tolerance, date generated. Quality indicators only where derivable: DEM ERR/EFFRES values at the site, horizon truncation flags. **No** blanket "accuracy %" anywhere.
 
 ## 9. Known scientific risks to be quantified, not assumed
-1. DEM tied to MOON_ME **DE421**; ephemeris from **DE440**. Offset between the two MOON_ME realisations is expected to be small, but we will measure its effect on azimuth at the pole (Stage 3/4).
+1. DEM tied to MOON_ME **DE421**; ephemeris from **DE440**. Offset between the two MOON_ME realisations is expected to be small, but we will measure its effect on azimuth at the pole (Stage 3/4). *Stage 3 result: NAIF-quoted ME vs DE421-ME rotation ≤ 3.07e-7 rad ⇒ ≤ 1.8e-5° in any direction (quoted, not independently measured); using `MOON_PA` instead would shift directions by ≈ 0.029° — see `docs/stage3/EPHEMERIS_METHOD.md` §4a.*
 2. Azimuth sensitivity near the pole: small lateral errors → large azimuth changes; horizon varies sharply with azimuth.
 3. Centre-vs-disk visibility at Sun elevations ≲ 1.5°.
 4. DEM interpolation under permanently shadowed terrain (no direct sunlight data ⇒ topography from altimetry only, which is fine for geometry, but we show it is interpolated).

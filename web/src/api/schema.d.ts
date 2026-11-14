@@ -38,6 +38,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ephemeris/position": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ephemeris Position */
+        get: operations["ephemeris_position_ephemeris_position_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ephemeris/series": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ephemeris Series */
+        post: operations["ephemeris_series_ephemeris_series_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -110,6 +144,19 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** BodySeriesOut */
+        BodySeriesOut: {
+            /** Angular Diameter Deg */
+            angular_diameter_deg: number[];
+            /** Azimuth Deg */
+            azimuth_deg: number[];
+            /** Elevation Deg */
+            elevation_deg: number[];
+            /** Light Time S */
+            light_time_s: number[];
+            /** Range Km */
+            range_km: number[];
+        };
         /** CapabilityOut */
         CapabilityOut: {
             /** Key */
@@ -200,6 +247,32 @@ export interface components {
             /** Time Utc */
             time_utc: string;
         };
+        /** ObserverOut */
+        ObserverOut: {
+            /**
+             * Frame
+             * @default MOON_ME
+             */
+            frame: string;
+            /** Height M */
+            height_m: number;
+            /**
+             * Lat Convention
+             * @default planetocentric
+             */
+            lat_convention: string;
+            /** Lat Deg */
+            lat_deg: number;
+            /**
+             * Lon Convention
+             * @default east_positive
+             */
+            lon_convention: string;
+            /** Lon Deg East */
+            lon_deg_east: number;
+            /** Site Id */
+            site_id: string | null;
+        };
         /** PendingRegionOut */
         PendingRegionOut: {
             /** Name */
@@ -210,6 +283,52 @@ export interface components {
             reference_url?: string | null;
             /** Status */
             status: string;
+        };
+        /** SeriesRequest */
+        SeriesRequest: {
+            /** Bodies */
+            bodies?: string[];
+            /**
+             * End Utc
+             * @description Inclusive end if aligned to the step
+             */
+            end_utc: string;
+            site: components["schemas"]["SiteSelector"];
+            /**
+             * Start Utc
+             * @description ISO-8601 UTC with Z, e.g. 2027-01-15T00:00:00Z
+             */
+            start_utc: string;
+            /**
+             * Step Seconds
+             * @description Sampling step, seconds (1..2592000)
+             * @default 900
+             */
+            step_seconds: number;
+        };
+        /** SeriesResponse */
+        SeriesResponse: {
+            /** Bodies */
+            bodies: {
+                [key: string]: components["schemas"]["BodySeriesOut"];
+            };
+            /** Data Class */
+            data_class: string;
+            /** N Samples */
+            n_samples: number;
+            /** Notes */
+            notes: string[];
+            observer: components["schemas"]["ObserverOut"];
+            /** Provenance */
+            provenance: {
+                [key: string]: unknown;
+            };
+            /** Times Utc */
+            times_utc: string[];
+            /** Units */
+            units: {
+                [key: string]: string;
+            };
         };
         /** SiteOut */
         SiteOut: {
@@ -235,6 +354,33 @@ export interface components {
             reference_height_source?: string | null;
             /** Sources */
             sources: components["schemas"]["SourceOut"][];
+        };
+        /**
+         * SiteSelector
+         * @description Either a catalogue `site_id`, or custom `lat` + `lon`. Typed loosely; the engine validates.
+         */
+        SiteSelector: {
+            /**
+             * Height M
+             * @description Observer height above the 1737.4 km reference sphere, metres (assumed 0 unless given; DEM-derived height arrives in Stage 5)
+             * @default 0
+             */
+            height_m: unknown;
+            /**
+             * Lat
+             * @description Planetocentric latitude, degrees (south negative)
+             */
+            lat?: unknown;
+            /**
+             * Lon
+             * @description East-positive longitude, degrees [-180, 360]
+             */
+            lon?: unknown;
+            /**
+             * Site Id
+             * @description Catalogue site id (see GET /sites)
+             */
+            site_id?: string | null;
         };
         /** SitesResponse */
         SitesResponse: {
@@ -416,6 +562,117 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["WindowOut"][];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    ephemeris_position_ephemeris_position_get: {
+        parameters: {
+            query: {
+                /** @description ISO-8601 UTC with Z */
+                time_utc: string;
+                /** @description Catalogue site id */
+                site_id?: string | null;
+                /** @description Latitude, degrees (planetocentric) */
+                lat?: number | null;
+                /** @description East-positive longitude, degrees */
+                lon?: number | null;
+                /** @description Observer height above the reference sphere, m */
+                height_m?: number;
+                /** @description sun | earth | both */
+                body?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SeriesResponse"];
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    ephemeris_series_ephemeris_series_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeriesRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SeriesResponse"];
                 };
             };
             /** @description Unprocessable Entity */

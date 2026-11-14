@@ -55,10 +55,18 @@ cd web; npm run gen:api                                       # regenerates src/
 .\.venv\Scripts\python.exe -I scripts\inspect_kernels.py      # coverage/version metadata into the manifest
 .\.venv\Scripts\python.exe -I scripts\extract_dem_window.py    # 3 small LOLA windows (~5 MB total)
 ```
-Tests that need the windows skip with this command in their message when the files are absent.
+Tests that need the windows (or the kernels) skip with the rebuild command in their message when the files are absent.
+
+## Stage 3 ephemeris validation
+```powershell
+.\.venv\Scripts\python.exe -I scripts\fetch_horizons_reference.py   # (network) re-record the JPL Horizons oracle -> data/validation/
+$env:PYTHONPATH="scripts"; .\.venv\Scripts\python.exe scripts\validate_ephemeris.py     # offline engine-vs-Horizons residuals (exit 1 on failure)
+$env:PYTHONPATH="scripts"; .\.venv\Scripts\python.exe scripts\ephemeris_sensitivity.py  # size of each modelling choice
+```
+The Horizons fixture is tracked (small); re-fetching is only needed to extend the grid.
 
 ## Dependencies
-- Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries (spiceypy, numpy, rasterio, pyproj) are added in the stage that first needs them.
+- Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.
 
 ## Not committed (decision G1)

@@ -1,0 +1,2320 @@
+{
+ "purpose": "Independent JPL Horizons reference for Stage 3 ephemeris validation",
+ "retrieved_utc": "2026-11-14T12:53:24Z",
+ "horizons_signature": {
+  "version": "1.2",
+  "source": "NASA/JPL Horizons API"
+ },
+ "endpoint": "https://ssd.jpl.nasa.gov/api/horizons.api",
+ "request_template": {
+  "CENTER": "coord@301",
+  "COORD_TYPE": "GEODETIC",
+  "SITE_COORD": "lonE,lat,alt_km",
+  "QUANTITIES": "4,13,20",
+  "APPARENT": "AIRLESS",
+  "EXTRA_PREC": "YES",
+  "TIME_TYPE": "UT",
+  "COMMAND": {
+   "sun": "10",
+   "earth": "399"
+  }
+ },
+ "notes": [
+  "Horizons frame for coord@301 is MEAN_ME (high precision), ephemeris DE441.",
+  "range_km = delta(AU) * 149597870.7.",
+  "These are validation test points, not landing-site claims."
+ ],
+ "sites": [
+  {
+   "id": "im2-athena",
+   "lat_deg": -84.79059,
+   "lon_deg_east": 29.19567,
+   "height_m": 0.0,
+   "note": "catalogue site (NAIF CLPS kernel)"
+  },
+  {
+   "id": "im2-athena-h5321",
+   "lat_deg": -84.79059,
+   "lon_deg_east": 29.19567,
+   "height_m": 5321.0,
+   "note": "same, observer 5321 m up: tests height handling"
+  },
+  {
+   "id": "im1-odysseus",
+   "lat_deg": -80.12759,
+   "lon_deg_east": 1.44587,
+   "height_m": 0.0,
+   "note": "catalogue site"
+  },
+  {
+   "id": "chandrayaan3",
+   "lat_deg": -69.3741,
+   "lon_deg_east": 32.32,
+   "height_m": 0.0,
+   "note": "catalogue site"
+  },
+  {
+   "id": "south-pole",
+   "lat_deg": -90.0,
+   "lon_deg_east": 0.0,
+   "height_m": 0.0,
+   "note": "exact pole: tests the azimuth tie-break"
+  },
+  {
+   "id": "south-pole-lon123",
+   "lat_deg": -90.0,
+   "lon_deg_east": 123.0,
+   "height_m": 0.0,
+   "note": "exact pole, non-zero longitude: tie-break uses lon"
+  },
+  {
+   "id": "north-pole-lon270",
+   "lat_deg": 90.0,
+   "lon_deg_east": 270.0,
+   "height_m": 0.0,
+   "note": "exact north pole, lon given as 270 E"
+  },
+  {
+   "id": "near-south-pole",
+   "lat_deg": -89.9,
+   "lon_deg_east": 123.0,
+   "height_m": 0.0,
+   "note": "0.1 deg from pole, off-meridian"
+  },
+  {
+   "id": "equator-nearside",
+   "lat_deg": 0.0,
+   "lon_deg_east": 0.0,
+   "height_m": 0.0,
+   "note": "sub-Earth region: Earth near zenith"
+  },
+  {
+   "id": "equator-farside",
+   "lat_deg": 0.0,
+   "lon_deg_east": 180.0,
+   "height_m": 0.0,
+   "note": "farside: Earth below the horizon"
+  },
+  {
+   "id": "north-midlat",
+   "lat_deg": 45.0,
+   "lon_deg_east": -100.0,
+   "height_m": 0.0,
+   "note": "northern hemisphere, longitude given negative"
+  }
+ ],
+ "epochs_utc": [
+  "2025-01-01T00:00:00Z",
+  "2025-07-04T06:30:00Z",
+  "2026-03-20T12:00:00Z",
+  "2027-01-15T00:00:00Z",
+  "2027-01-15T09:17:45Z",
+  "2028-02-29T23:59:59Z",
+  "2029-10-01T18:45:00Z",
+  "2031-05-05T03:03:03Z",
+  "2033-12-25T12:00:00Z",
+  "2035-12-31T23:00:00Z"
+ ],
+ "rows": [
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 132.976254128,
+   "el_deg": -2.033369496,
+   "ang_diam_arcsec": 1955.866,
+   "range_km": 146737020.97386608,
+   "range_rate_km_s": 0.2278072
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 46.626501605,
+   "el_deg": 2.108050835,
+   "ang_diam_arcsec": 1885.676,
+   "range_km": 152198934.1715491,
+   "range_rate_km_s": 0.8511082
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 128.131253116,
+   "el_deg": -3.759459833,
+   "ang_diam_arcsec": 1930.901,
+   "range_km": 148634190.52558947,
+   "range_rate_km_s": 0.8297254
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 63.561267244,
+   "el_deg": 3.073663681,
+   "ang_diam_arcsec": 1951.328,
+   "range_km": 147078252.67198566,
+   "range_rate_km_s": 1.0103388
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 58.858011429,
+   "el_deg": 3.43785553,
+   "ang_diam_arcsec": 1950.876,
+   "range_km": 147112323.9632553,
+   "range_rate_km_s": 1.0249152
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 94.141434262,
+   "el_deg": -1.362039055,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977486.74726242,
+   "range_rate_km_s": 1.1354749
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 223.10747219,
+   "el_deg": -2.290739274,
+   "ang_diam_arcsec": 1917.412,
+   "range_km": 149679841.45604184,
+   "range_rate_km_s": -1.3832276
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 351.526207007,
+   "el_deg": 4.728899933,
+   "ang_diam_arcsec": 1898.348,
+   "range_km": 151182959.9815298,
+   "range_rate_km_s": 0.8091177
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 100.754408472,
+   "el_deg": -2.50028883,
+   "ang_diam_arcsec": 1954.053,
+   "range_km": 146873161.70673773,
+   "range_rate_km_s": 0.6080876
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 123.003469747,
+   "el_deg": -4.026927476,
+   "ang_diam_arcsec": 1955.78,
+   "range_km": 146743478.54071206,
+   "range_rate_km_s": 0.3523709
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 326.373189043,
+   "el_deg": -1.978001092,
+   "ang_diam_arcsec": 6892.115,
+   "range_km": 381783.02497970074,
+   "range_rate_km_s": -0.0398757
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 332.680885977,
+   "el_deg": 0.346179791,
+   "ang_diam_arcsec": 6510.547,
+   "range_km": 404156.4252637331,
+   "range_rate_km_s": 0.0121417
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 326.912799972,
+   "el_deg": 8.452105831,
+   "ang_diam_arcsec": 7136.13,
+   "range_km": 368729.44647231366,
+   "range_rate_km_s": -0.0260802
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 322.685454515,
+   "el_deg": 9.317491677,
+   "ang_diam_arcsec": 6807.729,
+   "range_km": 386515.0235312083,
+   "range_rate_km_s": -0.0610616
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 322.60877464,
+   "el_deg": 9.649791782,
+   "ang_diam_arcsec": 6844.587,
+   "range_km": 384433.86780153634,
+   "range_rate_km_s": -0.0632637
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 324.158656525,
+   "el_deg": 10.719274501,
+   "ang_diam_arcsec": 6627.595,
+   "range_km": 397019.33833265427,
+   "range_rate_km_s": -0.0412317
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 323.474807216,
+   "el_deg": 1.693220527,
+   "ang_diam_arcsec": 6781.474,
+   "range_km": 388011.3105115484,
+   "range_rate_km_s": -0.06697
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 325.042730587,
+   "el_deg": -0.459755272,
+   "ang_diam_arcsec": 7015.915,
+   "range_km": 375046.8829478322,
+   "range_rate_km_s": -0.0611027
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 325.962563658,
+   "el_deg": 9.0016016,
+   "ang_diam_arcsec": 6937.533,
+   "range_km": 379283.8338667078,
+   "range_rate_km_s": -0.0328928
+  },
+  {
+   "site_id": "im2-athena",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 328.50110443,
+   "el_deg": 6.722143988,
+   "ang_diam_arcsec": 6484.796,
+   "range_km": 405761.1730684651,
+   "range_rate_km_s": -0.0102701
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 132.976254128,
+   "el_deg": -2.033371572,
+   "ang_diam_arcsec": 1955.866,
+   "range_km": 146737021.16269898,
+   "range_rate_km_s": 0.2278064
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 46.626501605,
+   "el_deg": 2.108048833,
+   "ang_diam_arcsec": 1885.676,
+   "range_km": 152198933.97585115,
+   "range_rate_km_s": 0.8511073
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 128.131253116,
+   "el_deg": -3.75946188,
+   "ang_diam_arcsec": 1930.901,
+   "range_km": 148634190.87452352,
+   "range_rate_km_s": 0.8297245
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 63.561267244,
+   "el_deg": 3.073661612,
+   "ang_diam_arcsec": 1951.328,
+   "range_km": 147078252.38672945,
+   "range_rate_km_s": 1.0103378
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 58.858011429,
+   "el_deg": 3.437853462,
+   "ang_diam_arcsec": 1950.876,
+   "range_km": 147112323.64423034,
+   "range_rate_km_s": 1.0249142
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 94.141434262,
+   "el_deg": -1.362041115,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977486.87379977,
+   "range_rate_km_s": 1.1354737
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 223.10747219,
+   "el_deg": -2.290741309,
+   "ang_diam_arcsec": 1917.412,
+   "range_km": 149679841.6686952,
+   "range_rate_km_s": -1.3832268
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 351.526207007,
+   "el_deg": 4.728897923,
+   "ang_diam_arcsec": 1898.348,
+   "range_km": 151182959.54283705,
+   "range_rate_km_s": 0.8091178
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 100.754408472,
+   "el_deg": -2.500290904,
+   "ang_diam_arcsec": 1954.053,
+   "range_km": 146873161.93891212,
+   "range_rate_km_s": 0.6080865
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 123.003469747,
+   "el_deg": -4.026929548,
+   "ang_diam_arcsec": 1955.78,
+   "range_km": 146743478.91441205,
+   "range_rate_km_s": 0.3523699
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 326.373189043,
+   "el_deg": -1.978799142,
+   "ang_diam_arcsec": 6892.112,
+   "range_km": 381783.2087113176,
+   "range_rate_km_s": -0.0398763
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 332.680885977,
+   "el_deg": 0.345425536,
+   "ang_diam_arcsec": 6510.548,
+   "range_km": 404156.3931794778,
+   "range_rate_km_s": 0.0121429
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 326.912799972,
+   "el_deg": 8.451288022,
+   "ang_diam_arcsec": 7136.146,
+   "range_km": 368728.6644644043,
+   "range_rate_km_s": -0.0260817
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 322.685454515,
+   "el_deg": 9.316713391,
+   "ang_diam_arcsec": 6807.744,
+   "range_km": 386514.1621242291,
+   "range_rate_km_s": -0.0610625
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 322.60877464,
+   "el_deg": 9.649010042,
+   "ang_diam_arcsec": 6844.603,
+   "range_km": 384432.97595438245,
+   "range_rate_km_s": -0.0632646
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 324.158656525,
+   "el_deg": 10.718520058,
+   "ang_diam_arcsec": 6627.612,
+   "range_km": 397018.34873525973,
+   "range_rate_km_s": -0.0412316
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 323.474807217,
+   "el_deg": 1.692435066,
+   "ang_diam_arcsec": 6781.477,
+   "range_km": 388011.1532916662,
+   "range_rate_km_s": -0.0669685
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 325.042730588,
+   "el_deg": -0.460568098,
+   "ang_diam_arcsec": 7015.914,
+   "range_km": 375046.9256580242,
+   "range_rate_km_s": -0.061104
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 325.962563659,
+   "el_deg": 9.000807748,
+   "ang_diam_arcsec": 6937.549,
+   "range_km": 379283.0014188845,
+   "range_rate_km_s": -0.0328918
+  },
+  {
+   "site_id": "im2-athena-h5321",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 328.501104431,
+   "el_deg": 6.721397829,
+   "ang_diam_arcsec": 6484.806,
+   "range_km": 405760.5502880415,
+   "range_rate_km_s": -0.0102687
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 160.563335215,
+   "el_deg": -7.797718002,
+   "ang_diam_arcsec": 1955.864,
+   "range_km": 146737195.05040345,
+   "range_rate_km_s": 0.2278494
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 74.332641927,
+   "el_deg": 1.198800823,
+   "ang_diam_arcsec": 1885.675,
+   "range_km": 152198961.74827397,
+   "range_rate_km_s": 0.8506834
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 155.677496042,
+   "el_deg": -9.548509848,
+   "ang_diam_arcsec": 1930.899,
+   "range_km": 148634364.81228194,
+   "range_rate_km_s": 0.8297323
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 91.266440939,
+   "el_deg": 0.537448738,
+   "ang_diam_arcsec": 1951.327,
+   "range_km": 147078329.54975694,
+   "range_rate_km_s": 1.0099536
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 86.623929167,
+   "el_deg": 1.334286659,
+   "ang_diam_arcsec": 1950.875,
+   "range_km": 147112387.7079417,
+   "range_rate_km_s": 1.0245159
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 121.470696127,
+   "el_deg": -6.182771676,
+   "ang_diam_arcsec": 1939.468,
+   "range_km": 147977632.57770222,
+   "range_rate_km_s": 1.1352401
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 250.850869066,
+   "el_deg": -1.732554454,
+   "ang_diam_arcsec": 1917.412,
+   "range_km": 149679824.52339545,
+   "range_rate_km_s": -1.3827999
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 19.548485955,
+   "el_deg": 8.889015286,
+   "ang_diam_arcsec": 1898.35,
+   "range_km": 151182834.76271453,
+   "range_rate_km_s": 0.8088185
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 128.06120003,
+   "el_deg": -7.657470407,
+   "ang_diam_arcsec": 1954.051,
+   "range_km": 146873317.43099576,
+   "range_rate_km_s": 0.6078967
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 150.486746148,
+   "el_deg": -9.796676586,
+   "ang_diam_arcsec": 1955.777,
+   "range_km": 146743652.15547672,
+   "range_rate_km_s": 0.3523399
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 353.947320612,
+   "el_deg": 3.506136273,
+   "ang_diam_arcsec": 6895.117,
+   "range_km": 381616.8143163228,
+   "range_rate_km_s": -0.0398723
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 0.359675933,
+   "el_deg": 5.592019134,
+   "ang_diam_arcsec": 6513.106,
+   "range_km": 403997.67525111604,
+   "range_rate_km_s": 0.01212
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 354.844006866,
+   "el_deg": 13.917259384,
+   "ang_diam_arcsec": 7139.274,
+   "range_km": 368567.0822738751,
+   "range_rate_km_s": -0.0260587
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 350.558780333,
+   "el_deg": 14.910583954,
+   "ang_diam_arcsec": 6810.647,
+   "range_km": 386349.436770238,
+   "range_rate_km_s": -0.0610575
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 350.489784933,
+   "el_deg": 15.244977669,
+   "ang_diam_arcsec": 6847.534,
+   "range_km": 384268.4344457026,
+   "range_rate_km_s": -0.0632587
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 352.106183399,
+   "el_deg": 16.27096072,
+   "ang_diam_arcsec": 6630.325,
+   "range_km": 396855.8813023225,
+   "range_rate_km_s": -0.0412399
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 351.146839376,
+   "el_deg": 7.264384226,
+   "ang_diam_arcsec": 6784.418,
+   "range_km": 387842.9981147735,
+   "range_rate_km_s": -0.066977
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 352.66134153,
+   "el_deg": 5.065986411,
+   "ang_diam_arcsec": 7019.047,
+   "range_km": 374879.5673321415,
+   "range_rate_km_s": -0.0610945
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 353.893995795,
+   "el_deg": 14.49802172,
+   "ang_diam_arcsec": 6940.516,
+   "range_km": 379120.8787357363,
+   "range_rate_km_s": -0.0328955
+  },
+  {
+   "site_id": "im1-odysseus",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 356.395712125,
+   "el_deg": 12.131361557,
+   "ang_diam_arcsec": 6487.381,
+   "range_km": 405599.53730394633,
+   "range_rate_km_s": -0.0102945
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 128.444500897,
+   "el_deg": -11.590365749,
+   "ang_diam_arcsec": 1955.862,
+   "range_km": 146737308.42982033,
+   "range_rate_km_s": 0.226935
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 44.999130036,
+   "el_deg": 13.384550174,
+   "ang_diam_arcsec": 1885.68,
+   "range_km": 152198595.92804226,
+   "range_rate_km_s": 0.850352
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 123.233352426,
+   "el_deg": -12.216386551,
+   "ang_diam_arcsec": 1930.898,
+   "range_km": 148634444.2857962,
+   "range_rate_km_s": 0.828796
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 62.123746919,
+   "el_deg": 10.766811034,
+   "ang_diam_arcsec": 1951.331,
+   "range_km": 147078021.30275497,
+   "range_rate_km_s": 1.009379
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 57.542653812,
+   "el_deg": 12.190952341,
+   "ang_diam_arcsec": 1950.88,
+   "range_km": 147112061.29796004,
+   "range_rate_km_s": 1.0240057
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 90.706098689,
+   "el_deg": -1.313624882,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977485.32402268,
+   "range_rate_km_s": 1.1343552
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 221.469924259,
+   "el_deg": -14.192609861,
+   "ang_diam_arcsec": 1917.407,
+   "range_km": 149680197.96389437,
+   "range_rate_km_s": -1.3825249
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 347.695712779,
+   "el_deg": 19.765696367,
+   "ang_diam_arcsec": 1898.354,
+   "range_km": 151182515.66166,
+   "range_rate_km_s": 0.8093632
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 96.782662048,
+   "el_deg": -4.167292445,
+   "ang_diam_arcsec": 1954.052,
+   "range_km": 146873212.21308222,
+   "range_rate_km_s": 0.6069774
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 118.086691427,
+   "el_deg": -11.290862024,
+   "ang_diam_arcsec": 1955.777,
+   "range_km": 146743696.735895,
+   "range_rate_km_s": 0.3513928
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 322.568775058,
+   "el_deg": 10.188765793,
+   "ang_diam_arcsec": 6898.75,
+   "range_km": 381415.8792839218,
+   "range_rate_km_s": -0.0398844
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 328.57729753,
+   "el_deg": 13.462027553,
+   "ang_diam_arcsec": 6516.897,
+   "range_km": 403762.6858536756,
+   "range_rate_km_s": 0.01219
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 321.291983452,
+   "el_deg": 20.570697695,
+   "ang_diam_arcsec": 7143.001,
+   "range_km": 368374.8095610671,
+   "range_rate_km_s": -0.0261088
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 316.734051494,
+   "el_deg": 20.667960471,
+   "ang_diam_arcsec": 6813.574,
+   "range_km": 386183.52110488515,
+   "range_rate_km_s": -0.0610232
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 316.587044421,
+   "el_deg": 20.980313187,
+   "ang_diam_arcsec": 6850.475,
+   "range_km": 384103.45805601263,
+   "range_rate_km_s": -0.063237
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 317.986789027,
+   "el_deg": 22.31720503,
+   "ang_diam_arcsec": 6633.212,
+   "range_km": 396683.2006746507,
+   "range_rate_km_s": -0.0411856
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 319.005055431,
+   "el_deg": 13.309862392,
+   "ang_diam_arcsec": 6787.571,
+   "range_km": 387662.8405840281,
+   "range_rate_km_s": -0.0669712
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 320.971103498,
+   "el_deg": 11.46243675,
+   "ang_diam_arcsec": 7022.639,
+   "range_km": 374687.8237380263,
+   "range_rate_km_s": -0.061122
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 320.200860687,
+   "el_deg": 20.948187817,
+   "ang_diam_arcsec": 6943.921,
+   "range_km": 378934.9650873286,
+   "range_rate_km_s": -0.0329397
+  },
+  {
+   "site_id": "chandrayaan3",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 323.257575048,
+   "el_deg": 19.127969613,
+   "ang_diam_arcsec": 6490.644,
+   "range_km": 405395.62157436315,
+   "range_rate_km_s": -0.0102264
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 162.188972351,
+   "el_deg": 1.519736842,
+   "ang_diam_arcsec": 1955.867,
+   "range_km": 146736913.23885015,
+   "range_rate_km_s": 0.2280912
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 75.801083019,
+   "el_deg": -1.471518023,
+   "ang_diam_arcsec": 1885.674,
+   "range_km": 152199042.68543136,
+   "range_rate_km_s": 0.851391
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 157.480492884,
+   "el_deg": -0.535970188,
+   "ang_diam_arcsec": 1930.902,
+   "range_km": 148634092.84816706,
+   "range_rate_km_s": 0.8300309
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 92.601314647,
+   "el_deg": 0.746603611,
+   "ang_diam_arcsec": 1951.327,
+   "range_km": 147078323.1779917,
+   "range_rate_km_s": 1.0106854
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 87.891179955,
+   "el_deg": 0.736068368,
+   "ang_diam_arcsec": 1950.875,
+   "range_km": 147112405.8149598,
+   "range_rate_km_s": 1.0252463
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 123.443350475,
+   "el_deg": -0.980743411,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977475.17209727,
+   "range_rate_km_s": 1.1358623
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 252.279056479,
+   "el_deg": 1.514482541,
+   "ang_diam_arcsec": 1917.413,
+   "range_km": 149679726.10342157,
+   "range_rate_km_s": -1.3834931
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 20.750709331,
+   "el_deg": -0.423913012,
+   "ang_diam_arcsec": 1898.346,
+   "range_km": 151183116.07148883,
+   "range_rate_km_s": 0.8090607
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 130.12969624,
+   "el_deg": -1.519541351,
+   "ang_diam_arcsec": 1954.053,
+   "range_km": 146873131.9705571,
+   "range_rate_km_s": 0.6084686
+  },
+  {
+   "site_id": "south-pole",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 152.397670155,
+   "el_deg": -1.180471433,
+   "ang_diam_arcsec": 1955.781,
+   "range_km": 146743392.31159583,
+   "range_rate_km_s": 0.3526957
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 355.372346407,
+   "el_deg": -6.310228085,
+   "ang_diam_arcsec": 6889.751,
+   "range_km": 381914.0496599061,
+   "range_rate_km_s": -0.0398697
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 1.804569891,
+   "el_deg": -4.280682826,
+   "ang_diam_arcsec": 6508.289,
+   "range_km": 404296.6161166398,
+   "range_rate_km_s": 0.0121213
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 356.432914808,
+   "el_deg": 4.076260697,
+   "ang_diam_arcsec": 7133.581,
+   "range_km": 368861.23258324113,
+   "range_rate_km_s": -0.0260651
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 352.294827791,
+   "el_deg": 5.159550639,
+   "ang_diam_arcsec": 6805.529,
+   "range_km": 386639.9893151408,
+   "range_rate_km_s": -0.0610693
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 352.237551898,
+   "el_deg": 5.495403648,
+   "ang_diam_arcsec": 6842.366,
+   "range_km": 384558.62923926546,
+   "range_rate_km_s": -0.0632682
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 353.826726358,
+   "el_deg": 6.479975639,
+   "ang_diam_arcsec": 6625.476,
+   "range_km": 397146.31536271976,
+   "range_rate_km_s": -0.0412462
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 352.662684898,
+   "el_deg": -2.493716515,
+   "ang_diam_arcsec": 6779.256,
+   "range_km": 388138.2562681791,
+   "range_rate_km_s": -0.0669771
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 354.116788614,
+   "el_deg": -4.726187536,
+   "ang_diam_arcsec": 7013.498,
+   "range_km": 375176.12299724703,
+   "range_rate_km_s": -0.0610898
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 355.519828973,
+   "el_deg": 4.672224737,
+   "ang_diam_arcsec": 6935.152,
+   "range_km": 379414.06425402674,
+   "range_rate_km_s": -0.0328831
+  },
+  {
+   "site_id": "south-pole",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 357.921972384,
+   "el_deg": 2.272666686,
+   "ang_diam_arcsec": 6482.649,
+   "range_km": 405895.58874194877,
+   "range_rate_km_s": -0.01029
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 39.188972351,
+   "el_deg": 1.519736842,
+   "ang_diam_arcsec": 1955.867,
+   "range_km": 146736913.23885015,
+   "range_rate_km_s": 0.2280912
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 312.801083019,
+   "el_deg": -1.471518023,
+   "ang_diam_arcsec": 1885.674,
+   "range_km": 152199042.68543136,
+   "range_rate_km_s": 0.851391
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 34.480492884,
+   "el_deg": -0.535970188,
+   "ang_diam_arcsec": 1930.902,
+   "range_km": 148634092.84816706,
+   "range_rate_km_s": 0.8300309
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 329.601314647,
+   "el_deg": 0.746603611,
+   "ang_diam_arcsec": 1951.327,
+   "range_km": 147078323.1779917,
+   "range_rate_km_s": 1.0106854
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 324.891179955,
+   "el_deg": 0.736068368,
+   "ang_diam_arcsec": 1950.875,
+   "range_km": 147112405.8149598,
+   "range_rate_km_s": 1.0252463
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 0.443350475,
+   "el_deg": -0.980743411,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977475.17209727,
+   "range_rate_km_s": 1.1358623
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 129.279056479,
+   "el_deg": 1.514482541,
+   "ang_diam_arcsec": 1917.413,
+   "range_km": 149679726.10342157,
+   "range_rate_km_s": -1.3834931
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 257.750709331,
+   "el_deg": -0.423913012,
+   "ang_diam_arcsec": 1898.346,
+   "range_km": 151183116.07148883,
+   "range_rate_km_s": 0.8090607
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 7.12969624,
+   "el_deg": -1.519541351,
+   "ang_diam_arcsec": 1954.053,
+   "range_km": 146873131.9705571,
+   "range_rate_km_s": 0.6084686
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 29.397670155,
+   "el_deg": -1.180471433,
+   "ang_diam_arcsec": 1955.781,
+   "range_km": 146743392.31159583,
+   "range_rate_km_s": 0.3526957
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 232.372346407,
+   "el_deg": -6.310228085,
+   "ang_diam_arcsec": 6889.751,
+   "range_km": 381914.0496599061,
+   "range_rate_km_s": -0.0398697
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 238.804569891,
+   "el_deg": -4.280682826,
+   "ang_diam_arcsec": 6508.289,
+   "range_km": 404296.6161166398,
+   "range_rate_km_s": 0.0121213
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 233.432914808,
+   "el_deg": 4.076260697,
+   "ang_diam_arcsec": 7133.581,
+   "range_km": 368861.23258324113,
+   "range_rate_km_s": -0.0260651
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 229.294827791,
+   "el_deg": 5.159550639,
+   "ang_diam_arcsec": 6805.529,
+   "range_km": 386639.9893151408,
+   "range_rate_km_s": -0.0610693
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 229.237551898,
+   "el_deg": 5.495403648,
+   "ang_diam_arcsec": 6842.366,
+   "range_km": 384558.62923926546,
+   "range_rate_km_s": -0.0632682
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 230.826726358,
+   "el_deg": 6.479975639,
+   "ang_diam_arcsec": 6625.476,
+   "range_km": 397146.31536271976,
+   "range_rate_km_s": -0.0412462
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 229.662684898,
+   "el_deg": -2.493716515,
+   "ang_diam_arcsec": 6779.256,
+   "range_km": 388138.2562681791,
+   "range_rate_km_s": -0.0669771
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 231.116788614,
+   "el_deg": -4.726187536,
+   "ang_diam_arcsec": 7013.498,
+   "range_km": 375176.12299724703,
+   "range_rate_km_s": -0.0610898
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 232.519828973,
+   "el_deg": 4.672224737,
+   "ang_diam_arcsec": 6935.152,
+   "range_km": 379414.06425402674,
+   "range_rate_km_s": -0.0328831
+  },
+  {
+   "site_id": "south-pole-lon123",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 234.921972384,
+   "el_deg": 2.272666686,
+   "ang_diam_arcsec": 6482.649,
+   "range_km": 405895.58874194877,
+   "range_rate_km_s": -0.01029
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 287.811027653,
+   "el_deg": -1.521093156,
+   "ang_diam_arcsec": 1955.866,
+   "range_km": 146737005.43529233,
+   "range_rate_km_s": 0.2280852
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 14.198916978,
+   "el_deg": 1.470210352,
+   "ang_diam_arcsec": 1885.676,
+   "range_km": 152198953.49476945,
+   "range_rate_km_s": 0.8513923
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 292.519507115,
+   "el_deg": 0.534630769,
+   "ang_diam_arcsec": 1930.903,
+   "range_km": 148634060.3769574,
+   "range_rate_km_s": 0.8300125
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 357.398685355,
+   "el_deg": -0.747957142,
+   "ang_diam_arcsec": 1951.327,
+   "range_km": 147078368.48915517,
+   "range_rate_km_s": 1.0106665
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 2.108820047,
+   "el_deg": -0.737421589,
+   "ang_diam_arcsec": 1950.874,
+   "range_km": 147112450.487113,
+   "range_rate_km_s": 1.025227
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 326.556649523,
+   "el_deg": 0.979398186,
+   "ang_diam_arcsec": 1939.471,
+   "range_km": 147977415.72972593,
+   "range_rate_km_s": 1.1358518
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 197.720943524,
+   "el_deg": -1.515812185,
+   "ang_diam_arcsec": 1917.412,
+   "range_km": 149679817.97916928,
+   "range_rate_km_s": -1.3835021
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 69.249290667,
+   "el_deg": 0.422596156,
+   "ang_diam_arcsec": 1898.346,
+   "range_km": 151183090.41273883,
+   "range_rate_km_s": 0.809083
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 319.870303757,
+   "el_deg": 1.518186291,
+   "ang_diam_arcsec": 1954.055,
+   "range_km": 146873039.86579,
+   "range_rate_km_s": 0.6084701
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 297.602329842,
+   "el_deg": 1.179114988,
+   "ang_diam_arcsec": 1955.782,
+   "range_km": 146743320.7711998,
+   "range_rate_km_s": 0.3527075
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 94.627653402,
+   "el_deg": 5.791594887,
+   "ang_diam_arcsec": 6896.365,
+   "range_km": 381547.7589787893,
+   "range_rate_km_s": -0.0394532
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 88.195429997,
+   "el_deg": 3.789360598,
+   "ang_diam_arcsec": 6512.228,
+   "range_km": 404052.1076989763,
+   "range_rate_km_s": 0.0113593
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 93.567085336,
+   "el_deg": -4.614246963,
+   "ang_diam_arcsec": 7128.492,
+   "range_km": 369124.50071152055,
+   "range_rate_km_s": -0.0251574
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 97.705172372,
+   "el_deg": -5.671912563,
+   "ang_diam_arcsec": 6799.761,
+   "range_km": 386967.9425604051,
+   "range_rate_km_s": -0.0604258
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 97.762448278,
+   "el_deg": -6.010227075,
+   "ang_diam_arcsec": 6836.174,
+   "range_km": 384906.9285728539,
+   "range_rate_km_s": -0.0626968
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 96.173273837,
+   "el_deg": -6.977535299,
+   "ang_diam_arcsec": 6618.69,
+   "range_km": 397553.45126658643,
+   "range_rate_km_s": -0.0412441
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 97.337315036,
+   "el_deg": 1.98102689,
+   "ang_diam_arcsec": 6781.627,
+   "range_km": 388002.5974917411,
+   "range_rate_km_s": -0.0679498
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 95.883211241,
+   "el_deg": 4.196964802,
+   "ang_diam_arcsec": 7018.555,
+   "range_km": 374905.8234892967,
+   "range_rate_km_s": -0.0602158
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 94.480171183,
+   "el_deg": -5.194773185,
+   "ang_diam_arcsec": 6929.693,
+   "range_km": 379712.8965833034,
+   "range_rate_km_s": -0.0335997
+  },
+  {
+   "site_id": "north-pole-lon270",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 92.078027686,
+   "el_deg": -2.762580426,
+   "ang_diam_arcsec": 6480.212,
+   "range_km": 406048.23160549987,
+   "range_rate_km_s": -0.0111886
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 39.19069232,
+   "el_deg": 1.597242538,
+   "ang_diam_arcsec": 1955.867,
+   "range_km": 146736910.8896744,
+   "range_rate_km_s": 0.2280865
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 312.802923429,
+   "el_deg": -1.403571338,
+   "ang_diam_arcsec": 1885.675,
+   "range_km": 152199040.62548962,
+   "range_rate_km_s": 0.8513965
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 34.480004684,
+   "el_deg": -0.45353805,
+   "ang_diam_arcsec": 1930.902,
+   "range_km": 148634090.348807,
+   "range_rate_km_s": 0.8300266
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 329.60061654,
+   "el_deg": 0.83285585,
+   "ang_diam_arcsec": 1951.327,
+   "range_km": 147078320.56263047,
+   "range_rate_km_s": 1.0106892
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 324.890399303,
+   "el_deg": 0.817874116,
+   "ang_diam_arcsec": 1950.875,
+   "range_km": 147112403.33438924,
+   "range_rate_km_s": 1.0252505
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 0.443337915,
+   "el_deg": -0.880746424,
+   "ang_diam_arcsec": 1939.47,
+   "range_km": 147977472.14025557,
+   "range_rate_km_s": 1.1358622
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 129.28106111,
+   "el_deg": 1.451171361,
+   "ang_diam_arcsec": 1917.413,
+   "range_km": 149679728.0228161,
+   "range_rate_km_s": -1.3834989
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 257.751449339,
+   "el_deg": -0.445128942,
+   "ang_diam_arcsec": 1898.346,
+   "range_km": 151183116.71450832,
+   "range_rate_km_s": 0.809068
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 7.129377906,
+   "el_deg": -1.420314572,
+   "ang_diam_arcsec": 1954.053,
+   "range_km": 146873128.96269444,
+   "range_rate_km_s": 0.6084676
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 29.396696603,
+   "el_deg": -1.093347654,
+   "ang_diam_arcsec": 1955.781,
+   "range_km": 146743389.6703766,
+   "range_rate_km_s": 0.352692
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 232.380785092,
+   "el_deg": -6.371244341,
+   "ang_diam_arcsec": 6889.717,
+   "range_km": 381915.8896703323,
+   "range_rate_km_s": -0.0398698
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 238.810643175,
+   "el_deg": -4.332457469,
+   "ang_diam_arcsec": 6508.264,
+   "range_km": 404298.1819425926,
+   "range_rate_km_s": 0.0121219
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 233.426854119,
+   "el_deg": 4.016660279,
+   "ang_diam_arcsec": 7133.546,
+   "range_km": 368863.0349219316,
+   "range_rate_km_s": -0.0260656
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 229.287684634,
+   "el_deg": 5.094303032,
+   "ang_diam_arcsec": 6805.494,
+   "range_km": 386641.9589715697,
+   "range_rate_km_s": -0.0610692
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 229.229965157,
+   "el_deg": 5.43007811,
+   "ang_diam_arcsec": 6842.331,
+   "range_km": 384560.60009995726,
+   "range_rate_km_s": -0.0632682
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 230.817623684,
+   "el_deg": 6.416771661,
+   "ang_diam_arcsec": 6625.444,
+   "range_km": 397148.21885051456,
+   "range_rate_km_s": -0.0412458
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 229.665706196,
+   "el_deg": -2.558430378,
+   "ang_diam_arcsec": 6779.222,
+   "range_km": 388140.2173122586,
+   "range_rate_km_s": -0.0669769
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 231.122905739,
+   "el_deg": -4.788932782,
+   "ang_diam_arcsec": 7013.463,
+   "range_km": 375178.0195182689,
+   "range_rate_km_s": -0.06109
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 232.513021607,
+   "el_deg": 4.611348781,
+   "ang_diam_arcsec": 6935.118,
+   "range_km": 379415.90351347165,
+   "range_rate_km_s": -0.0328833
+  },
+  {
+   "site_id": "near-south-pole",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 234.918415213,
+   "el_deg": 2.215185359,
+   "ang_diam_arcsec": 6482.621,
+   "range_km": 405897.3302810726,
+   "range_rate_km_s": -0.0102893
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 94.959393124,
+   "el_deg": -72.126499861,
+   "ang_diam_arcsec": 1955.845,
+   "range_km": 146738612.92462912,
+   "range_rate_km_s": 0.2267807
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 88.482806228,
+   "el_deg": 14.193506084,
+   "ang_diam_arcsec": 1885.68,
+   "range_km": 152198572.23078063,
+   "range_rate_km_s": 0.8472367
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 88.602577715,
+   "el_deg": -67.474718237,
+   "ang_diam_arcsec": 1930.882,
+   "range_km": 148635681.51976123,
+   "range_rate_km_s": 0.8283804
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 90.748051123,
+   "el_deg": -2.601769328,
+   "ang_diam_arcsec": 1951.326,
+   "range_km": 147078424.85484886,
+   "range_rate_km_s": 1.0064124
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 90.737244218,
+   "el_deg": 2.107969386,
+   "ang_diam_arcsec": 1950.876,
+   "range_km": 147112364.3993084,
+   "range_rate_km_s": 1.0209723
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 88.825512307,
+   "el_deg": -33.438375427,
+   "ang_diam_arcsec": 1939.458,
+   "range_km": 147978402.9525101,
+   "range_rate_km_s": 1.1322874
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 268.409415904,
+   "el_deg": -17.715176237,
+   "ang_diam_arcsec": 1917.406,
+   "range_km": 149680300.52457875,
+   "range_rate_km_s": -1.3794202
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 88.805538191,
+   "el_deg": 69.244930669,
+   "ang_diam_arcsec": 1898.367,
+   "range_km": 151181478.64391407,
+   "range_rate_km_s": 0.8075571
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 88.013816366,
+   "el_deg": -40.113246593,
+   "ang_diam_arcsec": 1954.039,
+   "range_km": 146874205.44053942,
+   "range_rate_km_s": 0.6052026
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 87.454992038,
+   "el_deg": -62.374761447,
+   "ang_diam_arcsec": 1955.761,
+   "range_km": 146744895.94326463,
+   "range_rate_km_s": 0.350721
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 322.725359646,
+   "el_deg": 82.352776842,
+   "ang_diam_arcsec": 6924.366,
+   "range_km": 380005.02951302385,
+   "range_rate_km_s": -0.0396919
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 24.056250549,
+   "el_deg": 85.561314469,
+   "ang_diam_arcsec": 6538.34,
+   "range_km": 402438.59998448036,
+   "range_rate_km_s": 0.0117524
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 219.310378549,
+   "el_deg": 84.353694817,
+   "ang_diam_arcsec": 7164.689,
+   "range_km": 367259.8582299412,
+   "range_rate_km_s": -0.0256012
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 234.735326128,
+   "el_deg": 80.549034369,
+   "ang_diam_arcsec": 6832.988,
+   "range_km": 385086.35098415054,
+   "range_rate_km_s": -0.0607071
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 233.280596274,
+   "el_deg": 80.305062526,
+   "ang_diam_arcsec": 6869.92,
+   "range_km": 383016.37191634777,
+   "range_rate_km_s": -0.062951
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 222.347337102,
+   "el_deg": 80.838070998,
+   "ang_diam_arcsec": 6650.855,
+   "range_km": 395630.9520852699,
+   "range_rate_km_s": -0.0412154
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 287.010304513,
+   "el_deg": 82.296530592,
+   "ang_diam_arcsec": 6810.733,
+   "range_km": 386344.58745652466,
+   "range_rate_km_s": -0.0674271
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 307.280107588,
+   "el_deg": 82.586823526,
+   "ang_diam_arcsec": 7048.484,
+   "range_km": 373314.0862368112,
+   "range_rate_km_s": -0.0607117
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 222.142724583,
+   "el_deg": 83.308911571,
+   "ang_diam_arcsec": 6964.156,
+   "range_km": 377834.04663785786,
+   "range_rate_km_s": -0.033282
+  },
+  {
+   "site_id": "equator-nearside",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 219.511197245,
+   "el_deg": 86.721921663,
+   "ang_diam_arcsec": 6509.302,
+   "range_km": 404233.71113203734,
+   "range_rate_km_s": -0.0107411
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 265.040606343,
+   "el_deg": 72.126085236,
+   "ang_diam_arcsec": 1955.889,
+   "range_km": 146735305.7308929,
+   "range_rate_km_s": 0.2293957
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 271.517193821,
+   "el_deg": -14.194774716,
+   "ang_diam_arcsec": 1885.67,
+   "range_km": 152199423.94824287,
+   "range_rate_km_s": 0.8555465
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 271.397422411,
+   "el_deg": 67.474206842,
+   "ang_diam_arcsec": 1930.923,
+   "range_km": 148632471.68803528,
+   "range_rate_km_s": 0.8316629
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 269.251948855,
+   "el_deg": 2.600417163,
+   "ang_diam_arcsec": 1951.328,
+   "range_km": 147078266.81225914,
+   "range_rate_km_s": 1.0149396
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 269.26275576,
+   "el_deg": -2.109321872,
+   "ang_diam_arcsec": 1950.874,
+   "range_km": 147112491.90274048,
+   "range_rate_km_s": 1.0295009
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 271.17448774,
+   "el_deg": 33.43725374,
+   "ang_diam_arcsec": 1939.483,
+   "range_km": 147976487.9431227,
+   "range_rate_km_s": 1.1394267
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 91.590584044,
+   "el_deg": 17.713908619,
+   "ang_diam_arcsec": 1917.419,
+   "range_km": 149679243.55616006,
+   "range_rate_km_s": -1.3875751
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 271.194461927,
+   "el_deg": -69.245399114,
+   "ang_diam_arcsec": 1898.326,
+   "range_km": 151184727.82285848,
+   "range_rate_km_s": 0.8105866
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 271.986183719,
+   "el_deg": 40.112211133,
+   "ang_diam_arcsec": 1954.069,
+   "range_km": 146871966.3872881,
+   "range_rate_km_s": 0.6117361
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 272.545008138,
+   "el_deg": 62.374134025,
+   "ang_diam_arcsec": 1955.802,
+   "range_km": 146741817.1233894,
+   "range_rate_km_s": 0.3546822
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 37.274661274,
+   "el_deg": -82.421866339,
+   "ang_diam_arcsec": 6862.167,
+   "range_km": 383449.0983431399,
+   "range_rate_km_s": -0.0396322
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 335.943788318,
+   "el_deg": -85.599272533,
+   "ang_diam_arcsec": 6482.535,
+   "range_km": 405902.73736296693,
+   "range_rate_km_s": 0.0117287
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 140.689591349,
+   "el_deg": -84.40652899,
+   "ang_diam_arcsec": 7097.852,
+   "range_km": 370717.82016942976,
+   "range_rate_km_s": -0.0256214
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 125.264661043,
+   "el_deg": -80.63316825,
+   "ang_diam_arcsec": 6772.698,
+   "range_km": 388514.05582379136,
+   "range_rate_km_s": -0.0607885
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 126.719390806,
+   "el_deg": -80.391810534,
+   "ang_diam_arcsec": 6809.022,
+   "range_km": 386441.6401163424,
+   "range_rate_km_s": -0.0630147
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 137.652647104,
+   "el_deg": -80.917499879,
+   "ang_diam_arcsec": 6593.676,
+   "range_km": 399061.5135785305,
+   "range_rate_km_s": -0.0412754
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 72.989704376,
+   "el_deg": -82.365000499,
+   "ang_diam_arcsec": 6750.55,
+   "range_km": 389788.6375165959,
+   "range_rate_km_s": -0.0675005
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 52.719908337,
+   "el_deg": -82.654997653,
+   "ang_diam_arcsec": 6984.011,
+   "range_km": 376759.9933958734,
+   "range_rate_km_s": -0.060596
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 137.857253471,
+   "el_deg": -83.369744752,
+   "ang_diam_arcsec": 6901.116,
+   "range_km": 381285.1278068279,
+   "range_rate_km_s": -0.0332022
+  },
+  {
+   "site_id": "equator-farside",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 140.488759388,
+   "el_deg": -86.749841626,
+   "ang_diam_arcsec": 6453.912,
+   "range_km": 407702.71256411547,
+   "range_rate_km_s": -0.0107379
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 274.463235257,
+   "el_deg": -6.594387764,
+   "ang_diam_arcsec": 1955.864,
+   "range_km": 146737158.72016263,
+   "range_rate_km_s": 0.2310817
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 5.779819245,
+   "el_deg": -43.379857079,
+   "ang_diam_arcsec": 1885.66,
+   "range_km": 152200191.38675871,
+   "range_rate_km_s": 0.8511705
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 279.301425609,
+   "el_deg": -8.434545522,
+   "ang_diam_arcsec": 1930.899,
+   "range_km": 148634331.31505975,
+   "range_rate_km_s": 0.8329738
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 342.232938049,
+   "el_deg": -44.366329199,
+   "ang_diam_arcsec": 1951.311,
+   "range_km": 147079560.65384156,
+   "range_rate_km_s": 1.0113281
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 348.767512022,
+   "el_deg": -45.190268389,
+   "ang_diam_arcsec": 1950.858,
+   "range_km": 147113660.71621048,
+   "range_rate_km_s": 1.0256444
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 307.387193116,
+   "el_deg": -30.081874729,
+   "ang_diam_arcsec": 1939.459,
+   "range_km": 147978316.19670615,
+   "range_rate_km_s": 1.1379337
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 190.578178168,
+   "el_deg": 42.98041245,
+   "ang_diam_arcsec": 1917.428,
+   "range_km": 149678587.53929925,
+   "range_rate_km_s": -1.3830946
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 66.888451496,
+   "el_deg": -20.874550675,
+   "ang_diam_arcsec": 1898.338,
+   "range_km": 151183722.40987232,
+   "range_rate_km_s": 0.8064827
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 301.593162934,
+   "el_deg": -25.747113462,
+   "ang_diam_arcsec": 1954.044,
+   "range_km": 146873840.5323087,
+   "range_rate_km_s": 0.610789
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "sun",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 283.474968558,
+   "el_deg": -11.492639448,
+   "ang_diam_arcsec": 1955.777,
+   "range_km": 146743702.57129055,
+   "range_rate_km_s": 0.3555877
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2025-01-01T00:00:00Z",
+   "az_deg": 81.930137766,
+   "el_deg": 0.237891445,
+   "ang_diam_arcsec": 6893.331,
+   "range_km": 381715.70813996636,
+   "range_rate_km_s": -0.0394407
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2025-07-04T06:30:00Z",
+   "az_deg": 78.759507254,
+   "el_deg": -5.66990347,
+   "ang_diam_arcsec": 6507.613,
+   "range_km": 404338.61221974465,
+   "range_rate_km_s": 0.0111404
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2026-03-20T12:00:00Z",
+   "az_deg": 88.530391439,
+   "el_deg": -7.885488763,
+   "ang_diam_arcsec": 7126.59,
+   "range_km": 369223.0294744722,
+   "range_rate_km_s": -0.0250139
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2027-01-15T00:00:00Z",
+   "az_deg": 92.219439472,
+   "el_deg": -5.703149627,
+   "ang_diam_arcsec": 6799.744,
+   "range_km": 386968.86374818947,
+   "range_rate_km_s": -0.0605756
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2027-01-15T09:17:45Z",
+   "az_deg": 92.500196529,
+   "el_deg": -5.90139403,
+   "ang_diam_arcsec": 6836.232,
+   "range_km": 384903.6329661699,
+   "range_rate_km_s": -0.0627984
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2028-02-29T23:59:59Z",
+   "az_deg": 92.079867484,
+   "el_deg": -7.701627885,
+   "ang_diam_arcsec": 6618.329,
+   "range_km": 397575.1617413466,
+   "range_rate_km_s": -0.0414386
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2029-10-01T18:45:00Z",
+   "az_deg": 86.535461648,
+   "el_deg": -0.555531982,
+   "ang_diam_arcsec": 6780.283,
+   "range_km": 388079.4877185568,
+   "range_rate_km_s": -0.0679062
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2031-05-05T03:03:03Z",
+   "az_deg": 83.937252127,
+   "el_deg": -0.013418119,
+   "ang_diam_arcsec": 7016.166,
+   "range_km": 375033.46863841265,
+   "range_rate_km_s": -0.0601799
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2033-12-25T12:00:00Z",
+   "az_deg": 89.59830132,
+   "el_deg": -7.647275684,
+   "ang_diam_arcsec": 6928.346,
+   "range_km": 379786.7391065544,
+   "range_rate_km_s": -0.0334085
+  },
+  {
+   "site_id": "north-midlat",
+   "body": "earth",
+   "time_utc": "2035-12-31T23:00:00Z",
+   "az_deg": 86.166650952,
+   "el_deg": -7.621554944,
+   "ang_diam_arcsec": 6477.872,
+   "range_km": 406194.86506274587,
+   "range_rate_km_s": -0.0113977
+  }
+ ]
+}

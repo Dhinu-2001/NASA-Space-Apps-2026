@@ -1,4 +1,4 @@
-# Architecture (Stage 2 baseline)
+# Architecture (Stage 3 baseline)
 
 Supersedes nothing in `docs/stage0/04_Architecture_Stack_Modules.md`; this records what is actually built and the enforced boundaries. Approved decisions are in `docs/DECISIONS.md`.
 
@@ -12,6 +12,9 @@ Supersedes nothing in `docs/stage0/04_Architecture_Stack_Modules.md`; this recor
     sites.py            Site model, coordinate validation/normalisation, catalogue policy loader
     dem.py              South-polar-stereographic projection, checksum-verified DEM windows,
                         bilinear elevation lookup with typed failures (no fallback)
+    frames.py           Pure geometry: site position, local ENU basis, az/el, angular diameter (no SPICE)
+    ephemeris.py        SPICE-backed Sun/Earth for a lunar observer; checksum-verified kernels, UTC
+                        parsing, validated-range enforcement, provenance (Stage 3)
 /api/lunarnav_api       FastAPI app. Thin: validation, logging, error mapping, no science.
     config.py           Env-driven settings (LUNARNAV_*), .env supported
     logging_setup.py    structlog (JSON or console), request-id correlation
@@ -19,6 +22,7 @@ Supersedes nothing in `docs/stage0/04_Architecture_Stack_Modules.md`; this recor
     schemas.py          Pydantic contract models -> OpenAPI
     main.py             App factory, middleware, /health, /version
     routes_data.py      /sites, /sites/validate, /dem/windows, /dem/elevation
+    routes_ephemeris.py /ephemeris/series, /ephemeris/position (Stage 3; thin over the engine)
 /web                    React + TypeScript + Vite. Presentation only (decision C4).
     src/api/client.ts   Typed fetch client; types generated from docs/openapi.json
 /tests/engine           Engine unit tests (no HTTP)
@@ -51,4 +55,4 @@ web ──HTTP/JSON──► api ──imports──► engine
 | Heavy data | Never in Git; fetched/extracted by scripts into `/data` with SHA-256 manifests |
 
 ## Module boundaries still to be created (by stage)
-`time`, `frames`, `ephemeris` (S3) · `horizon` (S4) · `visibility`, `metrics` (S5) · `scenario`, `comparison` (S6) · `provenance` registry (S5). Each lands with its own tests and its own entry flipped in `capabilities.py`.
+`horizon` (S4) · `visibility`, `metrics` (S5) · `scenario`, `comparison` (S6) · `provenance` registry (S5). Each lands with its own tests and its own entry flipped in `capabilities.py`.

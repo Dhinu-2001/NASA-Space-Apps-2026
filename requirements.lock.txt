@@ -13,6 +13,8 @@ httptools==0.9.0
 httpx==0.28.1
 idna==3.20
 iniconfig==2.3.1
+# Editable Git install with no remote (lunarnav==0.1.0)
+-e c:\projects\nasa space apps 2026
 numpy==2.5.4
 opentelemetry-api==1.45.2
 packaging==26.3
@@ -28,6 +30,7 @@ python-dotenv==1.2.4
 PyYAML==6.0.3
 rasterio==1.5.2
 ruff==0.17.5
+spiceypy==8.4.0
 starlette==1.10.0
 structlog==26.1.0
 typing-inspection==0.4.5

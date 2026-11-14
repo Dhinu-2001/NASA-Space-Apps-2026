@@ -26,3 +26,9 @@ Approved by project lead on Stage 0 review (before Stage 1). Authoritative over 
 | S7 | Never silently fall back to geometric visibility when terrain data is missing: return explicit error or incomplete-data status. |
 | G1 | Do not commit DEMs or generated datasets to Git. |
 | D1 | Deadline: Sunday 2026-11-15 23:59 IST. Scientific correctness is not traded for speed. |
+| E3 | (Stage 3) Observer apparent direction = SPICE `spkcpo` from a surface point fixed in `MOON_ME`, `LT+S`; the local ENU basis is built from the site, not from SPICE. Observer offset is never neglected (Earth would be wrong by 0.27°). `MOON_PA` is never used. |
+| E4 | (Stage 3) **Refinement of C11 / Methodology §2 pole tie-break:** at lat = ±90° the supplied longitude defines north (limit along that meridian); identical to "lon = 0 meridian" when lon = 0. Verified vs Horizons at both poles (lon 0, 123, 270) and by continuity tests. |
+| E5 | (Stage 3) C8 enforced as a hard error: times outside 2025-01-01 ≤ t < 2036-01-01 return `EPHEMERIS_OUT_OF_RANGE`. |
+| E6 | (Stage 3) Body radii for angular diameter are IAU 2015 nominal values (Sun 695 700 km, Earth equatorial 6378.1 km), recorded as assumptions in provenance. |
+| E7 | (Stage 3) Stage 3 acceptance criterion pre-declared before results: angular separation vs Horizons ≤ 0.01° on every row (PRD). `ephemeris` capability stays `implemented_unvalidated` until the user approves the gate. |
+| E8 | (Stage 3) Horizons reference values are recorded once into a small tracked fixture (`data/validation/`) so tests are offline and reproducible; the fixture is re-fetchable with `scripts/fetch_horizons_reference.py`. |
