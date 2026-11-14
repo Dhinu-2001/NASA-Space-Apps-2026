@@ -796,6 +796,118 @@
         "title": "VersionResponse",
         "type": "object"
       },
+      "VisRequest": {
+        "properties": {
+          "az_step_deg": {
+            "default": 0.25,
+            "description": "Horizon azimuth step",
+            "title": "Az Step Deg",
+            "type": "number"
+          },
+          "bodies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Bodies",
+            "type": "array"
+          },
+          "end_utc": {
+            "description": "Window ends at the last sample at or before this time",
+            "title": "End Utc",
+            "type": "string"
+          },
+          "include_series": {
+            "default": true,
+            "description": "Include per-step arrays",
+            "title": "Include Series",
+            "type": "boolean"
+          },
+          "n_directions": {
+            "default": 8,
+            "description": "Displacement directions sampled on the circle",
+            "title": "N Directions",
+            "type": "integer"
+          },
+          "observer_height_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Above the DEM surface. Default 2.0 m is an ASSUMPTION (C9).",
+            "title": "Observer Height M"
+          },
+          "position_uncertainty_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": 100.0,
+            "description": "Assumed observer-position uncertainty for the sensitivity band, metres (default 100). 0 or null disables it.",
+            "title": "Position Uncertainty M"
+          },
+          "refine": {
+            "default": true,
+            "description": "Bisect transitions to 1 s (false = sample resolution)",
+            "title": "Refine",
+            "type": "boolean"
+          },
+          "site": {
+            "$ref": "#/components/schemas/VisSite"
+          },
+          "start_utc": {
+            "description": "ISO-8601 UTC with Z",
+            "title": "Start Utc",
+            "type": "string"
+          },
+          "step_seconds": {
+            "default": 900.0,
+            "description": "Sampling step; transitions are refined to 1 s by bisection",
+            "title": "Step Seconds",
+            "type": "number"
+          }
+        },
+        "required": [
+          "site",
+          "start_utc",
+          "end_utc"
+        ],
+        "title": "VisRequest",
+        "type": "object"
+      },
+      "VisSite": {
+        "properties": {
+          "lat": {
+            "description": "Planetocentric latitude, degrees (south negative)",
+            "title": "Lat"
+          },
+          "lon": {
+            "description": "East-positive longitude, degrees",
+            "title": "Lon"
+          },
+          "site_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Catalogue site id (see GET /sites)",
+            "title": "Site Id"
+          }
+        },
+        "title": "VisSite",
+        "type": "object"
+      },
       "WindowOut": {
         "properties": {
           "bottom_m": {
@@ -1053,7 +1165,7 @@
     }
   },
   "info": {
-    "description": "Stage 4: sites, DEM lookup, Sun/Earth ephemeris (geometric) and terrain horizon profiles. Visibility endpoints are declared in docs/API_CONTRACT.md and are NOT implemented yet.",
+    "description": "Stage 5: sites, DEM lookup, Sun/Earth ephemeris, terrain horizon profiles and terrain-corrected Sun/Earth visibility with position-sensitivity bands. Scenario comparison is not implemented yet.",
     "title": "Lunar Landing Site Navigator API",
     "version": "0.1.0"
   },
@@ -1786,6 +1898,286 @@
         "summary": "Version",
         "tags": [
           "meta"
+        ]
+      }
+    },
+    "/visibility/at": {
+      "get": {
+        "operationId": "visibility_at_visibility_at_get",
+        "parameters": [
+          {
+            "description": "ISO-8601 UTC with Z",
+            "in": "query",
+            "name": "time_utc",
+            "required": true,
+            "schema": {
+              "description": "ISO-8601 UTC with Z",
+              "title": "Time Utc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "site_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Site Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lat",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lat"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lon",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lon"
+            }
+          },
+          {
+            "description": "default 2.0 m is an assumption (C9)",
+            "in": "query",
+            "name": "observer_height_m",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "default 2.0 m is an assumption (C9)",
+              "title": "Observer Height M"
+            }
+          },
+          {
+            "in": "query",
+            "name": "position_uncertainty_m",
+            "required": false,
+            "schema": {
+              "default": 100.0,
+              "title": "Position Uncertainty M",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "az_step_deg",
+            "required": false,
+            "schema": {
+              "default": 0.25,
+              "title": "Az Step Deg",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Visibility At Visibility At Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Visibility At",
+        "tags": [
+          "visibility"
+        ]
+      }
+    },
+    "/visibility/intervals": {
+      "post": {
+        "description": "Intervals, transitions and metrics only (no per-step arrays). `bodies: [\"sun\"]` is the solar\nvisibility API; `[\"earth\"]` the Earth visibility API.",
+        "operationId": "visibility_intervals_visibility_intervals_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Visibility Intervals Visibility Intervals Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Visibility Intervals",
+        "tags": [
+          "visibility"
+        ]
+      }
+    },
+    "/visibility/series": {
+      "post": {
+        "description": "Per-step states (centre / any-part / fully), geometric vs terrain-corrected, completeness flags and\nposition sensitivity, plus transitions, intervals and metrics.",
+        "operationId": "visibility_series_visibility_series_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Visibility Series Visibility Series Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorBody"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Visibility Series",
+        "tags": [
+          "visibility"
         ]
       }
     }

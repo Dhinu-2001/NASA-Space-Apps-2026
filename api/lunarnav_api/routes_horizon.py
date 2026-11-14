@@ -115,9 +115,9 @@ def to_response(p: HorizonProfile, site_id: str | None, ref_height_m: float | No
     )
 
 
-def build_horizon_router(data_dir: Path) -> APIRouter:
+def build_horizon_router(data_dir: Path, service: HorizonService | None = None) -> APIRouter:
     router = APIRouter()
-    service = HorizonService(data_dir)
+    service = service or HorizonService(data_dir)
     catalogue = {s.id: s for s in load_catalogue(data_dir / "catalogue" / "sites.json")}
 
     @router.get("/horizon/profile", response_model=HorizonResponse, responses=_ERR, tags=["horizon"])

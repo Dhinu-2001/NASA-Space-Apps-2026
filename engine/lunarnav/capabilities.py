@@ -30,10 +30,11 @@ CAPABILITIES: tuple[Capability, ...] = (
     Capability("dem", "LOLA DEM ingestion and elevation lookup", 2,
                CapabilityStatus.IMPLEMENTED_UNVALIDATED),
     Capability("ephemeris", "Sun and Earth azimuth/elevation (SPICE)", 3,
-               CapabilityStatus.IMPLEMENTED_UNVALIDATED),
+               CapabilityStatus.VALIDATED),
     Capability("horizon", "Terrain horizon profile", 4,
+               CapabilityStatus.VALIDATED),
+    Capability("visibility", "Terrain-corrected Sun/Earth visibility and intervals", 5,
                CapabilityStatus.IMPLEMENTED_UNVALIDATED),
-    Capability("visibility", "Terrain-corrected Sun/Earth visibility and intervals", 5),
     Capability("scenarios", "Scenario comparison and delay simulator", 6),
     Capability("engineering", "Solar power, antenna mask, slope", 8),
 )

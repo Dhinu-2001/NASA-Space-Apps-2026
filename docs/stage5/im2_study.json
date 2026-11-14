@@ -1,0 +1,516 @@
+{
+ "site": "im2-athena",
+ "lat": -84.79059,
+ "lon": 29.19567,
+ "start_utc": "2027-01-15T00:00:00Z",
+ "days": 30,
+ "observer_height_m": 2.0,
+ "observer_height_is_default_assumption": true,
+ "runtime_s_first_100m": 6.244560718536377,
+ "horizon": {
+  "az_step_deg": 0.25,
+  "windows": [
+   "im2_20m_r80km",
+   "im2_320m_r160km"
+  ],
+  "summary": {
+   "n_azimuths": 1440,
+   "horizon_min_deg": -1.469332377371741,
+   "horizon_max_deg": 4.065586128285099,
+   "horizon_mean_deg": 1.1681536647187456,
+   "n_truncated": 0,
+   "n_data_gap": 0,
+   "n_complete": 1440
+  },
+  "served_from": "disk",
+  "cache_key": "820a564cc280e12066ca9a7b9c62b5fd5f0474242c4feab9d8eadf514590216c"
+ },
+ "position_sensitivity_block": {
+  "status": "computed",
+  "data_class": "calculated",
+  "kind": "sensitivity of the result to the INPUT observer position; not an error bar on the astronomy or terrain calculation, which are exact for the given inputs",
+  "assumed_position_uncertainty_m": 100.0,
+  "assumption": "observer position uncertain by +/-100 m",
+  "n_directions": 8,
+  "method": "full recomputation (ephemeris, horizon, visibility, boundary bisection) at displaced positions on a circle of the stated radius; boundary band = [earliest, latest] over the nominal and displaced runs",
+  "limitations": "a sample of displacements, not a proven bound; applies only where terrain data support it; assumes the DEM itself is correct"
+ },
+ "bodies_100m": {
+  "sun": {
+   "headline_state": "any_part_visible",
+   "terrain_effect": {
+    "headline_visible_steps": 1402,
+    "geometric_headline_steps": 1537,
+    "steps_blocked_by_terrain_only": 155,
+    "n_steps": 2881
+   },
+   "completeness": {
+    "steps_with_incomplete_horizon": 0,
+    "unverified_visible_steps": 0,
+    "visibility_is_upper_bound": false
+   },
+   "metrics": {
+    "window_s": 2592000.0,
+    "total_visible_s": 1260929.00390625,
+    "visible_fraction": 0.48646952311197916,
+    "n_visible_intervals": 3,
+    "longest_visible_s_closed_only": 849.0234375,
+    "longest_visible_s_including_open": 1155534.521484375,
+    "longest_visible_includes_open_interval": true,
+    "longest_not_visible_s_closed_only": 1330921.58203125,
+    "longest_not_visible_s_including_open": 1330921.58203125,
+    "longest_not_visible_includes_open_interval": false
+   },
+   "intervals": [
+    {
+     "start_utc": "2027-01-15T00:00:00Z",
+     "end_utc": "2027-01-28T08:58:55Z",
+     "duration_s": 1155534.521484375,
+     "open_start": true,
+     "open_end": false,
+     "start_band": null,
+     "end_band": {
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "width_s": 39908.49609375,
+      "complete": false
+     }
+    },
+    {
+     "start_utc": "2027-01-28T09:01:24Z",
+     "end_utc": "2027-01-28T09:15:33Z",
+     "duration_s": 849.0234375,
+     "open_start": false,
+     "open_end": false,
+     "start_band": {
+      "earliest_utc": "2027-01-28T09:01:24Z",
+      "latest_utc": "2027-01-28T09:01:24Z",
+      "width_s": 0.0,
+      "complete": false
+     },
+     "end_band": {
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "width_s": 39908.49609375,
+      "complete": false
+     }
+    },
+    {
+     "start_utc": "2027-02-12T18:57:35Z",
+     "end_utc": "2027-02-14T00:00:00Z",
+     "duration_s": 104545.458984375,
+     "open_start": false,
+     "open_end": true,
+     "start_band": {
+      "earliest_utc": "2027-02-12T18:42:06Z",
+      "latest_utc": "2027-02-12T19:13:00Z",
+      "width_s": 1854.4921875,
+      "complete": true
+     },
+     "end_band": null
+    }
+   ],
+   "not_visible_intervals": [
+    {
+     "start_utc": "2027-01-28T08:58:55Z",
+     "end_utc": "2027-01-28T09:01:24Z",
+     "duration_s": 149.4140625,
+     "open_start": false,
+     "open_end": false,
+     "start_band": {
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "width_s": 39908.49609375,
+      "complete": false
+     },
+     "end_band": {
+      "earliest_utc": "2027-01-28T09:01:24Z",
+      "latest_utc": "2027-01-28T09:01:24Z",
+      "width_s": 0.0,
+      "complete": false
+     }
+    },
+    {
+     "start_utc": "2027-01-28T09:15:33Z",
+     "end_utc": "2027-02-12T18:57:35Z",
+     "duration_s": 1330921.58203125,
+     "open_start": false,
+     "open_end": false,
+     "start_band": {
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "width_s": 39908.49609375,
+      "complete": false
+     },
+     "end_band": {
+      "earliest_utc": "2027-02-12T18:42:06Z",
+      "latest_utc": "2027-02-12T19:13:00Z",
+      "width_s": 1854.4921875,
+      "complete": true
+     }
+    }
+   ],
+   "position_sensitivity": {
+    "metric_bands": {
+     "total_visible_s": [
+      1177870.60546875,
+      1268535.05859375
+     ],
+     "visible_fraction": [
+      0.4544253879123264,
+      0.4894039577907986
+     ],
+     "n_visible_intervals": [
+      2,
+      3
+     ],
+     "longest_visible_s_closed_only": [
+      849.0234375,
+      849.0234375
+     ],
+     "longest_not_visible_s_closed_only": [
+      1323464.94140625,
+      1414129.39453125
+     ]
+    },
+    "events_only_in_displaced_runs": 1,
+    "max_boundary_band_width_s": 39908.49609375,
+    "boundary_bands": [
+     {
+      "nominal_time_s": 1155534.521484375,
+      "earliest_s": 1123687.353515625,
+      "latest_s": 1163595.849609375,
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "band_width_s": 39908.49609375,
+      "displaced_runs_without_matching_event": 1,
+      "band_complete": false
+     },
+     {
+      "nominal_time_s": 1155683.935546875,
+      "earliest_s": 1155683.935546875,
+      "latest_s": 1155683.935546875,
+      "earliest_utc": "2027-01-28T09:01:24Z",
+      "latest_utc": "2027-01-28T09:01:24Z",
+      "band_width_s": 0.0,
+      "displaced_runs_without_matching_event": 8,
+      "band_complete": false
+     },
+     {
+      "nominal_time_s": 1156532.958984375,
+      "earliest_s": 1123687.353515625,
+      "latest_s": 1163595.849609375,
+      "earliest_utc": "2027-01-28T00:08:07Z",
+      "latest_utc": "2027-01-28T11:13:16Z",
+      "band_width_s": 39908.49609375,
+      "displaced_runs_without_matching_event": 1,
+      "band_complete": false
+     },
+     {
+      "nominal_time_s": 2487454.541015625,
+      "earliest_s": 2486525.537109375,
+      "latest_s": 2488380.029296875,
+      "earliest_utc": "2027-02-12T18:42:06Z",
+      "latest_utc": "2027-02-12T19:13:00Z",
+      "band_width_s": 1854.4921875,
+      "displaced_runs_without_matching_event": 0,
+      "band_complete": true
+     }
+    ],
+    "max_horizon_shift_at_body_deg": 1.76078,
+    "fraction_steps_state_not_robust": 0.03505727178063167
+   }
+  },
+  "earth": {
+   "headline_state": "centre_visible",
+   "terrain_effect": {
+    "headline_visible_steps": 2327,
+    "geometric_headline_steps": 2117,
+    "steps_blocked_by_terrain_only": 0,
+    "n_steps": 2881
+   },
+   "completeness": {
+    "steps_with_incomplete_horizon": 0,
+    "unverified_visible_steps": 0,
+    "visibility_is_upper_bound": false
+   },
+   "metrics": {
+    "window_s": 2592000.0,
+    "total_visible_s": 2093241.796875,
+    "visible_fraction": 0.8075778537326389,
+    "n_visible_intervals": 2,
+    "longest_visible_s_closed_only": null,
+    "longest_visible_s_including_open": 1076446.142578125,
+    "longest_visible_includes_open_interval": true,
+    "longest_not_visible_s_closed_only": 498758.203125,
+    "longest_not_visible_s_including_open": 498758.203125,
+    "longest_not_visible_includes_open_interval": false
+   },
+   "intervals": [
+    {
+     "start_utc": "2027-01-15T00:00:00Z",
+     "end_utc": "2027-01-27T11:00:46Z",
+     "duration_s": 1076446.142578125,
+     "open_start": true,
+     "open_end": false,
+     "start_band": null,
+     "end_band": {
+      "earliest_utc": "2027-01-27T10:43:12Z",
+      "latest_utc": "2027-01-27T11:22:24Z",
+      "width_s": 2351.953125,
+      "complete": true
+     }
+    },
+    {
+     "start_utc": "2027-02-02T05:33:24Z",
+     "end_utc": "2027-02-14T00:00:00Z",
+     "duration_s": 1016795.654296875,
+     "open_start": false,
+     "open_end": true,
+     "start_band": {
+      "earliest_utc": "2027-02-02T04:52:04Z",
+      "latest_utc": "2027-02-02T10:38:06Z",
+      "width_s": 20762.40234375,
+      "complete": true
+     },
+     "end_band": null
+    }
+   ],
+   "not_visible_intervals": [
+    {
+     "start_utc": "2027-01-27T11:00:46Z",
+     "end_utc": "2027-02-02T05:33:24Z",
+     "duration_s": 498758.203125,
+     "open_start": false,
+     "open_end": false,
+     "start_band": {
+      "earliest_utc": "2027-01-27T10:43:12Z",
+      "latest_utc": "2027-01-27T11:22:24Z",
+      "width_s": 2351.953125,
+      "complete": true
+     },
+     "end_band": {
+      "earliest_utc": "2027-02-02T04:52:04Z",
+      "latest_utc": "2027-02-02T10:38:06Z",
+      "width_s": 20762.40234375,
+      "complete": true
+     }
+    }
+   ],
+   "position_sensitivity": {
+    "metric_bands": {
+     "total_visible_s": [
+      2073905.859375,
+      2096777.63671875
+     ],
+     "visible_fraction": [
+      0.8001180013020833,
+      0.8089419894748264
+     ],
+     "n_visible_intervals": [
+      2,
+      2
+     ],
+     "longest_visible_s_closed_only": [
+      null,
+      null
+     ],
+     "longest_not_visible_s_closed_only": [
+      495222.36328125,
+      518094.140625
+     ]
+    },
+    "events_only_in_displaced_runs": 0,
+    "max_boundary_band_width_s": 20762.40234375,
+    "boundary_bands": [
+     {
+      "nominal_time_s": 1076446.142578125,
+      "earliest_s": 1075392.333984375,
+      "latest_s": 1077744.287109375,
+      "earliest_utc": "2027-01-27T10:43:12Z",
+      "latest_utc": "2027-01-27T11:22:24Z",
+      "band_width_s": 2351.953125,
+      "displaced_runs_without_matching_event": 0,
+      "band_complete": true
+     },
+     {
+      "nominal_time_s": 1575204.345703125,
+      "earliest_s": 1572724.072265625,
+      "latest_s": 1593486.474609375,
+      "earliest_utc": "2027-02-02T04:52:04Z",
+      "latest_utc": "2027-02-02T10:38:06Z",
+      "band_width_s": 20762.40234375,
+      "displaced_runs_without_matching_event": 0,
+      "band_complete": true
+     }
+    ],
+    "max_horizon_shift_at_body_deg": 0.477447,
+    "fraction_steps_state_not_robust": 0.009024644220756661
+   }
+  }
+ },
+ "band_sweep": {
+  "20m": {
+   "sun": {
+    "max_boundary_band_width_s": 9805.95703125,
+    "boundary_bands_complete": 3,
+    "n_boundaries": 4,
+    "events_only_in_displaced_runs": 0,
+    "total_visible_s_band": [
+     1255326.85546875,
+     1265048.4375
+    ],
+    "n_visible_intervals_band": [
+     2,
+     3
+    ]
+   },
+   "earth": {
+    "max_boundary_band_width_s": 1463.37890625,
+    "boundary_bands_complete": 2,
+    "n_boundaries": 2,
+    "events_only_in_displaced_runs": 0,
+    "total_visible_s_band": [
+     2092368.1640625,
+     2094261.328125
+    ],
+    "n_visible_intervals_band": [
+     2,
+     2
+    ]
+   }
+  },
+  "50m": {
+   "sun": {
+    "max_boundary_band_width_s": 13475.390625,
+    "boundary_bands_complete": 3,
+    "n_boundaries": 4,
+    "events_only_in_displaced_runs": 0,
+    "total_visible_s_band": [
+     1252764.84375,
+     1266094.3359375
+    ],
+    "n_visible_intervals_band": [
+     2,
+     3
+    ]
+   },
+   "earth": {
+    "max_boundary_band_width_s": 2054.00390625,
+    "boundary_bands_complete": 2,
+    "n_boundaries": 2,
+    "events_only_in_displaced_runs": 0,
+    "total_visible_s_band": [
+     2092128.22265625,
+     2095172.75390625
+    ],
+    "n_visible_intervals_band": [
+     2,
+     2
+    ]
+   }
+  },
+  "100m": {
+   "sun": {
+    "max_boundary_band_width_s": 39908.49609375,
+    "boundary_bands_complete": 1,
+    "n_boundaries": 4,
+    "events_only_in_displaced_runs": 1,
+    "total_visible_s_band": [
+     1177870.60546875,
+     1268535.05859375
+    ],
+    "n_visible_intervals_band": [
+     2,
+     3
+    ]
+   },
+   "earth": {
+    "max_boundary_band_width_s": 20762.40234375,
+    "boundary_bands_complete": 2,
+    "n_boundaries": 2,
+    "events_only_in_displaced_runs": 0,
+    "total_visible_s_band": [
+     2073905.859375,
+     2096777.63671875
+    ],
+    "n_visible_intervals_band": [
+     2,
+     2
+    ]
+   }
+  },
+  "200m": {
+   "sun": {
+    "max_boundary_band_width_s": 40929.78515625,
+    "boundary_bands_complete": 1,
+    "n_boundaries": 4,
+    "events_only_in_displaced_runs": 2,
+    "total_visible_s_band": [
+     1014933.69140625,
+     1268259.08203125
+    ],
+    "n_visible_intervals_band": [
+     2,
+     3
+    ]
+   },
+   "earth": {
+    "max_boundary_band_width_s": 11772.94921875,
+    "boundary_bands_complete": 0,
+    "n_boundaries": 2,
+    "events_only_in_displaced_runs": 2,
+    "total_visible_s_band": [
+     1697325.29296875,
+     2101034.1796875
+    ],
+    "n_visible_intervals_band": [
+     2,
+     2
+    ]
+   }
+  }
+ },
+ "step_convergence": {
+  "900s": {
+   "sun": {
+    "total_visible_s": 1260929.00390625,
+    "n_visible_intervals": 3,
+    "transitions": [
+     "2027-01-28T08:58:55Z",
+     "2027-01-28T09:01:24Z",
+     "2027-01-28T09:15:33Z",
+     "2027-02-12T18:57:35Z"
+    ]
+   },
+   "earth": {
+    "total_visible_s": 2093241.796875,
+    "n_visible_intervals": 2,
+    "transitions": [
+     "2027-01-27T11:00:46Z",
+     "2027-02-02T05:33:24Z"
+    ]
+   }
+  },
+  "300s": {
+   "sun": {
+    "total_visible_s": 1260929.296875,
+    "n_visible_intervals": 3,
+    "transitions": [
+     "2027-01-28T08:58:55Z",
+     "2027-01-28T09:01:24Z",
+     "2027-01-28T09:15:33Z",
+     "2027-02-12T18:57:34Z"
+    ]
+   },
+   "earth": {
+    "total_visible_s": 2093241.2109375,
+    "n_visible_intervals": 2,
+    "transitions": [
+     "2027-01-27T11:00:46Z",
+     "2027-02-02T05:33:25Z"
+    ]
+   }
+  }
+ }
+}

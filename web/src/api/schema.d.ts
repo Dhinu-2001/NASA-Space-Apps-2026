@@ -157,6 +157,65 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/visibility/at": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Visibility At */
+        get: operations["visibility_at_visibility_at_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/visibility/intervals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Visibility Intervals
+         * @description Intervals, transitions and metrics only (no per-step arrays). `bodies: ["sun"]` is the solar
+         *     visibility API; `["earth"]` the Earth visibility API.
+         */
+        post: operations["visibility_intervals_visibility_intervals_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/visibility/series": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Visibility Series
+         * @description Per-step states (centre / any-part / fully), geometric vs terrain-corrected, completeness flags and
+         *     position sensitivity, plus transitions, intervals and metrics.
+         */
+        post: operations["visibility_series_visibility_series_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -467,6 +526,81 @@ export interface components {
             notice: string;
             /** Stage */
             stage: number;
+        };
+        /** VisRequest */
+        VisRequest: {
+            /**
+             * Az Step Deg
+             * @description Horizon azimuth step
+             * @default 0.25
+             */
+            az_step_deg: number;
+            /** Bodies */
+            bodies?: string[];
+            /**
+             * End Utc
+             * @description Window ends at the last sample at or before this time
+             */
+            end_utc: string;
+            /**
+             * Include Series
+             * @description Include per-step arrays
+             * @default true
+             */
+            include_series: boolean;
+            /**
+             * N Directions
+             * @description Displacement directions sampled on the circle
+             * @default 8
+             */
+            n_directions: number;
+            /**
+             * Observer Height M
+             * @description Above the DEM surface. Default 2.0 m is an ASSUMPTION (C9).
+             */
+            observer_height_m?: number | null;
+            /**
+             * Position Uncertainty M
+             * @description Assumed observer-position uncertainty for the sensitivity band, metres (default 100). 0 or null disables it.
+             * @default 100
+             */
+            position_uncertainty_m: number | null;
+            /**
+             * Refine
+             * @description Bisect transitions to 1 s (false = sample resolution)
+             * @default true
+             */
+            refine: boolean;
+            site: components["schemas"]["VisSite"];
+            /**
+             * Start Utc
+             * @description ISO-8601 UTC with Z
+             */
+            start_utc: string;
+            /**
+             * Step Seconds
+             * @description Sampling step; transitions are refined to 1 s by bisection
+             * @default 900
+             */
+            step_seconds: number;
+        };
+        /** VisSite */
+        VisSite: {
+            /**
+             * Lat
+             * @description Planetocentric latitude, degrees (south negative)
+             */
+            lat?: unknown;
+            /**
+             * Lon
+             * @description East-positive longitude, degrees
+             */
+            lon?: unknown;
+            /**
+             * Site Id
+             * @description Catalogue site id (see GET /sites)
+             */
+            site_id?: string | null;
         };
         /** WindowOut */
         WindowOut: {
@@ -1026,6 +1160,171 @@ export interface operations {
             };
             /** @description Internal Server Error */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    visibility_at_visibility_at_get: {
+        parameters: {
+            query: {
+                /** @description ISO-8601 UTC with Z */
+                time_utc: string;
+                site_id?: string | null;
+                lat?: number | null;
+                lon?: number | null;
+                /** @description default 2.0 m is an assumption (C9) */
+                observer_height_m?: number | null;
+                position_uncertainty_m?: number;
+                az_step_deg?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    visibility_intervals_visibility_intervals_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VisRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+        };
+    };
+    visibility_series_visibility_series_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VisRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Unprocessable Entity */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorBody"];
+                };
+            };
+            /** @description Service Unavailable */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

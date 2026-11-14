@@ -90,3 +90,16 @@ def angular_diameter_deg(radius_km: float, range_km: float) -> float:
     if range_km <= radius_km:
         raise ValueError("observer is inside the body")
     return math.degrees(2.0 * math.asin(radius_km / range_km))
+
+
+def destination_deg(lat_deg: float, lon_deg_east: float, azimuth_deg: float, distance_m: float
+                    ) -> tuple[float, float]:
+    """Point reached by travelling `distance_m` along the great circle that leaves the site at `azimuth_deg`
+    (clockwise from local north, same E4 convention) on the 1737.4 km sphere. Returns (lat, lon_east) with
+    lon in [-180, 180]. Used for position-uncertainty displacements."""
+    basis = enu_basis(lat_deg, lon_deg_east)
+    az = math.radians(azimuth_deg)
+    theta = distance_m / (REFERENCE_RADIUS_KM * 1000.0)
+    t = math.cos(az) * basis.north + math.sin(az) * basis.east
+    p = basis.up * math.cos(theta) + t * math.sin(theta)
+    return math.degrees(math.asin(max(-1.0, min(1.0, float(p[2]))))), math.degrees(math.atan2(p[1], p[0]))

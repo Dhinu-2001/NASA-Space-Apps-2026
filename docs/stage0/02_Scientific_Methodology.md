@@ -87,7 +87,7 @@ Per timestep, body *b* ∈ {Sun, Earth}:
   - `fully_visible`: the entire disc is above the terrain horizon.
   - **Headline Sun/sunlight metric = `any_part_visible`** (any direct illumination reaches the observer), with `partial` periods reported separately and a `fully_visible` total alongside.
   - **Headline Earth metric = `centre_visible`** (antenna pointing is at the disc centre), with `any_part` and `fully` reported alongside. This is geometric line of sight, not link availability.
-  - Until Stage 5 lands, Stage 3–4 outputs expose only centre-based elevation; no visibility claim is made before then.
+  - *Stage 5 implemented this (docs/stage5/VISIBILITY_METHOD.md): disc = circle of the ephemeris angular radius sampled at 41 azimuth points; horizon between samples = max of bracketing samples; every headline result carries a position-sensitivity band (user requirement).*
   - Limitation: partial-disc *fraction* of illumination is not computed in MVP (visible fraction ≠ irradiance ratio without limb-darkening/area integration).
 - Operational communication (B2) adds an antenna elevation mask: `comm_geometric = terrain_visible AND elev > mask`. Never labelled "link available".
 

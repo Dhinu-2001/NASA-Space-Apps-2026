@@ -74,6 +74,12 @@ The Horizons fixture is tracked (small); re-fetching is only needed to extend th
 ```
 Horizon profiles are cached in `data/results/horizon` (git-ignored, regenerable). Real-DEM tests skip with the rebuild command when the windows are absent.
 
+## Stage 5 visibility
+```powershell
+.\.venv\Scripts\python.exe -I scripts\visibility_study.py --json docs\stage5\im2_study.json   # IM-2 30-day result, position-band sweep, step convergence
+```
+The first `/visibility/*` call for a site computes the nominal + 8 displaced horizon profiles (about 60 s for IM-2 at 0.25 degrees); they are cached in `data/results/horizon`.
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.

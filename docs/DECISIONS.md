@@ -40,4 +40,10 @@ Approved by project lead on Stage 0 review (before Stage 1). Authoritative over 
 | H6 | (Stage 4, user instruction) 20 m DEM fetched out to 80 km around IM-2 at native resolution (no resampling), as window `im2_20m_r80km`; fetch is checkpointed/resumable; file not committed (G1), manifest tracked. |
 | H7 | (Stage 4) Stage 0 limb-dip figure corrected: h = 2 m dips 0.087° (not 0.05°). |
 | H8 | (Stage 4) Horizon cache key includes every DEM window SHA-256, all parameters, the height ceiling and the algorithm version; disk entries are git-ignored and never trusted if unreadable. |
-
+| J1 | (Stage 5, user instruction) Every visibility result carries a position-sensitivity band (default ±100 m, configurable `position_uncertainty_m`, 0 disables) attached to each interval boundary, each metric and each step — not a separate report. Labelled `data_class: calculated` with the stated assumption; it is a sensitivity to the INPUT position, not an error bar on the astronomy/terrain. Computed only where terrain data support it (IM-2); never extrapolated to IM-1 / Chandrayaan-3. |
+| J2 | (Stage 5) Sensitivity = full recomputation at `n_directions` (default 8) positions on a circle; boundary band = [earliest, latest] of the nearest same-type event within ±12 h; `complete=false` if a displaced run lacks the event. A sample, not a bound. |
+| J3 | (Stage 5) Data-support rule: sensitivity requires zero `truncated`/`data_gap` azimuths at the nominal and every displaced position; else `not_computed` + reason. |
+| J4 | (Stage 5) Disc model: circle of ephemeris angular radius, 41 azimuth points; horizon between samples = max of the two bracketing samples (never over-states visibility). Headline Sun = any-part, Earth = centre (E2). |
+| J5 | (Stage 5) Transitions by bisection on the predicate to 1 s; intervals tile the window; open intervals excluded from `*_closed_only` extrema and flagged when they tie or lead. Window ends at the last sample. |
+| J6 | (Stage 5) Steps with an incomplete horizon are `unverified_visible`; the body block reports `visibility_is_upper_bound`. |
+| J7 | (Stage 5, user instruction) `ephemeris` and `horizon` are `validated` (user approved those gates); `visibility` stays `implemented_unvalidated` until approved. |
