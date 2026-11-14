@@ -86,6 +86,9 @@ The first `/visibility/*` call for a site computes the nominal + 8 displaced hor
 ```
 Scenario results are cached in `data/results/scenarios` (git-ignored). A new site's first scenario computes its horizon profiles (about 60 s).
 
+## Stage 7 UI
+Start the backend and the frontend (see Run above), open http://localhost:5173/ . The default scenario (IM-2) computes on load; the first calculation for a new site takes about a minute, then it is cached. `npm test` runs the 16 UI tests; `npm run build` makes a production bundle in `web/dist` (git-ignored).
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.

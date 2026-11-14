@@ -7,13 +7,13 @@ def test_model_version_is_set():
     assert MODEL_VERSION.startswith("0.6.0")
 
 
-def test_capability_statuses_are_honest_for_stage_6():
-    # Only gates the user has explicitly approved are 'validated' (ephemeris S3, horizon S4, visibility S5);
-    # Stage 6 awaits approval, later stages are unbuilt.
+def test_capability_statuses_are_honest_for_stage_7():
+    # Only gates the user has explicitly approved are 'validated' (ephemeris S3, horizon S4, visibility S5,
+    # scenarios S6). Stage 7 (UI) has no engine capability; sites/dem were never explicitly approved.
     status = {c.key: c.status for c in CAPABILITIES}
-    for key in ("sites", "dem", "scenarios"):
+    for key in ("sites", "dem"):
         assert status[key] is CapabilityStatus.IMPLEMENTED_UNVALIDATED
-    for key in ("ephemeris", "horizon", "visibility"):
+    for key in ("ephemeris", "horizon", "visibility", "scenarios"):
         assert status[key] is CapabilityStatus.VALIDATED
     assert status["engineering"] is CapabilityStatus.NOT_IMPLEMENTED
 

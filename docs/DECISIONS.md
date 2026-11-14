@@ -55,3 +55,9 @@ Approved by project lead on Stage 0 review (before Stage 1). Authoritative over 
 | K6 | (Stage 6) Scenario `position_uncertainty_m` must be > 0 so that sensitivity cannot be silently dropped. |
 | K7 | (Stage 6) Rankings: supported only; `distinguishable_from_next` true only if adjacent position bands do not overlap. |
 | K8 | (Stage 6) Delay simulator default window 14 days, an assumption (about one lunar day), labelled; a 29.5-day window hides short delays. `visibility` capability set to validated (Stage 5 approved); `scenarios` stays implemented_unvalidated. |
+| L1 | (Stage 7, user instruction) Minimal read-only UI (C2): site, UTC time, Sun/Earth az/el, horizon profile, terrain-corrected visibility, timelines, plus compare/delay/data-and-assumptions views. No 3D, no animation. |
+| L2 | (Stage 7, C4) The frontend only displays backend numbers; its only trigonometry is the orientation-map layout and its only date arithmetic is chart-axis placement. Audited by grep (docs/stage7/UI.md). |
+| L3 | (Stage 7, user instruction) Every number that carries a position band shows the band (or says 'not computed'); event times show earliest-latest and width; incomplete bands are marked; differences state whether they are distinguishable from zero. |
+| L4 | (Stage 7, user instruction) Sites without terrain support render as 'Terrain data insufficient' with the reason and no figure, bar, rank or placeholder, in Compare, Delay and the single-site view. |
+| L5 | (Stage 7, user instruction) Capability status is displayed from the backend (strip + per-panel tags); the UI never presents anything as more validated than its status. |
+| L6 | (Stage 7, user decision) Extending the 20 m DEM to IM-1 is future work, not attempted: IM-1 stays 'terrain data insufficient'. The 14-day delay window default is confirmed. The Stage 6 gate was approved with the Stage 7 go-ahead, so `scenarios` is now `validated` (J7/K8 updated by this entry). |

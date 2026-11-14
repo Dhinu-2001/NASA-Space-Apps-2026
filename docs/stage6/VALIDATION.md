@@ -1,6 +1,6 @@
 # Stage 6 — Validation evidence and IM-2 example results
 
-Status: `scenarios` stays `implemented_unvalidated` until the user approves the gate.
+Status: gate approved by the user; `scenarios` is `validated`.
 
 ## 1. Gate items → tests (`tests/engine/test_scenarios.py`, `tests/api/test_api_stage6.py`)
 | Gate item | Evidence |

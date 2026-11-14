@@ -25,8 +25,8 @@ def test_version_lists_unbuilt_capabilities_honestly():
     assert body["stage"] == 6
     assert "terrain_data_insufficient" in body["notice"]
     by_key = {c["key"]: c["status"] for c in body["capabilities"]}
-    assert by_key["sites"] == by_key["dem"] == by_key["scenarios"] == "implemented_unvalidated"
-    assert by_key["ephemeris"] == by_key["horizon"] == by_key["visibility"] == "validated"
+    assert by_key["sites"] == by_key["dem"] == "implemented_unvalidated"
+    assert by_key["ephemeris"] == by_key["horizon"] == by_key["visibility"] == by_key["scenarios"] == "validated"
     assert by_key["engineering"] == "not_implemented"
 
 

@@ -1,7 +1,6 @@
 # Stage 6 — Scenarios, comparison and the mission delay simulator
 
-Status: implemented, **unvalidated until the Stage 6 gate is approved** (`scenarios` = `implemented_unvalidated`).
-`ephemeris`, `horizon` and `visibility` are `validated` (user-approved gates, Stages 3–5).
+Status: implemented; the Stage 6 gate was approved by the user (with the Stage 7 go-ahead), so `scenarios` is now `validated`, as are `ephemeris`, `horizon` and `visibility`.
 Code: `engine/lunarnav/scenarios.py` (logic), `api/lunarnav_api/routes_scenarios.py` (HTTP only). Evidence: [VALIDATION.md](VALIDATION.md).
 
 **Scope.** Comparison of geometric line of sight / direct illumination of the Sun and Earth between sites and dates. It is not link availability, irradiance, thermal or power, and it compares only what the terrain data support.
