@@ -7,6 +7,7 @@ import type {
   DemWindowInfo,
   EphemerisPositionResponse,
   HorizonResponse,
+  ProvenanceResponse,
   SitesResponse,
   VisibilityResponse,
 } from "./types";
@@ -78,6 +79,7 @@ export const api = {
   version: (signal?: AbortSignal) => request<VersionInfo>("GET", "/version", undefined, signal),
   sites: (signal?: AbortSignal) => request<SitesResponse>("GET", "/sites", undefined, signal),
   demWindows: (signal?: AbortSignal) => request<DemWindowInfo[]>("GET", "/dem/windows", undefined, signal),
+  provenance: (signal?: AbortSignal) => request<ProvenanceResponse>("GET", "/provenance", undefined, signal),
   ephemerisProvenance: (signal?: AbortSignal) =>
     request<EphemerisPositionResponse>("GET", `/ephemeris/position?${qs({ site_id: "im2-athena", time_utc: "2027-01-15T00:00:00Z" })}`, undefined, signal),
   ephemerisPosition: (sel: SiteSel, timeUtc: string, signal?: AbortSignal) =>

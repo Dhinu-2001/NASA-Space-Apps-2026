@@ -96,6 +96,12 @@ Start the backend and the frontend (see Run above), open http://localhost:5173/ 
 ```
 Validation suite only: `.\.venv\Scripts\python.exe -m pytest tests\validation` (golden regression and edge cases; real-data tests skip with the rebuild command if kernels/DEM are absent).
 
+## Demo preparation
+```powershell
+.\.venv\Scripts\python.exe -I scripts\warm_cache.py --base http://127.0.0.1:8000   # warm caches via the running backend (once)
+```
+See `docs/stage9/DEMO_READINESS.md` for the checklist, measured waits and a 5-minute walkthrough. Deep links: `/?autorun=1#compare`, `/?autorun=1#delay`.
+
 ## Dependencies
 - Python: declared in `pyproject.toml`; exact resolved versions pinned in `requirements.lock.txt` (`pip freeze`). Science libraries are added in the stage that first needs them (numpy, rasterio, pyproj: Stage 2; spiceypy 8.4.0 / CSPICE N0067: Stage 3).
 - Frontend: `web/package.json` + `web/package-lock.json`.

@@ -105,7 +105,7 @@ def build_scenario_router(data_dir: Path, visibility: VisibilityService) -> APIR
             for st in req.sites:
                 for d in req.start_utc_list:
                     name = st.site_id or f"{st.lat},{st.lon}"
-                    specs.append(service.make_spec(st.model_dump(), d, label=f"{name} @ {d}", **c))
+                    specs.append(service.make_spec(st.model_dump(), d, label=f"{name} @ {d[:10]}", **c))
         else:
             raise InvalidInputError("Give `scenarios`, or both `sites` and `start_utc_list`", field="scenarios")
         return service.compare(specs, req.baseline_index, req.use_cache)

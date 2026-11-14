@@ -5,10 +5,12 @@ import { useAsync } from "../hooks";
 import { statusLabel } from "../format";
 import { CapabilitiesContext, ErrorBox, Loading, Panel } from "../ui";
 
+const Sha = ({ v }: { v: string | null | undefined }) =>
+  v ? <code title={v} style={{ wordBreak: "break-all" }}>{v}</code> : <span className="muted-text">—</span>;
+
 export function AboutTab({ sites }: { sites: SitesResponse | null }) {
   const caps = useContext(CapabilitiesContext);
-  const dem = useAsync((s) => api.demWindows(s), "dem");
-  const eph = useAsync((s) => api.ephemerisProvenance(s), "eph");
+  const prov = useAsync((s) => api.provenance(s), "prov");
   const list: Site[] = sites?.sites ?? [];
 
   return (
@@ -22,7 +24,7 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
             ))}
           </tbody>
         </table>
-        <p className="help">“validated” = the project owner approved that stage’s evaluation gate. “implemented unvalidated” = built but not yet approved: treat as provisional. “not implemented” = nothing on screen is computed for it.</p>
+        <p className="help">“validated” = the project owner approved that stage’s evaluation gate after reviewing the evidence (implemented, tested, reviewed — <em>not</em> “proven against measurement”). “implemented unvalidated” = built but not yet approved: treat as provisional. “not implemented” = nothing on screen is computed for it.</p>
       </Panel>
 
       <Panel title="What the numbers mean">
@@ -43,12 +45,14 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
           <li><span className="assump">Assumption:</span> landing-position uncertainty ±100 m by default (configurable); positions are catalogue values from NASA/JPL NAIF and LROC sources.</li>
           <li><span className="assump">Assumption:</span> the mission-delay window defaults to 14 days (about one lunar day); change it to match the operation.</li>
           <li>Validated time range 2025-01-01 to 2035-12-31 (kernels are checksum-pinned; UTC after 2017 assumes no further leap seconds).</li>
-          <li>The terrain is a LOLA DEM (about 90 % of 5 m pixels are interpolated between ground tracks); boulders, the lander body and regolith lofting are not modelled.</li>
-          <li>Only IM-2 (landing and pre-landing target positions) has the 20 m terrain coverage needed for position-sensitivity figures. IM-1 has 2 km of 20 m data and Chandrayaan-3 has none, so they appear as “terrain data insufficient”. Extending coverage is future work.</li>
+          <li>The terrain is a LOLA DEM (about 90 % of 5 m pixels are interpolated between ground tracks); boulders, the lander body and regolith lofting are not modelled; no per-pixel DEM uncertainty is reported.</li>
+          <li>Only IM-2 (landing and pre-landing target positions) has the 20 m terrain coverage needed for position-sensitivity figures. IM-1 has 2 km of 20 m data and Chandrayaan-3 has none, so they appear as “terrain data insufficient”. Extending coverage is future work. No real permanently shadowed region data are included.</li>
+          <li>The ephemeris check against JPL Horizons shares JPL’s ephemerides, so it validates the implementation, not the ephemerides themselves; no physically independent horizon or visibility dataset was available.</li>
           <li>Events shorter than the sampling step that fall between samples are not detected (checked at IM-2: 15-minute and 5-minute runs agree).</li>
           <li>Not modelled: gravitational light bending (≤ 6×10⁻⁷°), Earth oblateness, refraction (none on the Moon).</li>
-          <li>Engineering assessments (solar power, antenna masks, slope, temperature) are not built (Stage 8).</li>
+          <li>Engineering assessments (solar power, antenna masks, slope, temperature) are not built (deferred).</li>
         </ul>
+        <p className="help">Full list with evidence: <code>docs/stage9/KNOWN_LIMITATIONS.md</code> (29 items) · validation evidence: <code>docs/stage9/VALIDATION_REPORT.md</code> · numerical tolerances: <code>docs/stage9/TOLERANCES.md</code>.</p>
       </Panel>
 
       <Panel title="Scientific data sources">
@@ -69,41 +73,58 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
         {sites && sites.pending_regions.length > 0 && (
           <p className="help">Not selectable: {sites.pending_regions.map((p) => p.name).join("; ")} — {sites.pending_regions[0].reason}</p>
         )}
-
-        <h3>Terrain (LOLA digital elevation models, NASA GSFC PGDA)</h3>
-        {dem.phase === "loading" && <Loading startedAt={dem.startedAt} label="Loading" />}
-        {dem.phase === "error" && <ErrorBox error={dem.error} what="DEM list" />}
-        {dem.phase === "ready" && (
-          <div className="scroll">
-            <table>
-              <thead><tr><th>Window</th><th>Product</th><th className="num">Pixel</th><th className="num">Size</th><th>SHA-256</th></tr></thead>
-              <tbody>
-                {dem.data.map((w) => (
-                  <tr key={w.window_id}>
-                    <td>{w.window_id}</td>
-                    <td><a href={w.source_url} target="_blank" rel="noreferrer">{w.product_id}</a>{w.overview_level !== null ? ` (overview ${w.overview_level})` : ""}</td>
-                    <td className="num">{w.pixel_size_m} m</td>
-                    <td className="num">{w.width}×{w.height}</td>
-                    <td><code>{w.sha256.slice(0, 12)}…</code></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        <h3>Ephemeris (NAIF SPICE)</h3>
-        {eph.phase === "loading" && <Loading startedAt={eph.startedAt} label="Loading" />}
-        {eph.phase === "error" && <ErrorBox error={eph.error} what="Ephemeris provenance" />}
-        {eph.phase === "ready" && (
+        {prov.phase === "loading" && <Loading startedAt={prov.startedAt} label="Loading provenance" />}
+        {prov.phase === "error" && <ErrorBox error={prov.error} what="Provenance" />}
+        {prov.phase === "ready" && (
           <>
-            <ul className="plain">
-              {(eph.data.provenance.kernels ?? []).map((k) => (
-                <li key={k.file}>{k.file} <code>{k.sha256.slice(0, 12)}…</code></li>
-              ))}
-            </ul>
+            <p className="help">Catalogue version {prov.data.site_catalogue.catalogue_version} · SHA-256 <Sha v={prov.data.site_catalogue.sha256} /></p>
+
+            <h3>Terrain (LOLA digital elevation models, NASA GSFC PGDA)</h3>
+            <div className="scroll">
+              <table>
+                <thead><tr><th>Window</th><th>Product</th><th className="num">Pixel</th><th className="num">Size</th><th>SHA-256 (verified at load)</th></tr></thead>
+                <tbody>
+                  {prov.data.dem_windows.map((w) => (
+                    <tr key={w.window_id}>
+                      <td>{w.window_id}</td>
+                      <td><a href={w.source_url} target="_blank" rel="noreferrer">{w.product_id}</a>{w.overview_level !== null ? ` (overview ${w.overview_level})` : ""}</td>
+                      <td className="num">{w.pixel_size_m} m</td>
+                      <td className="num">{w.width}×{w.height}</td>
+                      <td><Sha v={w.sha256} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="help">Heights are metres above the 1737.4 km reference sphere (data class: measured, interpolated). Windows are real extracts of the cited LOLA product; nothing is resampled by this project.</p>
+
+            <h3>Ephemeris (NAIF SPICE)</h3>
+            {prov.data.spice_kernels ? (
+              <div className="scroll">
+                <table>
+                  <thead><tr><th>Kernel</th><th>Role</th><th>SHA-256 (verified at load)</th></tr></thead>
+                  <tbody>
+                    {prov.data.spice_kernels.map((k) => (
+                      <tr key={k.file}><td><a href={k.source_url} target="_blank" rel="noreferrer">{k.file}</a></td><td>{k.role.replaceAll("_", " ")}</td><td><Sha v={k.sha256} /></td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="error" role="alert">SPICE kernels are not installed on this server: {prov.data.spice_kernels_error}</p>
+            )}
             <p className="help">
-              Frame {eph.data.provenance.frame} · aberration correction {eph.data.provenance.aberration_correction}. The ephemeris engine was validated against JPL Horizons on a 220-row grid (Sun within 1.4×10⁻⁸°, Earth within 6×10⁻⁷°); that check shares JPL’s ephemerides, so it validates the implementation, not the ephemerides themselves.
+              Frame {prov.data.spice_frame ?? "MOON_ME"} · light-time + stellar aberration. The ephemeris engine was compared with JPL Horizons on a 220-row grid (Sun within 1.4×10⁻⁸°, Earth within 6×10⁻⁷°, against a pre-declared 0.01° criterion). Horizons shares JPL’s ephemerides, so this checks the implementation, not the ephemerides.
+            </p>
+
+            <h3>Reproducibility</h3>
+            <p className="help">
+              Model version <strong>{prov.data.model_version}</strong> · code commit <Sha v={prov.data.git_commit} /> · {Object.entries(prov.data.software).map(([k, v]) => `${k} ${v}`).join(" · ")}
+            </p>
+            <p className="help">
+              Every visibility and scenario result carries a deterministic <code>provenance</code> block (kernel and DEM checksums, frame, algorithm version and every parameter, no timestamps): the same inputs and data give identical results. Validation fixture{" "}
+              {Object.values(prov.data.validation_fixtures).map((f) => <span key={f.file}><code>{f.file}</code> <Sha v={f.sha256} /></span>)}.
+              Data classes: {Object.entries(prov.data.data_classes).map(([k, v]) => `${k} (${v})`).join("; ")}.
             </p>
           </>
         )}

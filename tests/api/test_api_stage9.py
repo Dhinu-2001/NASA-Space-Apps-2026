@@ -85,3 +85,24 @@ def test_partial_install_still_reports_what_is_missing_and_stays_honest_about_ca
     assert c.get("/health").status_code == 200 and c.get("/version").status_code == 200
     sites = c.get("/sites")
     assert sites.status_code == 200 and len(sites.json()["sites"]) >= 3          # the catalogue does not need kernels/DEM
+
+
+@needs_data
+def test_repeat_visibility_requests_are_served_identically_and_routes_do_not_corrupt_the_cache():
+    import time
+
+    client = TestClient(create_app())
+    body = {"site": {"site_id": "im2-athena"}, "start_utc": "2027-02-09T00:00:00Z", "end_utc": "2027-02-11T00:00:00Z",
+            "step_seconds": 3600, "az_step_deg": 1.0}
+    t0 = time.time()
+    first = client.post("/visibility/series", json=body).json()
+    t_first = time.time() - t0
+    t0 = time.time()
+    second = client.post("/visibility/series", json=body).json()
+    t_second = time.time() - t0
+    assert first == second and t_second < max(0.5, t_first / 3)
+    # /visibility/at edits its own copy (drops 'states'/'headline'); a later /series must still have them
+    at = client.get("/visibility/at", params={"time_utc": "2027-02-09T12:00:00Z", "site_id": "im2-athena", "az_step_deg": 1.0})
+    assert at.status_code == 200 and "states" not in at.json()["bodies"]["sun"]
+    again = client.post("/visibility/series", json=body).json()
+    assert "states" in again["bodies"]["sun"] and again == first

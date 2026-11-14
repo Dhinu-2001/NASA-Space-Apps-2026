@@ -29,7 +29,7 @@ from .routes_visibility import build_visibility_router
 from .schemas import CapabilityOut, ErrorBody, HealthResponse, VersionResponse
 
 API_VERSION = "0.1.0"
-CURRENT_STAGE = 6
+CURRENT_STAGE = 9
 
 _ERROR_RESPONSES = {422: {"model": ErrorBody}, 500: {"model": ErrorBody}}
 
@@ -98,9 +98,10 @@ def create_app() -> FastAPI:
             api_version=API_VERSION,
             stage=CURRENT_STAGE,
             notice=(
-                "Stage 6: scenario comparison and mission delay simulator over terrain-corrected visibility "
+                "Stage 9: terrain-corrected Sun/Earth visibility, scenario comparison and mission delay simulator "
                 "(geometric line of sight / direct illumination only; not link availability or irradiance). "
-                "Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked."
+                "Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked. "
+                "Engineering assessments (solar power, antenna, slope, temperature) are not built."
             ),
             capabilities=[
                 CapabilityOut(key=c.key, title=c.title, stage=c.stage, status=c.status.value)

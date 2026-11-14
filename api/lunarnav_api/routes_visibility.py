@@ -5,7 +5,11 @@ Thin layer: parsing, site lookup, limits. All science is in `lunarnav.visibility
 
 from __future__ import annotations
 
+import copy
+import json
 import math
+import threading
+from collections import OrderedDict
 from pathlib import Path
 from typing import Any
 
@@ -70,7 +74,26 @@ def build_visibility_router(data_dir: Path, horizon_service: HorizonService | No
             raise InvalidInputError("Give a site_id, or both lat and lon", field="site")
         return None, sel.lat, sel.lon
 
+    # Identical requests give identical results (the engine is deterministic), so repeat loads are served from a small
+    # in-memory cache. Entries are deep-copied in and out: routes edit their copy (e.g. /visibility/at drops fields).
+    cache: OrderedDict[str, dict[str, Any]] = OrderedDict()
+    cache_lock = threading.Lock()
+
     def run(req: VisRequest, include_series: bool) -> dict[str, Any]:
+        key = json.dumps([req.model_dump(), include_series], sort_keys=True, default=str)
+        with cache_lock:
+            hit = cache.get(key)
+            if hit is not None:
+                cache.move_to_end(key)
+                return copy.deepcopy(hit)
+        res = compute(req, include_series)
+        with cache_lock:
+            cache[key] = copy.deepcopy(res)
+            while len(cache) > 24:
+                cache.popitem(last=False)
+        return res
+
+    def compute(req: VisRequest, include_series: bool) -> dict[str, Any]:
         site_id, lat, lon = resolve(req.site)
         start, end = parse_utc(req.start_utc, "start_utc"), parse_utc(req.end_utc, "end_utc")
         step = req.step_seconds

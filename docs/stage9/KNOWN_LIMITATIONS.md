@@ -44,7 +44,7 @@ One list for the whole project. Each limitation has an ID, what it means for a r
 | L-P3 | **Stage 8 (engineering: solar power, antenna masks, slope, temperature) is not built**; the `engineering` capability is `not_implemented` | no power, link or thermal figure exists anywhere |
 | L-P4 | No formal accessibility audit; small-screen charts shrink with the page | landmarks, labels and text alternatives are present |
 | L-P5 | Results are verified on one machine/OS (Windows 11, Python 3.12); cross-platform bit-exactness is not claimed (decision S5) | tolerances in `TOLERANCES.md` are the cross-platform contract |
-| L-P6 | Headless screenshots cover three UI views; Compare and Delay were verified against real backend JSON and fixtures, not screenshots | `stage7/UI.md` §5 |
+| L-P6 | UI verified in one browser engine (headless Edge/Chromium): all four tabs screenshotted with real data, console clean; no cross-browser testing | `stage9/DEMO_READINESS.md` |
 
 ## What the validated status means
 A capability is `validated` when the project owner approved its stage's evaluation gate after reviewing the evidence in `docs/stageN/VALIDATION.md`. It does **not** mean "proven against measurement": see L-M1 and L-M2 for exactly what independence the evidence has.

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import type { DelayBodyRow, DelayResponse, Site } from "../api/types";
 import { fmtBand, fmtDur, fmtPct, fmtUtc, localInputToUtc } from "../format";
@@ -144,6 +144,10 @@ export function DelayTab({ sites }: { sites: Site[] }) {
     setErr(null);
     setApplied({ site: siteId, start: localInputToUtc(start), offsets: o, duration: d, band: b });
   };
+
+  // Deep link for demos: ?autorun=1 runs the form's defaults on load (never in unit tests).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (import.meta.env.MODE !== "test" && window.location.search.includes("autorun=1")) run(); }, []);
 
   const state = useAsync(
     applied ? (s) => api.delay({ site_id: applied.site }, applied.start, applied.offsets, { duration_days: applied.duration, position_uncertainty_m: applied.band }, s) : null,

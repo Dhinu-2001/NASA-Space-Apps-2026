@@ -22,7 +22,7 @@ def test_request_id_is_echoed():
 
 def test_version_lists_unbuilt_capabilities_honestly():
     body = client.get("/version").json()
-    assert body["stage"] == 6
+    assert body["stage"] == 9
     assert "terrain_data_insufficient" in body["notice"]
     by_key = {c["key"]: c["status"] for c in body["capabilities"]}
     for k in ("sites", "dem", "ephemeris", "horizon", "visibility", "scenarios"):

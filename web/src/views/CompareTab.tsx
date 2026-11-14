@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../api/client";
 import type { CompareResponse, ScenarioResult } from "../api/types";
 import { DASH, fmtBand, fmtDur, fmtPct, fmtUtc, localInputToUtc } from "../format";
@@ -119,7 +119,7 @@ export function CompareResult({ data }: { data: CompareResponse }) {
       {data.rankings.length > 0 && (
         <>
           <h3>Rankings (supported scenarios only)</h3>
-          <div className="cards">
+          <div className="cards" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 400px), 1fr))" }}>
             {data.rankings.map((r) => (
               <div className="card" key={r.criterion}>
                 <strong>{r.criterion.replaceAll("_", " ")}</strong> <span className="muted-text">({r.better} is better)</span>
@@ -174,6 +174,10 @@ export function CompareTab({ sites }: { sites: Site[] }) {
     setErr(null);
     setApplied({ sites: chosen, dates: dates.map(localInputToUtc), duration: d, band: b, baseline: Math.min(baseSite, chosen.length - 1) * dates.length + Math.min(baseDate, dates.length - 1) });
   };
+
+  // Deep link for demos: ?autorun=1 runs the form's defaults on load (never in unit tests).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { if (import.meta.env.MODE !== "test" && window.location.search.includes("autorun=1")) run(); }, []);
 
   const state = useAsync(
     applied ? (s) => api.compare(applied.sites.map((id) => ({ site_id: id })), applied.dates, { duration_days: applied.duration, position_uncertainty_m: applied.band }, applied.baseline, s) : null,

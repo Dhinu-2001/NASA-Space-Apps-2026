@@ -1,7 +1,7 @@
 # Stage 7 — Core user interface
 
 Status: implemented; the UI has no engine capability of its own. Stage 7 was approved by the project owner (Stage 8 deferred, Stage 9 authorised). Minimal, read-only (decision C2). Code: `web/src/`.
-Screenshots from the real app against the real backend: [view_desktop.png](view_desktop.png), [view_mobile.png](view_mobile.png), [about.png](about.png).
+Screenshots from the real app against the real backend (Stage 9 final polish): [final_view.png](final_view.png), [final_compare.png](final_compare.png), [final_delay.png](final_delay.png), [final_about.png](final_about.png), [final_mobile.png](final_mobile.png) (500 px). Rehearsal evidence: [../stage9/DEMO_READINESS.md](../stage9/DEMO_READINESS.md).
 
 ## 1. Scope (C2) and the required workflow
 One page, four tabs. Nothing beyond the C2 list: site, UTC time, Sun/Earth az/el, horizon profile, terrain-corrected visibility, sunlight and Earth timelines — plus the comparison, delay and data/assumptions views the Stage 7 task list names. No 3D, no animation, no editing of scientific data.
@@ -28,7 +28,7 @@ One page, four tabs. Nothing beyond the C2 list: site, UTC time, Sun/Earth az/el
 
 ## 3. Behaviour notes
 * The default scenario (IM-2, 2027-01-15, 30 days, ±100 m) is computed on load; the first computation for a new site takes about a minute (terrain profiles at the site and 8 displaced positions), then it is cached.
-* Deep links: `#view`, `#compare`, `#delay`, `#about`.
+* Deep links: `#view`, `#compare`, `#delay`, `#about`; add `?autorun=1` to run the Compare/Delay defaults on load. The About tab reads `GET /provenance` (full checksums, code commit, software).
 * Visibility inputs are limited to the validated range (2025-01-01 to 2035-12-31) by the input `min`/`max` and by the backend.
 * Not built (by decision): 3D lunar surface, animation, full time-scrubbing player (clicking the timeline moves the time marker), saved-scenario browser, export.
 
@@ -36,6 +36,6 @@ One page, four tabs. Nothing beyond the C2 list: site, UTC time, Sun/Earth az/el
 Capability strip shows real statuses and panel tags; error state; the form's controls and client-side validation; the data/assumptions page; comparison rows show terrain-corrected next to geometric with bands; cut-off flagged; an insufficient site is a label with no numbers and absent from rankings; differences carry bands and "within position uncertainty"; delay chart draws band and geometric value; "not computed" instead of a confident number; timeline bars, dashed cut-off outlines and whiskers; the full view workflow with an insufficient site. The Compare and Delay components were additionally rendered against the real backend JSON (4 supported + 4 insufficient scenarios, real delay results) during development.
 
 ## 5. Limitations
-* Visual verification was by headless-browser screenshots of three views (View desktop, View at 500 px, About); Compare and Delay were verified with real backend JSON in component tests and by fixtures, not by screenshot.
+* Visual verification: headless-browser screenshots of all four tabs with real data plus a 500 px Compare view (Stage 9 polish); browser console captured on every tab with no errors or warnings. Not tested across browsers.
 * Small-screen charts scale down with the page (text gets small below ~500 px).
 * Accessibility: tags and landmarks are in place and the map/timelines have text alternatives, but no formal audit was done.

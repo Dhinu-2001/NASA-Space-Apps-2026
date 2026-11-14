@@ -375,3 +375,17 @@ export interface DelayResponse {
   summary_table?: DelayRow[];
   notes?: string[];
 }
+
+export interface ProvenanceResponse {
+  model_version: string;
+  git_commit: string | null;
+  software: Record<string, string>;
+  spice_kernels: { file: string; role: string; sha256: string; source_url: string }[] | null;
+  spice_kernels_error?: string;
+  spice_frame?: string | null;
+  dem_windows: DemWindowInfo[];
+  site_catalogue: { catalogue_version: string; sha256: string | null; sites: { id: string; name: string; kind: string; sources: { label: string; url: string }[] }[] };
+  validation_fixtures: Record<string, { file: string; sha256: string | null; note: string }>;
+  constants: Record<string, number | string>;
+  data_classes: Record<string, string>;
+}

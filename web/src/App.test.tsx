@@ -92,14 +92,38 @@ describe("App shell", () => {
     expect(screen.getByRole("alert")).toHaveTextContent(/numeric latitude/);
   });
 
-  it("shows the data-sources and assumptions page with the defaults labelled as assumptions", async () => {
-    stubApi({ "/ephemeris/position": { provenance: { kernels: [{ file: "de440s.bsp", sha256: "a".repeat(64) }], frame: "MOON_ME", aberration_correction: "LT+S" }, notes: [], bodies: {}, observer: {} } });
+  const provenance = {
+    model_version: "0.9.0-stage9", git_commit: "abc123def456", software: { python: "3.12.10", spiceypy: "8.4.0" },
+    spice_kernels: [{ file: "de440s.bsp", role: "planetary_spk", sha256: "a".repeat(64), source_url: "https://naif.example/de440s.bsp" }],
+    spice_frame: "MOON_ME",
+    dem_windows: [{ window_id: "im2_20m_r80km", product_id: "LDEM_80S_20MPP_ADJ", pixel_size_m: 20, width: 8000, height: 8000, source_url: "https://pgda.example/x.TIF", sha256: "b".repeat(64), z_min_m: 0, z_max_m: 1, valid_fraction: 1, overview_level: null }],
+    site_catalogue: { catalogue_version: "2026-11-14.1", sha256: "c".repeat(64), sites: [] },
+    validation_fixtures: { horizons: { file: "data/validation/horizons_stage3_reference.json", sha256: "d".repeat(64), note: "x" } },
+    constants: {}, data_classes: { calculated: "derived by the engine" },
+  };
+
+  it("shows the data-sources, checksums, provenance and assumptions page with defaults labelled as assumptions", async () => {
+    stubApi({ "/provenance": provenance });
     render(<App />);
     await screen.findByTestId("health-status");
     fireEvent.click(screen.getByRole("tab", { name: "Data & assumptions" }));
     expect(await screen.findByText(/de440s\.bsp/)).toBeInTheDocument();
+    expect(screen.getByText("a".repeat(64))).toBeInTheDocument();           // full kernel checksum
+    expect(screen.getByText("b".repeat(64))).toBeInTheDocument();           // full DEM checksum
+    expect(screen.getByText("abc123def456")).toBeInTheDocument();           // code commit
+    expect(screen.getByText(/0\.9\.0-stage9/)).toBeInTheDocument();
     expect(screen.getAllByText("Assumption:").length).toBeGreaterThanOrEqual(3);
     expect(screen.getByText(/IM-1 has 2 km of 20 m data/)).toBeInTheDocument();
+    expect(screen.getByText(/“proven against measurement”/)).toBeInTheDocument();
+    expect(screen.getAllByText(/shares JPL’s ephemerides/).length).toBe(2);   // limitations list and the ephemeris note
+  });
+
+  it("says so when the server has no SPICE kernels instead of showing an empty table", async () => {
+    stubApi({ "/provenance": { ...provenance, spice_kernels: null, spice_kernels_error: "Required SPICE kernel missing: de440s.bsp" } });
+    render(<App />);
+    await screen.findByTestId("health-status");
+    fireEvent.click(screen.getByRole("tab", { name: "Data & assumptions" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/SPICE kernels are not installed.*de440s\.bsp/);
   });
 });
 
