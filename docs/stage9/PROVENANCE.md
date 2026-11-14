@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-14 20:19 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.9.0-stage9**, code commit **07420d8bb0a7**.
+Generated 2026-11-14 20:35 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **feed46af324c**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -84,6 +84,8 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+feed46a feat: Stage 8 (narrow) idealised direct-beam solar-energy upper bound
+e6d4d32 docs: final Stage 9 reports from a clean tree
 07420d8 fix: test report generator per-file table and dirty-tree detection
 4f353a2 docs: regenerate Stage 9 provenance and test reports at the final polished commit
 1e912cd feat: final polish - demo readiness, provenance in About tab, cache warm-up, real-browser rehearsal
