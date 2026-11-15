@@ -20,7 +20,7 @@ Pick one:
 **A. Rebuild from NASA** (needs outbound internet; 30–60 minutes; resumable; the NASA PGDA server is slow and sometimes drops connections, just re-run):
 ```
 python scripts/provision_data.py --warm        # kernels, DEM windows, then warm the caches
-python scripts/provision_data.py --skip-large  # quick partial install (IM-2 small windows only, about 5 MB; Chandrayaan-3 and the 80 km window are skipped)
+python scripts/provision_data.py --skip-large  # PARTIAL install (kernels + small windows, about 50 MB). IM-2 needs the 80 km window (141 MB), so with this option IM-2 reports 'terrain data insufficient (DATA_MISSING)'; it only gets the app running, e.g. for a smoke test
 ```
 **B. Copy a bundle** (fast): on a machine that has the data, `python scripts/pack_data.py --with-cache` makes `lunarnav-data.tar.gz` (about 290 MB; it contains a `SHA256SUMS` file); unpack it into the data directory on the host. The application re-verifies every kernel and DEM window against `data/manifests` at load, so a damaged bundle is refused, never used.
 
@@ -32,7 +32,7 @@ Check the result: `python scripts/verify_data.py` prints `READY` and each window
 ```
 export GIT_COMMIT=$(git rev-parse --short HEAD)          # shown in /api/provenance and the About tab
 docker compose up -d --build
-# first run: put data into the volume
+# first run: put data into the volume (REQUIRED: the container does not download it itself and exits with "Data not ready" until you do)
 docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm
 #   or unpack a bundle:  docker run --rm -v <volume-name>:/data -v "$PWD":/in alpine tar xzf /in/lunarnav-data.tar.gz -C /data
 #   (find <volume-name> with `docker volume ls`; compose names it <project>_lunarnav-data)

@@ -28,7 +28,21 @@ python -m venv .venv ; .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 cd web ; npm ci ; npm run dev                                                # UI at http://localhost:5173
 ```
 
-One-process **production** mode (UI + API on one port) and Docker: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Development details: [docs/DEV_SETUP.md](docs/DEV_SETUP.md).
+**With Docker** (the data is not in git, so this is a two-step process: the container refuses to start until its `/data` volume holds the NASA data; it does not download it by itself):
+
+```bash
+export GIT_COMMIT=$(git rev-parse --short HEAD)
+docker compose build
+# Step 1: download the data into the volume (kernels + all terrain windows, ~290 MB; 30-60 min the first time; re-run if NASA's server drops a connection, it resumes)
+docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm
+# Step 2: start the app, then open http://localhost:8000
+docker compose up -d
+curl http://localhost:8000/api/health
+```
+
+If you run `docker compose up` before step 1 the container exits with "Data not ready" and restarts in a loop: that is expected; run step 1, then `docker compose restart lunarnav`. The IM-2 results need the 80 km terrain window (141 MB), which is part of step 1; a partial download (`--skip-large`) starts the app but IM-2 then reports "terrain data insufficient".
+
+One-process **production** mode (UI + API on one port) and more Docker detail: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Development details: [docs/DEV_SETUP.md](docs/DEV_SETUP.md).
 
 ## Using it (the complete workflow)
 
@@ -68,4 +82,4 @@ Full test and validation report: [docs/TEST_AND_VALIDATION.md](docs/TEST_AND_VAL
 
 ## Licence
 
-No licence has been declared yet; choosing one is a decision for the project owner. Third-party software licences are listed in [docs/ATTRIBUTION.md](docs/ATTRIBUTION.md).
+[MIT](LICENSE) (c) 2026 Dhinu C Philip. Third-party software licences are listed in [docs/ATTRIBUTION.md](docs/ATTRIBUTION.md).

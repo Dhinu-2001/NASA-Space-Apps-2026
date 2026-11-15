@@ -24,7 +24,11 @@ ENV LUNARNAV_GIT_COMMIT=${GIT_COMMIT} \
 WORKDIR /app
 
 # rasterio's wheel links libexpat, which the slim base image does not include (found by the first container run)
-RUN apt-get update && apt-get install -y --no-install-recommends libexpat1  && rm -rf /var/lib/apt/lists/*
+# zlib1g is upgraded to pick up Debian's fixed version (two HIGH CVEs flagged by docker scout in the base image's older build)
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libexpat1 \
+ && apt-get install -y --only-upgrade zlib1g \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.runtime.txt ./
 RUN pip install -r requirements.runtime.txt
