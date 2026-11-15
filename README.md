@@ -2,6 +2,8 @@
 
 **NASA International Space Apps Challenge 2026.** A scientifically grounded tool for comparing lunar south-pole landing sites and dates by **terrain-corrected Sun and Earth visibility**: when is the Sun above the local terrain horizon, when can Earth be seen (for direct-to-Earth communication geometry), how long are the longest periods without either, and how much does the answer move if the landing position is uncertain?
 
+**Live demo: <http://65.1.111.177/>**
+
 > Independent project, **not a NASA product and not endorsed by NASA, JPL or ASU.** All scientific data are public NASA data, credited in [docs/ATTRIBUTION.md](docs/ATTRIBUTION.md) and in the application.
 
 ![The Site & time view for IM-2 Athena: Sun and Earth positions, terrain horizon, visibility timelines with position-uncertainty bands](docs/stage11/e2e/01_view_im2.png)
