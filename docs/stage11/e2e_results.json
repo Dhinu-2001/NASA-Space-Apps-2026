@@ -39,7 +39,7 @@
     {
       "name": "3a clicking the map fills latitude/longitude (about -75, 100)",
       "pass": true,
-      "detail": "-75.15, 99.43"
+      "detail": "-75.13, 100"
     },
     {
       "name": "3b a point without terrain data is LABELLED 'terrain data insufficient', never estimated",
@@ -97,7 +97,7 @@
       "detail": ""
     },
     {
-      "name": "9b assumptions and limitations are stated (35 items)",
+      "name": "9b assumptions and limitations are stated (38 items)",
       "pass": true,
       "detail": ""
     },
@@ -129,8 +129,8 @@
   ],
   "expected_422": [
     "422 /horizon/profile",
-    "422 /visibility/series",
-    "422 /visibility/at"
+    "422 /visibility/at",
+    "422 /visibility/series"
   ],
   "unexpected_api_errors": [],
   "console_errors": [],
