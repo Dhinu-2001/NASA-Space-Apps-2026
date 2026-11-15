@@ -90,7 +90,7 @@
           "im2-athena (84.79 S: ~150 km from the grid edge on its nearest side)"
         ],
         "sites_not_covered": [
-          "chandrayaan3-shiv-shakti (69.37 S): needs a 60S product (e.g. LDEM_60S_240MPP_ADJ / 120MPP / 60MPP), not yet registered"
+          "chandrayaan3-shiv-shakti (69.37 S): outside this product; covered by LDEM_60S_60MPP_ADJ (registered 2026-11-15, unvalidated)"
         ]
       },
       "known_limitations": [
@@ -105,6 +105,147 @@
         "nan_pixels_inside_80S_circle": 0,
         "overview_resampling_inference": "Area-average (not nearest): at IM-2 the overview-3 (320 m) pixel = 5190.37 m; mean of its 16x16 20 m block = 5189.91 m; median 5188.20 m; nearest candidates 5163.42 m / 5193.60 m. Consistent with averaging.",
         "overview_implication": "Averaged overviews smooth ridge peaks, so a horizon computed from them can UNDER-estimate obstruction (optimistic visibility). Far-field use in Stage 4 must quantify this."
+      }
+    },
+    "LDEM_60S_60MPP_ADJ": {
+      "title": "LOLA Digital Elevation Model, 60-90 deg S, 60 m/pixel, track-adjusted",
+      "publisher": "NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team",
+      "landing_page": "https://pgda.gsfc.nasa.gov/products/90",
+      "doi": "10.60903/gsfcpgda-lola-spole",
+      "file_url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF",
+      "file_size_bytes_listed_on_landing_page": "2.9G (approximate; exact byte size not measured)",
+      "verified_utc": "2026-11-15",
+      "status": "registered_unvalidated: header, CRS and one published-height check verified; NOT approved as a validation gate by the owner",
+      "companion_layers_listed_on_landing_page": [
+        "LDEC_60S_60MPP_ADJ.TIF (spot count)",
+        "LDEM_60S_60MPP_ADJ_EFFRES.TIF",
+        "LDEM_60S_60MPP_ADJ_ERR.TIF",
+        "LDEM_60S_60MPP_ADJ_HILL.TIF",
+        "LDSM_60S_60MPP_ADJ.TIF",
+        "LDSM_60S_60MPP_ADJ_ERR.TIF"
+      ],
+      "other_60S_products_considered": {
+        "LDEM_60S_240MPP_ADJ": "covers the site (site height 529.3 m nearest pixel); rejected: at the site the product's own EFFRES layer reads ~32 m (median ~52 m within 3 km), so 240 m pixels would discard real terrain information",
+        "LDEM_60S_120MPP_ADJ": "covers the site (527.7 m nearest pixel); rejected for the same reason as 240 m; 60 m is the coarsest product that is not coarser than the stated effective resolution",
+        "LDEM_75S_30MPP_ADJ": "does not cover the site (site is at 69.4 S, product limit 75 S)"
+      },
+      "raster": {
+        "verified_by": "rasterio 1.5.2 / GDAL 3.12.2 header read over HTTP range requests (no bulk download)",
+        "driver": "GTiff (Cloud-Optimized)",
+        "width": 31040,
+        "height": 31040,
+        "bands": 1,
+        "dtype": "float32",
+        "pixel_size_m": 60.0,
+        "bounds_m": {
+          "left": -931200.0,
+          "bottom": -931200.0,
+          "right": 931200.0,
+          "top": 931200.0
+        },
+        "nodata": "NaN",
+        "block_shape": [
+          512,
+          512
+        ],
+        "overviews": [
+          2,
+          4,
+          8,
+          16,
+          32,
+          64
+        ],
+        "compression": "deflate",
+        "registration": "same convention as the 80S product (pixel-centre samples, GeoTIFF origin at the outer pixel edge)",
+        "units": "metres"
+      },
+      "crs": {
+        "name": "Moon (2015) - Sphere / Ocentric / South Polar (IAU:30135)",
+        "projection": "Polar_Stereographic, latitude_of_origin=-90, central_meridian=0, false easting/northing 0, metres",
+        "sphere_radius_m": 1737400.0,
+        "datum": "Moon (2015) - Sphere (IAU:30100), radius 1737400 m, flattening 0",
+        "verified_orientation": "CRS WKT is string-identical to the verified 80S product. pyproj on the file CRS gives x=338051.9336 m, y=534332.2375 m for 69.3741 S 32.32 E, equal to the project's own formula to <1e-9 m."
+      },
+      "height_datum": "Metres above the 1737.4 km reference sphere (confirmed against NAIF-published altitudes, same sphere).",
+      "frame": {
+        "stated_by": "PGDA landing page 90 states the MOON_ME / JPL DE421 frame once for 'All TIF files' on the page, including this product (NOT embedded in the GeoTIFF).",
+        "requirement": "Same as the 80S product: SPICE frame MOON_ME, never MOON_PA (~875 m difference).",
+        "not_verified": "The frame statement is the provider's page text; it has NOT been independently tested for this product. The 80S product was tested against two published sites (IM-1/IM-2 heights); here the only check is one height at one site (below), which cannot distinguish a frame offset of the order of ~1 km."
+      },
+      "height_checks": [
+        {
+          "site": "chandrayaan3-shiv-shakti",
+          "published_height_m": 532.0,
+          "published_by": "LROC image page 1314 ([69.3741 S, 32.32 E, 532 m elevation])",
+          "dem_height_m_nearest_pixel": 528.826,
+          "dem_height_m_bilinear": 529.3406,
+          "difference_m_bilinear_minus_published": -2.659,
+          "local_spread_m": "5x5 pixel (300 m) neighbourhood spans 525.7 to 533.4 m; the published height lies inside that range",
+          "caveat": "UNVERIFIED DATUM MATCH: sites.json states the 532 m datum is as stated by LROC and only ASSUMED to be sphere-referenced LOLA height. Agreement within ~3 m is consistent with that assumption but does not prove it, and the published coordinates carry a limited number of decimals (0.0001 deg ~ 3 m), so a 3 m height difference is not meaningful. One site only: this is a plausibility check, not a validation."
+        }
+      ],
+      "coverage": {
+        "latitude": "Square grid +/-931.2 km, nominal 60-90 S.",
+        "sites_covered": [
+          "chandrayaan3-shiv-shakti (69.37 S; ~632 km from the pole, ~299 km from the nearest grid edge)"
+        ],
+        "sites_not_covered": [
+          "im1-odysseus: not helped by this product (its limit is that the 20 m window edge is 4 km away; no 60 m window was extracted for it)"
+        ],
+        "window_valid_fraction": "1.0000 in the extracted 200 km window (no NaN); valid does not mean high quality"
+      },
+      "known_limitations": [
+        "60 m pixels: terrain features smaller than ~120 m cannot be resolved and rock-scale obstructions are not represented; the horizon is a coarser estimate than IM-2's 20 m result.",
+        "Native 60 m product, not an overview, but still gridded/interpolated from LOLA tracks: at the site LDEC (spot count) = 4 in the 60 m pixel and EFFRES = 32 m; over the surrounding +/-3 km the median count is 1 and the median EFFRES 52 m (p10 25 m, p90 160 m). Parts of the area are therefore interpolated.",
+        "Height error layer at the site: 0.30 m (median 0.61 m, p90 1.96 m within +/-3 km). These are the provider's ERR values for the 60 m product; they have not been propagated into the horizon.",
+        "Frame information is not embedded in the file and was verified only with one published height (see frame.not_verified).",
+        "Window extent is 200 km (see dem_windows.json); terrain beyond is bounded, not measured."
+      ],
+      "measurements": {
+        "site_neighbourhood_layers_3km": {
+          "ldem_60s_60mpp_adj_effres_m": {
+            "centre": 32.1,
+            "median": 51.5,
+            "p10": 24.5,
+            "p90": 159.6
+          },
+          "ldec_spot_count": {
+            "centre": 4.0,
+            "median": 1.0,
+            "p10": 0.0,
+            "p90": 5.0
+          },
+          "ldem_60s_60mpp_adj_err_m": {
+            "centre": 0.298,
+            "median": 0.608,
+            "p10": 0.186,
+            "p90": 1.964
+          }
+        },
+        "relief_in_240m_product_around_site": {
+          "r50km": [
+            -565,
+            2494
+          ],
+          "r100km": [
+            -2669,
+            4399
+          ],
+          "r150km": [
+            -2755,
+            4699
+          ],
+          "r200km": [
+            -3853,
+            6052
+          ],
+          "r300km": [
+            -5038,
+            6052
+          ],
+          "unit": "m (min, max above the 1737.4 km sphere)"
+        }
       }
     }
   }

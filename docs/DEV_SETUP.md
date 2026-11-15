@@ -55,6 +55,7 @@ cd web; npm run gen:api                                       # regenerates src/
 .\.venv\Scripts\python.exe -I scripts\inspect_kernels.py      # coverage/version metadata into the manifest
 .\.venv\Scripts\python.exe -I scripts\extract_dem_window.py    # LOLA windows; the default set includes the 80 km / 20 m IM-2 window (~190 MB download)
 .\.venv\Scripts\python.exe -I scripts\extract_dem_window.py im2_20m_r10km im2_320m_r160km im1_20m_r2km   # only the 3 small windows (~5 MB)
+.\.venv\Scripts\python.exe -I scripts\extract_dem_window.py ch3_60m_r200km   # Chandrayaan-3, 60 m to 200 km, ~108 MB (optional; without it the site is 'terrain data insufficient')
 ```
 Tests that need the windows (or the kernels) skip with the rebuild command in their message when the files are absent.
 

@@ -93,7 +93,7 @@ def test_a_smaller_position_uncertainty_gives_a_narrower_energy_band():
 
 
 @needs_data
-@pytest.mark.parametrize("site", [{"site_id": "im1-odysseus"}, {"site_id": "chandrayaan3-shiv-shakti"}, {"lat": -90.0, "lon": 0.0}])
+@pytest.mark.parametrize("site", [{"site_id": "im1-odysseus"}, {"lat": -72.0, "lon": 200.0}, {"lat": -90.0, "lon": 0.0}])
 def test_sites_without_terrain_support_get_a_label_and_no_energy_figure(site):
     r = client.post("/engineering/solar", json={**BASE, "site": site, "az_step_deg": 5.0})
     assert r.status_code == 200, r.text

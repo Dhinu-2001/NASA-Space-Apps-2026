@@ -51,7 +51,7 @@ Named bundles of **existing** form parameters (window length, observer height, p
 | Item | Reason |
 |---|---|
 | Detailed 3D lunar terrain | Needs a new backend endpoint for a decimated heightmap (labelled `measured_interpolated`, decimated), a 3D library over a slow network, and covers IM-2 only; highest risk to the gate "must not compromise scientific accuracy or performance". Recommended only if time remains after Stage 11. |
-| Historical landing-site comparisons | Compare already does site comparison honestly; IM-1 and Chandrayaan-3 correctly stay "terrain data insufficient". |
+| Historical landing-site comparisons | Compare already does site comparison honestly; IM-1 correctly stays "terrain data insufficient"; Chandrayaan-3 (60 m terrain, 2026-11-15) is supported with a not-yet-approved caveat. |
 | Advanced scenario exploration; advanced scientific visualisation | Not selected for the core scope. |
 
 ## 7. Tests (`web/src`: 108 frontend tests in 5 files; backend unchanged at 357)

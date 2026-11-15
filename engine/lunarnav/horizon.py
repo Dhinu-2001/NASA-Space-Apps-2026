@@ -297,7 +297,9 @@ def compute_horizon(
                        "interpolation": "bilinear_pixel_centres"},
         "windows": [{"window_id": w.meta.window_id, "product_id": w.meta.product_id,
                      "pixel_size_m": w.meta.pixel_size_m, "sha256": w.meta.sha256,
-                     "overview_level": w.meta.overview_level, "source_url": w.meta.source_url}
+                     "overview_level": w.meta.overview_level, "source_url": w.meta.source_url,
+                     # present only for windows from products the owner has not yet approved (no key = no claim)
+                     **({"validation_status": w.meta.raw["validation_status"]} if "validation_status" in w.meta.raw else {})}
                     for w in sampler.windows],
     }
     return HorizonProfile(azimuth, horizon, h_dist, h_pix, covered, n_missing, bound, truncated, data_gap, meta)

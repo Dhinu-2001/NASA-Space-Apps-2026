@@ -436,7 +436,7 @@ def test_im1_has_insufficient_terrain_so_sensitivity_is_not_extrapolated_and_res
 @needs_dem
 def test_no_dem_site_is_an_error_not_geometric_visibility(vis):
     with pytest.raises(OutOfDemCoverageError):
-        vis.evaluate(-69.3741, 32.32, START, 3600.0, 5, 2.0)
+        vis.evaluate(-72.0, 200.0, START, 3600.0, 5, 2.0)
 
 
 @needs_kernels

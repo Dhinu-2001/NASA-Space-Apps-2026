@@ -1,6 +1,33 @@
 {
   "manifest_note": "Each window is a real extract of the cited LOLA product; files live in data/dem_cache (git-ignored). Regenerate with scripts/extract_dem_window.py.",
   "windows": {
+    "ch3_60m_r200km": {
+      "bottom_m": 334320.0,
+      "centre_lat_deg": -69.3741,
+      "centre_lon_deg_east": 32.32,
+      "crs_wkt": "PROJCS[\"Moon (2015) - Sphere / Ocentric / South Polar\",GEOGCS[\"Moon (2015) - Sphere / Ocentric\",DATUM[\"Moon (2015) - Sphere\",SPHEROID[\"Moon (2015) - Sphere\",1737400,0,AUTHORITY[\"IAU\",\"30100\"]],AUTHORITY[\"IAU\",\"30100\"]],PRIMEM[\"Reference Meridian\",0,AUTHORITY[\"IAU\",\"30100\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AUTHORITY[\"IAU\",\"30100\"]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH],AUTHORITY[\"IAU\",\"30135\"]]",
+      "extracted_utc": "2026-11-15T01:44:36Z",
+      "file": "dem_cache/ch3_60m_r200km.tif",
+      "gdal": "3.12.2",
+      "height": 6667,
+      "left_m": 138060.0,
+      "nodata": "NaN",
+      "overview_level": null,
+      "pixel_size_m": 60.0,
+      "product_id": "LDEM_60S_60MPP_ADJ",
+      "rasterio": "1.5.2",
+      "right_m": 538080.0,
+      "sha256": "4ec7fcbc04ec9f5310b0c8f4c3b0bd801dada74ce2cf0905fdcf574b3c2c72c4",
+      "size_bytes": 107914151,
+      "source_url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF",
+      "top_m": 734340.0,
+      "units": "metres above 1737.4 km reference sphere",
+      "valid_fraction": 1.0,
+      "validation_status": "registered_unvalidated: header, CRS and one published-height check verified 2026-11-15; not approved by the project owner as a validation gate",
+      "width": 6667,
+      "z_max_m": 6058.68994140625,
+      "z_min_m": -5043.10302734375
+    },
     "im1_20m_r2km": {
       "bottom_m": 298020.0,
       "centre_lat_deg": -80.12759,

@@ -281,10 +281,13 @@ def test_manifest_checksums_match_files_and_windows_are_fully_valid():
 
 @needs_data
 def test_window_geometry_is_on_the_product_grid():
-    # LOLA grid: origin -304000 m, pixel edges at multiples of the pixel size from there.
+    # LOLA grids are centred on the pole: the 80S products span +/-304 km, the 60S products +/-931.2 km; pixel
+    # edges lie at multiples of the pixel size from that origin.
+    half = {"LDEM_80S_20MPP_ADJ": 304000.0, "LDEM_60S_60MPP_ADJ": 931200.0}
     for meta in DemRegistry(DATA).windows.values():
-        assert (meta.left_m + 304000.0) % meta.pixel_size_m == pytest.approx(0, abs=1e-6)
-        assert (304000.0 - meta.top_m) % meta.pixel_size_m == pytest.approx(0, abs=1e-6)
+        h = half[meta.product_id]
+        assert (meta.left_m + h) % meta.pixel_size_m == pytest.approx(0, abs=1e-6), meta.window_id
+        assert (h - meta.top_m) % meta.pixel_size_m == pytest.approx(0, abs=1e-6), meta.window_id
 
 
 @needs_data
@@ -298,9 +301,20 @@ def test_site_is_inside_its_window_with_surrounding_terrain_for_ray_casting():
 
 
 @needs_data
-def test_chandrayaan_site_is_out_of_coverage_with_explicit_error():
+def test_a_point_inside_no_window_is_an_explicit_error():
     with pytest.raises(OutOfDemCoverageError):
-        DemRegistry(DATA).elevation(-69.3741, 32.32)
+        DemRegistry(DATA).elevation(-72.0, 200.0)
+
+
+@pytest.mark.skipif(not (WINDOWS / "ch3_60m_r200km.tif").exists(),
+                    reason="60 m window absent: run `python scripts/extract_dem_window.py ch3_60m_r200km`")
+def test_chandrayaan_site_is_covered_by_the_60m_product_and_the_published_height_is_plausible():
+    # Registered 2026-11-15 (unvalidated). The 532 m figure is LROC's, datum ASSUMED to be the LOLA sphere (sites.json):
+    # agreement within a few metres is a plausibility check, not a validation.
+    r = DemRegistry(DATA).elevation(-69.3741, 32.32)
+    assert r.product_id == "LDEM_60S_60MPP_ADJ" and r.pixel_size_m == 60.0 and r.window_id == "ch3_60m_r200km"
+    assert r.data_class == "measured_interpolated"
+    assert abs(r.elevation_m - 532.0) < 5.0 and r.elevation_m == pytest.approx(529.34, abs=0.01)
 
 
 @needs_data

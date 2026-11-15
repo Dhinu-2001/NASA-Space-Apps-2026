@@ -58,9 +58,7 @@ def test_bad_numbers_are_rejected_with_the_field_named():
 
 
 def test_no_dem_means_error_not_a_flat_horizon():
-    r = client.get("/horizon/profile", params={"site_id": "chandrayaan3-vikram", "observer_height_m": 2})
-    if r.status_code == 422 and r.json()["field"] == "site_id":  # catalogue id differs; use coordinates
-        r = client.get("/horizon/profile", params={"lat": -69.3741, "lon": 32.32, "observer_height_m": 2})
+    r = client.get("/horizon/profile", params={"lat": -72.0, "lon": 200.0, "observer_height_m": 2})   # inside no window
     assert_error(r, 422, "OUT_OF_DEM_COVERAGE")
     assert "No flat-terrain or synthetic fallback" in r.json()["message"]
     assert_error(client.get("/horizon/profile", params={"lat": 10, "lon": 0, "observer_height_m": 2}),

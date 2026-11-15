@@ -54,7 +54,9 @@ def test_validate_reports_coverage_without_inventing_it():
     covered = client.post("/sites/validate", json={"lat": -84.79059, "lon": 29.19567}).json()
     assert covered["dem_coverage_status"] == "covered"
     assert covered["covering_windows"][0]["pixel_size_m"] == 20.0  # finest first
-    not_covered = client.post("/sites/validate", json={"lat": -69.3741, "lon": 32.32}).json()
+    ch3 = client.post("/sites/validate", json={"lat": -69.3741, "lon": 32.32}).json()   # covered since the 60 m window
+    assert ch3["dem_coverage_status"] == "covered" and ch3["covering_windows"][0]["pixel_size_m"] == 60.0
+    not_covered = client.post("/sites/validate", json={"lat": -72.0, "lon": 200.0}).json()
     assert not_covered["dem_coverage_status"] == "not_covered"
     assert not_covered["covering_windows"] == []
 

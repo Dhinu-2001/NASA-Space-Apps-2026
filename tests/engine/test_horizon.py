@@ -528,6 +528,16 @@ def test_real_im1_has_only_2km_of_data_so_everything_is_truncated():
 
 
 @needs_dem
-def test_real_chandrayaan3_has_no_dem_and_gets_an_error_not_a_flat_horizon():
+def test_a_site_inside_no_window_gets_an_error_not_a_flat_horizon():
     with pytest.raises(OutOfDemCoverageError):
-        HorizonService(DATA).profile(-69.3741, 32.32, 2.0)
+        HorizonService(DATA).profile(-72.0, 200.0, 2.0)
+
+
+@pytest.mark.skipif(not (DATA / "dem_cache" / "ch3_60m_r200km.tif").exists(),
+                    reason="60 m window absent: run scripts/extract_dem_window.py ch3_60m_r200km")
+def test_real_chandrayaan3_horizon_is_complete_from_the_60m_window():
+    p = HorizonService(DATA).profile(-69.3741, 32.32, 2.0, az_step_deg=1.0)
+    assert not p.truncated.any() and not p.data_gap.any()                 # every azimuth certified against the window
+    assert set(p.limiting_pixel_size_m.tolist()) == {60.0}                 # only the 60 m window was used
+    assert p.range_covered_km.min() > 100.0                                 # 200 km window, nothing cut short
+    assert 0.0 < p.horizon_elevation_deg.min() and p.horizon_elevation_deg.max() < 5.0   # gently rolling terrain here

@@ -46,13 +46,13 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
           <li><span className="assump">Assumption:</span> the mission-delay window defaults to 14 days (about one lunar day); change it to match the operation.</li>
           <li>Validated time range 2025-01-01 to 2035-12-31 (kernels are checksum-pinned; UTC after 2017 assumes no further leap seconds).</li>
           <li>The terrain is a LOLA DEM (about 90 % of 5 m pixels are interpolated between ground tracks); boulders, the lander body and regolith lofting are not modelled; no per-pixel DEM uncertainty is reported.</li>
-          <li>Only IM-2 (landing and pre-landing target positions) has the 20 m terrain coverage needed for position-sensitivity figures. IM-1 has 2 km of 20 m data and Chandrayaan-3 has none, so they appear as “terrain data insufficient”. Extending coverage is future work. No real permanently shadowed region data are included.</li>
+          <li>IM-2 (landing and pre-landing target positions) has 20 m terrain coverage. Chandrayaan-3 has a coarser 60 m terrain window that is registered but not yet approved as a validation gate, so its results carry that caveat and resolve fewer small ridges. IM-1 has only 2 km of 20 m data, so it appears as “terrain data insufficient”. Extending coverage is future work. No real permanently shadowed region data are included.</li>
           <li>The ephemeris check against JPL Horizons shares JPL’s ephemerides, so it validates the implementation, not the ephemerides themselves; no physically independent horizon or visibility dataset was available.</li>
           <li>Events shorter than the sampling step that fall between samples are not detected (checked at IM-2: 15-minute and 5-minute runs agree).</li>
           <li>Not modelled: gravitational light bending (≤ 6×10⁻⁷°), Earth oblateness, refraction (none on the Moon).</li>
           <li>Engineering is limited to an <strong>idealised direct-beam solar-energy upper bound</strong> (sun-tracking panel, any part of the Sun counts as full illumination, constant irradiance: the default 1361 W/m² is an assumption). It is not a power budget or battery state. Antenna masks, slope/aspect, temperature data and incidence-angle power are not built (deferred).</li>
         </ul>
-        <p className="help">Full list with evidence: <code>docs/stage9/KNOWN_LIMITATIONS.md</code> (33 items) · validation evidence: <code>docs/stage9/VALIDATION_REPORT.md</code> · numerical tolerances: <code>docs/stage9/TOLERANCES.md</code>.</p>
+        <p className="help">Full list with evidence: <code>docs/stage9/KNOWN_LIMITATIONS.md</code> (34 items) · validation evidence: <code>docs/stage9/VALIDATION_REPORT.md</code> · numerical tolerances: <code>docs/stage9/TOLERANCES.md</code>.</p>
       </Panel>
 
       <Panel title="Scientific data sources">

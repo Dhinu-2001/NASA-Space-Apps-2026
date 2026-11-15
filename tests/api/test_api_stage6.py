@@ -63,7 +63,7 @@ def test_evaluate_then_fetch_saved_scenario():
 @needs_data
 def test_compare_grid_labels_insufficient_sites_and_ranks_only_supported():
     r = client.post("/scenarios/compare", json={
-        "sites": [{"site_id": "im2-athena"}, {"site_id": "im1-odysseus"}, {"site_id": "chandrayaan3-shiv-shakti"}],
+        "sites": [{"site_id": "im2-athena"}, {"site_id": "im1-odysseus"}, {"lat": -90.0, "lon": 0.0}],
         "start_utc_list": ["2027-01-26T00:00:00Z", "2027-02-05T00:00:00Z"], **P})
     assert r.status_code == 200, r.text
     j = r.json()

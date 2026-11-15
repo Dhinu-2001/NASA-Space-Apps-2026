@@ -50,7 +50,7 @@ def test_range_bodies_band_and_dem_errors():
     assert_error(client.post("/visibility/series", json=body(bodies=["moon"])), 422, "INVALID_INPUT", "bodies")
     assert_error(client.post("/visibility/series", json=body(position_uncertainty_m=-5)), 422, "INVALID_INPUT",
                  "position_uncertainty_m")
-    r = client.post("/visibility/series", json=body(site={"lat": -69.3741, "lon": 32.32}))
+    r = client.post("/visibility/series", json=body(site={"lat": -72.0, "lon": 200.0}))
     assert_error(r, 422, "OUT_OF_DEM_COVERAGE")
     assert "No flat-terrain or synthetic fallback" in r.json()["message"]
 

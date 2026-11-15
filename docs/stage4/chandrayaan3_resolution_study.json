@@ -1,0 +1,55 @@
+{
+  "site": {
+    "lat": -69.3741,
+    "lon": 32.32,
+    "observer_height_m": 2.0
+  },
+  "reference": "ch3_60m_r200km (60 m)",
+  "reference_horizon_deg": {
+    "min": 0.5273963965753369,
+    "max": 2.4671625564296202,
+    "mean": 1.364824259641627
+  },
+  "reference_window_max_height_m": 6058.68994140625,
+  "coarser": {
+    "120 m overview": {
+      "pixel_size_m": 120.0,
+      "n_truncated": 0,
+      "mean_diff_deg": -0.008020288774992841,
+      "rms_diff_deg": 0.01952186209034926,
+      "max_abs_diff_deg": 0.14239991441040056,
+      "p95_abs_diff_deg": 0.04953446412071138,
+      "frac_underestimated_gt_0p05deg": 0.05,
+      "horizon_deg": {
+        "min": 0.46593322540736115,
+        "max": 2.464812853026299
+      }
+    },
+    "240 m overview": {
+      "pixel_size_m": 240.0,
+      "n_truncated": 0,
+      "mean_diff_deg": -0.031700300413733624,
+      "rms_diff_deg": 0.058944946039818105,
+      "max_abs_diff_deg": 0.22701919082212874,
+      "p95_abs_diff_deg": 0.17727203875836908,
+      "frac_underestimated_gt_0p05deg": 0.17777777777777778,
+      "horizon_deg": {
+        "min": 0.3802062438435455,
+        "max": 2.4548787550411957
+      }
+    },
+    "480 m overview": {
+      "pixel_size_m": 480.0,
+      "n_truncated": 0,
+      "mean_diff_deg": -0.06975908596340001,
+      "rms_diff_deg": 0.11178272392621183,
+      "max_abs_diff_deg": 0.37127665316855396,
+      "p95_abs_diff_deg": 0.3097838696752779,
+      "frac_underestimated_gt_0p05deg": 0.36527777777777776,
+      "horizon_deg": {
+        "min": 0.31612092047017776,
+        "max": 2.433764858100781
+      }
+    }
+  }
+}

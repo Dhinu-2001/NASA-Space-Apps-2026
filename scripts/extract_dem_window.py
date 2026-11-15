@@ -31,9 +31,16 @@ R = 1_737_400.0
 PRODUCT_ID = "LDEM_80S_20MPP_ADJ"
 URL = "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF"
 
+# Further registered products (see data/manifests/dem_products.json). Windows default to the 80S product.
+PRODUCTS = {
+    "LDEM_80S_20MPP_ADJ": URL,
+    "LDEM_60S_60MPP_ADJ": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF",
+}
+
 # Site centres are the catalogue coordinates (NAIF kernel values); see data/catalogue/sites.json.
 IM2 = (-84.79059, 29.19567)
 IM1 = (-80.12759, 1.44587)
+CH3 = (-69.3741, 32.32)  # Chandrayaan-3 (Statio Shiv Shakti), LROC image page 1314
 
 # (window_id, centre (lat, lon), half-width metres, overview_level or None)
 SPECS = [
@@ -42,6 +49,9 @@ SPECS = [
     ("im1_20m_r2km", IM1, 2_000.0, None),
     # Stage 4: far field at full 20 m resolution (no area-averaging) out to 80 km, ~190 MB download.
     ("im2_20m_r80km", IM2, 80_000.0, None),
+    # Chandrayaan-3: 60 m native product (not an overview). 200 km = geometric visibility distance of the
+    # highest terrain the registry knows (7027 m) from a ~534 m observer: sqrt(2R)(sqrt(534)+sqrt(7027)) = 199 km.
+    ("ch3_60m_r200km", CH3, 200_000.0, None, "LDEM_60S_60MPP_ADJ"),
 ]
 
 
@@ -58,10 +68,12 @@ def sha256_file(p: Path) -> str:
     return h.hexdigest()
 
 
-def extract(window_id: str, centre: tuple[float, float], half_m: float, overview: int | None):
+def extract(window_id: str, centre: tuple[float, float], half_m: float, overview: int | None,
+            product_id: str = PRODUCT_ID):
+    src_url = PRODUCTS[product_id]
     cx, cy = lonlat_to_xy(*centre)
     kwargs = {"overview_level": overview} if overview is not None else {}
-    with rasterio.open(URL, **kwargs) as ds:
+    with rasterio.open(src_url, **kwargs) as ds:
         res = ds.res[0]
         n = round(2 * half_m / res)
         col0 = math.floor((cx - ds.bounds.left) / res - n / 2 + 0.5)
@@ -88,7 +100,7 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
                 f.unlink()
         for attempt in range(10):
             try:
-                with rasterio.open(URL, **kwargs) as ds:
+                with rasterio.open(src_url, **kwargs) as ds:
                     block = ds.read(1, window=Window(col0, row0 + r, n, h)).astype(np.float32)
                 data[r : r + h] = block
                 np.save(f, block)
@@ -100,7 +112,7 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
                 time.sleep(10)
         if n > 2000:
             print(f"  strip {r + h}/{n} rows done", flush=True)
-    with rasterio.open(URL, **kwargs) as ds:
+    with rasterio.open(src_url, **kwargs) as ds:
         crs = ds.crs
     profile = {
         "driver": "GTiff", "dtype": "float32", "count": 1, "width": n, "height": n,
@@ -113,7 +125,7 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
     with rasterio.open(out, "w", **profile) as dst:
         dst.write(data, 1)
         dst.update_tags(
-            SOURCE_URL=URL, PRODUCT_ID=PRODUCT_ID, OVERVIEW_LEVEL=str(overview),
+            SOURCE_URL=src_url, PRODUCT_ID=product_id, OVERVIEW_LEVEL=str(overview),
             NOTE="Extracted by scripts/extract_dem_window.py; heights in metres above the "
             "1737.4 km sphere; NoData=NaN",
         )
@@ -121,11 +133,11 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
     valid = np.isfinite(data)
     left, top = transform.c, transform.f
     entry = {
-        "product_id": PRODUCT_ID,
+        "product_id": product_id,
         "file": f"dem_cache/{window_id}.tif",
         "sha256": sha256_file(out),
         "size_bytes": out.stat().st_size,
-        "source_url": URL,
+        "source_url": src_url,
         "overview_level": overview,
         "pixel_size_m": res,
         "left_m": left, "top_m": top, "width": n, "height": n,
@@ -140,11 +152,14 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
         "extracted_utc": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "rasterio": rasterio.__version__, "gdal": rasterio.__gdal_version__,
     }
+    if product_id != PRODUCT_ID:  # products registered after Stage 9 stay labelled until the owner approves them
+        entry["validation_status"] = ("registered_unvalidated: header, CRS and one published-height check verified "
+                                      "2026-11-15; not approved by the project owner as a validation gate")
     return entry, data, (col0, row0)
 
 
 def main(argv: list[str]) -> int:
-    wanted = set(argv) or {s[0] for s in SPECS}
+    wanted = set(argv) or {s[0] for s in SPECS if len(s) == 4}
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {"windows": {}}
     manifest["manifest_note"] = (
         "Each window is a real extract of the cited LOLA product; files live in data/dem_cache "
@@ -154,13 +169,13 @@ def main(argv: list[str]) -> int:
               GDAL_HTTP_MAX_RETRY="6", GDAL_HTTP_RETRY_DELAY="3", GDAL_HTTP_TIMEOUT="180")
     ok = True
     with env:
-        for wid, centre, half, ov in SPECS:
+        for wid, centre, half, ov, *prod in SPECS:
             if wid not in wanted:
                 continue
             t0 = time.time()
             print(f"[{wid}] extracting ...", flush=True)
             try:
-                entry, _data, _ = extract(wid, centre, half, ov)
+                entry, _data, _ = extract(wid, centre, half, ov, *prod)
                 manifest["windows"][wid] = entry
                 MANIFEST.parent.mkdir(parents=True, exist_ok=True)
                 MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")

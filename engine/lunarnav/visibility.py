@@ -355,9 +355,18 @@ class VisibilityService:
                 "unverified (upper bound)."),
                 ("Terrain horizon is from a DEM (interpolated between LOLA tracks); boulders and the lander "
                 "body are not modelled."),
+                *self._unvalidated_terrain_notes(nominal.profile.meta["windows"]),
             ],
         }
         return VisibilityResult(data)
+
+    @staticmethod
+    def _unvalidated_terrain_notes(windows: list[dict[str, Any]]) -> list[str]:
+        """One caveat per terrain window whose product the owner has not yet approved (manifest validation_status)."""
+        return [(f"Terrain window {w['window_id']} ({w['product_id']}, {w['pixel_size_m']:g} m pixels) is registered but "
+                 f"NOT yet approved as a validation gate. Pixels this coarse do not resolve small ridges, and the "
+                 f"position-sensitivity displacement is only a couple of pixels.")
+                for w in windows if "validation_status" in w]
 
     # ---- helpers ----------------------------------------------------------
     @staticmethod

@@ -46,7 +46,7 @@ Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `
 * Position-sensitivity bands on every boundary, metric and step; IM-2 (30 d): Sun visible 48.6 % [45.4, 48.9], Earth 80.8 % [80.0, 80.9]; largest boundary band 11.1 h (grazing Sun events).
 
 ### 3.5 Scenarios (Stage 6) — `docs/stage6/VALIDATION.md`
-* Delta/ranking logic verified on hand-built cases (paired vs independent bands); only supported sites compared; insufficient sites carry no figures (asserted, including against real IM-1 / Chandrayaan-3 results).
+* Delta/ranking logic verified on hand-built cases (paired vs independent bands); only supported sites compared; insufficient sites carry no figures (asserted, including against real IM-1 results; Chandrayaan-3 was covered by a new 60 m window on 2026-11-15 and is supported but explicitly not-yet-approved terrain - `stage4/CHANDRAYAAN3_TERRAIN.md`).
 * Finding that shaped the design: a 30-day window hides short delays (totals repeat), so the delay default is 14 days (an assumption, labelled).
 
 ### 3.6 UI (Stage 7) — `docs/stage7/UI.md`
@@ -63,7 +63,7 @@ Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `
 | 8 Permanently shadowed terrain | synthetic crater (rim ≈ 26°, floor 1.5 km below): Sun and Earth never visible for 30 days, band [0, 0], longest not-visible = whole window flagged open, while geometry says the Sun is up ~half the month (terrain removes 100 %). **No real PSR data** (L-D6) | same |
 | 9 Missing datasets | missing kernels → `DATA_MISSING` with rebuild hint; modified kernel/DEM refused by checksum; missing DEM → scenario labelled insufficient (`DATA_MISSING`), API 503 with `field: dem`; `/provenance` degrades gracefully on a partial install | `test_edge_cases.py`, `test_api_stage9.py` |
 | 10 Numerical tolerances | every criterion, achieved value, margin and rationale in one table | [TOLERANCES.md](TOLERANCES.md) |
-| 11 Known limitations | 33 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
+| 11 Known limitations | 34 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
 | 12 Data provenance | generated report: kernels, DEM windows, catalogue, Horizons fixture, software, git history | [PROVENANCE.md](PROVENANCE.md), `GET /provenance` |
 | 13 Reproducible calculation metadata | deterministic `provenance` block (model version, kernel + DEM SHA-256, frame, aberration, algorithm version, every parameter, no timestamps) in every visibility/scenario result; identical inputs ⇒ identical metadata (asserted) | `engine/lunarnav/provenance.py` |
 

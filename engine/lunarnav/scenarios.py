@@ -8,7 +8,7 @@ always give the same id, and a changed model or DEM gives a new one. Results are
 Rules carried from the Stage 5 approval (user instructions):
   * A site whose terrain data do not support a position-sensitivity figure is reported as
     `terrain_data_insufficient` with the reason and NO numbers: not ranked, not scored, no "estimated" column,
-    no upper-bound stand-in. Currently IM-2 is supported; IM-1 and Chandrayaan-3 are not.
+    no upper-bound stand-in. Currently IM-2 (20 m terrain) and Chandrayaan-3 (60 m terrain, registered but not owner-approved) are supported; IM-1 is not.
   * Geometric and terrain-corrected results are both present in every scenario and every delta, so the gap
     between them is always visible.
   * Position sensitivity is carried into deltas. Two dates at the SAME site share one physical position error,

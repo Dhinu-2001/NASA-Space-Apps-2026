@@ -28,7 +28,7 @@ Every slow path shows a spinner with elapsed seconds and, after 4 s, an explanat
 | Tab | Verified | Evidence |
 |---|---|---|
 | Site & time | map, catalogue + custom coordinates, UTC time, Sun/Earth az/el with horizon comparison and position-error note, horizon plot with Sun/Earth paths, timelines with boundary whiskers, elevation-vs-horizon charts with position band, metrics with bands and "cut off" flags, event table with "incomplete" band flags | `final_view.png` |
-| Compare | 4 supported scenarios with terrain-corrected beside geometric and bands; 4 insufficient scenarios (IM-1, Chandrayaan-3) as labelled non-results with reasons and no figures; paired vs independent delta methods; rankings with "clearly ahead / not distinguishable" | `final_compare.png`, `final_mobile.png` (500 px) |
+| Compare | 4 supported scenarios with terrain-corrected beside geometric and bands; 2 insufficient scenarios (IM-1) as labelled non-results (Chandrayaan-3 became supported on 2026-11-15 with 60 m terrain and an "not yet approved" label, so the default selection now shows 6 supported scenarios; this rehearsal predates that) with reasons and no figures; paired vs independent delta methods; rankings with "clearly ahead / not distinguishable" | `final_compare.png`, `final_mobile.png` (500 px) |
 | Delay simulator | bars with uncertainty whiskers, geometric markers, table with bands and "cut off" flags, paired deltas ("−7.14 pp, band −7.14 to −7.14") | `final_delay.png` |
 | Data & assumptions | all 7 capabilities with status; definitions; assumptions labelled; catalogue sources as links with SHA-256; all four DEM windows and four kernels with **full SHA-256**; frame; Horizons comparison with its independence caveat; model version, code commit, software versions; data classes | `final_about.png` |
 
@@ -49,7 +49,7 @@ Every slow path shows a spinner with elapsed seconds and, after 4 s, an explanat
 ## 5. Suggested 5-minute walkthrough (the evaluation workflow)
 1. **Site & time** — IM-2 is preselected: point at the horizon plot (real LOLA terrain, Sun and Earth paths), then the Sun card: elevation vs horizon, "could change by up to 0.05° for a ±100 m position error".
 2. Timelines: terrain-corrected vs geometric (155 Sun steps blocked by terrain); the wide whisker on the sunset = how uncertain a grazing event is.
-3. **Compare** — IM-2 landing vs intended target: not distinguishable at ±100 m; Jan vs Mar: −6.1 points, distinguishable. IM-1 and Chandrayaan-3 shown honestly as "terrain data insufficient".
+3. **Compare** — IM-2 landing vs intended target: not distinguishable at ±100 m; Jan vs Mar: −6.1 points, distinguishable. IM-1 shown honestly as "terrain data insufficient"; Chandrayaan-3 (60 m terrain, added after this rehearsal) carries a "registered, not yet approved" caveat.
 4. **Delay simulator** — each day of delay costs exactly 1/14 of the sunlit window (paired band collapses to zero) while the absolute value stays uncertain.
 5. **Data & assumptions** — status table, checksums, assumptions, limitations; "validated" means owner-approved evidence, not proof against measurement.
 

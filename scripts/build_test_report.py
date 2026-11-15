@@ -92,7 +92,7 @@ def main() -> int:
     a("## What the suites cover\n")
     a("* **Unit/analytic**: frames, projection, time conversion, horizon geometry (flat, mesa, curvature, height), disc states, interval maths, delta and ranking logic.\n"
       "* **Independent comparison**: JPL Horizons (220-row grid, recorded fixture) and the hand-written horizon implementation, re-asserted as regression evidence.\n"
-      "* **Real-data**: IM-2 LOLA windows + real SPICE ephemeris (golden scenarios, transitions vs brute-force scan, position sensitivity, IM-1 insufficient, Chandrayaan-3 no DEM).\n"
+      "* **Real-data**: IM-2 LOLA windows + real SPICE ephemeris (golden scenarios, transitions vs brute-force scan, position sensitivity, IM-1 insufficient, Chandrayaan-3 on the 60 m window, uncovered point = no DEM).\n"
       "* **Synthetic terrain with the real ephemeris**: terrain obstruction, permanently shadowed crater.\n"
       "* **Fault injection**: missing or modified kernels and DEM, partial installation, out-of-range and malformed inputs.\n"
       "* **API contract**: every endpoint's success shape and typed errors; calculation metadata; provenance.\n"

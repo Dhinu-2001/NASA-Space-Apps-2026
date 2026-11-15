@@ -268,8 +268,8 @@ def test_cache_roundtrip_and_stable_id(svc):
 
 @needs_data
 @pytest.mark.parametrize(("site", "code"), [({"site_id": "im1-odysseus"}, "TERRAIN_NOT_CERTIFIED"),
-                                            ({"site_id": "chandrayaan3-shiv-shakti"}, "OUT_OF_DEM_COVERAGE"),
-                                            ({"lat": -69.3741, "lon": 32.32}, None)])
+                                            ({"lat": -72.0, "lon": 200.0}, "OUT_OF_DEM_COVERAGE"),
+                                            ({"lat": -90.0, "lon": 0.0}, None)])
 def test_insufficient_sites_get_a_label_and_reason_but_no_numbers(svc, site, code):
     r = svc.evaluate(svc.make_spec(site, JAN, **KW), use_cache=False)
     assert r["status"] == INSUFFICIENT and r["reason"]
@@ -283,13 +283,14 @@ def test_insufficient_sites_get_a_label_and_reason_but_no_numbers(svc, site, cod
 
 @needs_data
 def test_compare_excludes_insufficient_sites_and_never_ranks_them(svc):
-    specs = [svc.make_spec({"site_id": s}, d, label=f"{s}@{d[:10]}", **KW)
-             for s in ("im2-athena", "im2-intended", "im1-odysseus", "chandrayaan3-shiv-shakti")
-             for d in ("2027-01-26T00:00:00Z", "2027-02-05T00:00:00Z")]
+    sites = {"im2-athena": {"site_id": "im2-athena"}, "im2-intended": {"site_id": "im2-intended"},
+             "im1-odysseus": {"site_id": "im1-odysseus"}, "pole": {"lat": -90.0, "lon": 0.0}}
+    specs = [svc.make_spec(sites[s], d, label=f"{s}@{d[:10]}", **KW)
+             for s in sites for d in ("2027-01-26T00:00:00Z", "2027-02-05T00:00:00Z")]
     r = svc.compare(specs, 0, use_cache=False)
     ids_excluded = {e["scenario_id"] for e in r["excluded_terrain_data_insufficient"]}
     assert len(ids_excluded) == 4 and all(e["status"] == INSUFFICIENT for e in r["excluded_terrain_data_insufficient"])
-    assert {e["site_id"] for e in r["excluded_terrain_data_insufficient"]} == {"im1-odysseus", "chandrayaan3-shiv-shakti"}
+    assert {e["site_id"] for e in r["excluded_terrain_data_insufficient"]} == {"im1-odysseus", None}
     ranked = {row["scenario_id"] for rk in r["rankings"] for row in rk["ranking"]}
     assert ranked and not (ranked & ids_excluded)
     assert not ({d["scenario_id"] for d in r["deltas_vs_baseline"]} & ids_excluded)
@@ -297,7 +298,7 @@ def test_compare_excludes_insufficient_sites_and_never_ranks_them(svc):
     text = json.dumps(r["excluded_terrain_data_insufficient"]).lower()
     assert "fraction" not in text and "total_visible" not in text and "estimated" not in text
     body = json.dumps([r["rankings"], r["deltas_vs_baseline"]]).lower()
-    assert "estimated" not in body and "chandrayaan" not in body and "im1-odysseus" not in body
+    assert "estimated" not in body and "im1-odysseus" not in body
     # method per pair: same site (other date) is paired; the other IM-2 position is independent
     by = {d["scenario_id"]: d["delta_band_method"] for d in r["deltas_vs_baseline"]}
     assert sorted(by.values()) == ["independent_interval_arithmetic", "independent_interval_arithmetic", "paired"]
