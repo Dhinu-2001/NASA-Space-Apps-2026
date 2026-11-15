@@ -42,7 +42,7 @@ None at runtime. Tooling used and not added to the project: `pip-audit`, `mypy` 
 Unchanged and re-confirmed by the golden-regression suites and the browser test (IM-2 Sun 48.6 % [45.4, 48.9], Earth 80.8 %, solar 143.0 kWh, Chandrayaan-3 49.1 %, IM-1 insufficient). Ephemeris vs Horizons 1.4×10⁻⁸° / 6×10⁻⁷°; horizon vs independent implementation 1.1×10⁻⁹°. No new science was introduced in this stage.
 
 ## 10. Known issues
-1. **No public deployment exists** and **the container image has never been built** (no Docker on the development machine); only the equivalent clean-virtualenv production run is verified.
+1. **No public deployment exists** and **the container image is built and verified locally (26/26 end-to-end, 15 Nov 2026; see DOCKER_VERIFICATION.md) but has not been vulnerability-scanned**, and has not been deployed anywhere.
 2. **Presentation not visually rendered:** LibreOffice is not installed here, so the deck was checked by schema validation, a font-metric text-fit check and a wireframe drawn from the file; the two native charts (slides 5 and 6) have not been seen rendered. Open it in PowerPoint and check them.
 3. **Attribution terms unconfirmed:** no Moon Trek-, PGDA- or LROC-specific licence text was found (NASA general guidance applies; credits shown). Not legal advice.
 4. **No licence declared** for the project's own code.
@@ -64,7 +64,7 @@ Choose hosting and deploy (guide: [../DEPLOYMENT.md](../DEPLOYMENT.md)); build a
 | 5 | Remove demonstration data from production views | **PASS** (audit found no mock or fixture data in the bundle; built-in profiles and the solar example are labelled illustrative; `?autorun`/`?scrub` demo links retained deliberately and produce only real computed results) |
 | 6 | Verify NASA data attribution | **PARTIAL** (attribution complete and shown in the app; provider-specific terms not located) |
 | 7 | Finalise application documentation | **PASS** |
-| 8 | Prepare deployment configuration | **PARTIAL** (written; image unbuilt; clean-venv production run verified) |
+| 8 | Prepare deployment configuration | **PARTIAL** (image built and run in Docker, 26/26; not scanned, not deployed) |
 | 9 | Deploy the application | **BLOCKED** (needs the owner's hosting account; guided steps ready) |
 | 10 | Demonstration scenario | **PASS** (every quoted number checked against the live app; browser rehearsal 25/25) |
 | 11 | Project presentation | **PARTIAL** (built, validated, notes written; not visually rendered here) |

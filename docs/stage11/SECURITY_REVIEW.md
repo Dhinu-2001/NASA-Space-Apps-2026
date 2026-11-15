@@ -41,7 +41,7 @@ Scope: the HTTP API, the web UI, the build and deployment configuration and the 
 | No TLS in the application | By design | Terminate TLS at the platform or proxy (DEPLOYMENT.md) |
 | API documentation exposed at `/api/docs` | It is a deliverable and read-only; the docs page loads Swagger assets from a CDN | Disable by deploying the plain `main` app behind the proxy if undesired |
 | Map imagery from NASA's server | The visitor's IP and the page origin reach `trek.nasa.gov` (disclosed in the app and in ATTRIBUTION.md); live availability | Fallback to the ring map; could be self-hosted if terms allow |
-| Not penetration tested; container image unbuilt | Out of scope/time and no Docker locally | Build and scan the image (`docker scout`/`trivy`) before public launch |
+| Not penetration tested; container image built but not scanned | Scan needs the owner's go-ahead (sends metadata/pulls a scanner) | Scan the image (`docker scout`/`trivy`) before public launch |
 
 ## 5. Verification
 Hardening tests: 16 in `tests/api/test_hardening.py` (headers on success and error, oversize and streamed bodies, CORS headers on refusals, list/label limits for 5 request shapes, limiter admits N and returns typed 503 for the rest, waiting requests are served when a slot frees, cheap endpoints never queued, serving mode headers/CSP/caching, build stamp) and 5 in `tests/engine/test_cachecap.py`. Full backend suite 388 pass; browser test 25/25 under the production CSP.

@@ -1,7 +1,6 @@
 # Lunar Landing Site Navigator: one image serving the built web UI and the API (lunarnav_api.serve).
 # The heavy scientific data (SPICE kernels, DEM windows, ~290 MB) is NOT baked in: mount it at /data (see docs/DEPLOYMENT.md).
-# NOTE: this file was written on a machine without Docker; the Python layer was verified with an equivalent clean virtualenv
-# install, the image itself has not been built by the project authors. Report any build error.
+# Built and run on Docker 29.9.3 (15 Nov 2026); see docs/stage11/DOCKER_VERIFICATION.md.
 
 # ---- 1. build the web UI
 FROM node:24-slim AS web
@@ -23,6 +22,9 @@ ENV LUNARNAV_GIT_COMMIT=${GIT_COMMIT} \
     LUNARNAV_WEB_DIST=/app/web/dist \
     LUNARNAV_MAX_HEAVY_REQUESTS=2
 WORKDIR /app
+
+# rasterio's wheel links libexpat, which the slim base image does not include (found by the first container run)
+RUN apt-get update && apt-get install -y --no-install-recommends libexpat1  && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.runtime.txt ./
 RUN pip install -r requirements.runtime.txt

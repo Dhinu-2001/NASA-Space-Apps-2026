@@ -22,7 +22,7 @@ Geometric line of sight and direct illumination only; no link budget, irradiance
 
 ## 3. Engineering
 * **Job queue with progress** for new points (about a minute today), and a precomputed or parallel terrain-profile grid; shared cache and limiter for multi-worker deployments.
-* **Verify the container image** (build, scan, run) and add a CI workflow run on GitHub; add per-IP rate limiting at the proxy.
+* **Scan the container image** (built and run: done; scan outstanding) and add a CI workflow run on GitHub; add per-IP rate limiting at the proxy.
 * Extract the repeated "run" logic of the five computing tabs into one hook; split the About tab; tidy the `responses=` type annotations (mypy findings); add a coverage report.
 * Regenerate `MODEL_VERSION` semantics if any science changes (cache keys and provenance depend on it).
 

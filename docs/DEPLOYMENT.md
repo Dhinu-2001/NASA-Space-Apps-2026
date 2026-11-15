@@ -11,7 +11,7 @@ The application is **one Python process** serving the built web UI and the API o
 
 ## What was and was not verified here
 * **Verified (Windows, 2026-11-15):** a clean virtual environment built from `requirements.runtime.txt` plus `pip install --no-deps .`, started from an unrelated directory with environment variables only (`LUNARNAV_DATA_DIR`, `LUNARNAV_WEB_DIST`), serving UI + API; the 25-check browser test passes against it ([stage11/E2E_REPORT.md](stage11/E2E_REPORT.md)); `pip-audit` and `npm audit` clean.
-* **Not verified:** the `Dockerfile`, `docker-compose.yml` and entrypoint were written without Docker available, so the **image has never been built by the authors**; Linux wheels for the pinned packages were not tested. Expect to fix small things on first build and tell us.
+* **Container verified (15 Nov 2026, Docker 29.9.3):** the image builds (507 MB), runs non-root, passes its health check and the full 26-check browser suite with data mounted at `/data` (see [stage11/DOCKER_VERIFICATION.md](stage11/DOCKER_VERIFICATION.md); the first run found a missing `libexpat1`, now fixed). **Still not done:** a vulnerability scan, `docker compose up`, and the in-container data download.
 * **Not done:** a public deployment. It needs your hosting account; the steps below are written so that it takes minutes once the data are in place.
 
 ## 1. Get the data onto the host (once)
