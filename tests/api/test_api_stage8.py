@@ -104,8 +104,8 @@ def test_sites_without_terrain_support_get_a_label_and_no_energy_figure(site):
     assert "wh" not in " ".join(j.keys()).lower()
 
 
-def test_capability_is_listed_honestly_as_implemented_unvalidated_and_narrow():
+def test_capability_is_validated_by_the_owner_but_its_title_stays_narrow():
     cap = {c["key"]: c for c in client.get("/version").json()["capabilities"]}["engineering"]
-    assert cap["status"] == "implemented_unvalidated" and cap["stage"] == 8
+    assert cap["status"] == "validated" and cap["stage"] == 8      # owner approved the Stage 8 gate (2026-11-15)
     assert "upper bound" in cap["title"].lower() and "antenna" not in cap["title"].lower()   # does not claim what is not built
     assert client.post("/engineering/antenna", json={}).status_code == 501                    # antenna/slope/temperature still deferred

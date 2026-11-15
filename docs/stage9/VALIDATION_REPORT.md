@@ -1,11 +1,11 @@
 # Scientific validation report (Stage 9)
 
-Covers Stages 0–7 and Stage 9. Stage 8 (engineering) was built afterwards in a deliberately narrow form and is **not** part of the validated set: it is `implemented_unvalidated` pending owner approval (`docs/stage8/SOLAR_ENERGY.md`). Written so that a reviewer can see, for each important output, what was checked, against what, how independent that check is, and what it does *not* show. Companion documents: [TOLERANCES.md](TOLERANCES.md), [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md), [TRACEABILITY.md](TRACEABILITY.md), [PROVENANCE.md](PROVENANCE.md), [TEST_REPORT.md](TEST_REPORT.md).
+Covers Stages 0–7 and Stage 9. Stage 8 (engineering) was built afterwards in a deliberately narrow form; the owner approved its gate on 2026-11-15, so it is now `validated` in the same sense (`docs/stage8/SOLAR_ENERGY.md`). Written so that a reviewer can see, for each important output, what was checked, against what, how independent that check is, and what it does *not* show. Companion documents: [TOLERANCES.md](TOLERANCES.md), [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md), [TRACEABILITY.md](TRACEABILITY.md), [PROVENANCE.md](PROVENANCE.md), [TEST_REPORT.md](TEST_REPORT.md).
 
 ## 1. What "validated" means in this project
 A capability is marked `validated` when **(a)** it is implemented and tested, **(b)** its acceptance criteria were declared before the checks were run, **(c)** the evidence is recorded in `docs/stageN/VALIDATION.md`, and **(d)** the project owner reviewed it and approved the stage gate. It does **not** mean "proven against measurement". The independence of each check is stated below; the two largest gaps are L-M1 (the ephemeris check shares JPL's ephemerides) and L-M2 (no physically independent horizon or visibility dataset).
 
-Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `horizon`, `visibility`, `scenarios` = validated; `engineering` = implemented unvalidated (Stage 8, narrow: an idealised solar-energy upper bound; evidence in `docs/stage8/SOLAR_ENERGY.md`; not part of the validated set).
+Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `horizon`, `visibility`, `scenarios` = validated; `engineering` = validated (Stage 8, narrow: an idealised solar-energy upper bound; evidence in `docs/stage8/SOLAR_ENERGY.md`; owner-approved 2026-11-15, after this report's original scope, and it carries the same meaning of "validated" as above).
 
 ## 2. Independence of the evidence
 

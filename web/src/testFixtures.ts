@@ -119,7 +119,7 @@ export const versionFixture = {
     { key: "horizon", title: "Terrain horizon profile", stage: 4, status: "validated" },
     { key: "visibility", title: "Terrain-corrected Sun/Earth visibility", stage: 5, status: "validated" },
     { key: "scenarios", title: "Scenario comparison and delay simulator", stage: 6, status: "validated" },
-    { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "implemented_unvalidated" },
+    { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "validated" },
   ],
 };
 

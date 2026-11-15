@@ -9,11 +9,11 @@ def test_model_version_is_set():
 
 def test_capability_statuses_are_honest_for_stage_8():
     # Only gates the user has explicitly approved are 'validated' (sites/dem S2, ephemeris S3, horizon S4,
-    # visibility S5, scenarios S6). Anything not yet built or not yet approved must not be 'validated'.
+    # visibility S5, scenarios S6, engineering S8 - approved 2026-11-15 after independent verification).
     status = {c.key: c.status for c in CAPABILITIES}
-    for key in ("sites", "dem", "ephemeris", "horizon", "visibility", "scenarios"):
-        assert status[key] is CapabilityStatus.VALIDATED
-    assert status["engineering"] is not CapabilityStatus.VALIDATED
+    for key in ("sites", "dem", "ephemeris", "horizon", "visibility", "scenarios", "engineering"):
+        assert status[key] is CapabilityStatus.VALIDATED, key
+    assert {c.key for c in CAPABILITIES} == {"sites", "dem", "ephemeris", "horizon", "visibility", "scenarios", "engineering"}
 
 
 def test_typed_error_carries_code_field_and_details():

@@ -6,7 +6,7 @@ import { fmtEnergy, fmtHours, fmtPower } from "./format";
 import { CapabilitiesContext } from "./ui";
 
 const caps = [
-  { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "implemented_unvalidated" },
+  { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "validated" },
   { key: "visibility", title: "Terrain-corrected Sun/Earth visibility", stage: 5, status: "validated" },
 ] as never;
 
@@ -58,7 +58,7 @@ describe("Solar energy panel (read-only display of the backend result)", () => {
   it("is tagged with the real capability status and calls it an upper bound, not a power budget", () => {
     stub(supported);
     ui();
-    expect(screen.getByTestId("status-engineering")).toHaveTextContent("engineering: implemented unvalidated");
+    expect(screen.getByTestId("status-engineering")).toHaveTextContent("engineering: validated");
     expect(screen.getByText(/upper bound, not a power budget and not battery state/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Irradiance/)).toHaveAttribute("placeholder", expect.stringMatching(/default assumption/));
   });

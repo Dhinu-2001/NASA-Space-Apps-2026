@@ -42,7 +42,7 @@ Machine-readable source of truth: the OpenAPI document generated from the Pydant
 | `GET /version` | 1 | IMPLEMENTED | Model/API version, current stage, capability table with honest status |
 | `GET /sites` | 2 | IMPLEMENTED | Cited site catalogue (kind: confirmed / intended / candidate), conventions, pending regions |
 | `POST /sites/validate` | 2 | IMPLEMENTED | Validate/normalise custom lat/lon; reports DEM coverage (`covered`/`not_covered`) |
-| `POST /engineering/solar` | 8 | IMPLEMENTED (unvalidated) | Idealised direct-beam solar energy (upper bound) for a site/window and a user-supplied panel (area, efficiency, optional irradiance); position band carried from the visibility result; geometric counterpart; `terrain_data_insufficient` with no figure where terrain data do not support it |
+| `POST /engineering/solar` | 8 | IMPLEMENTED (validated: owner-approved gate, narrow scope) | Idealised direct-beam solar energy (upper bound) for a site/window and a user-supplied panel (area, efficiency, optional irradiance); position band carried from the visibility result; geometric counterpart; `terrain_data_insufficient` with no figure where terrain data do not support it |
 | `GET /provenance` | 9 | IMPLEMENTED | What the running application is built from: code commit, software versions, SPICE kernels and DEM windows with SHA-256, site catalogue and sources, validation fixture, constants, data classes. On a partial install it reports what is missing (`spice_kernels_error`) instead of failing |
 | `GET /dem/windows` | 2 | IMPLEMENTED | Extracted DEM windows: extent, pixel size, checksum, validity |
 | `GET /dem/elevation?lat&lon[&window_id]` | 2 | IMPLEMENTED | Bilinear LOLA height with provenance; explicit errors, no fallback |

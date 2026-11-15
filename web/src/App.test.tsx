@@ -17,8 +17,9 @@ const version = {
   capabilities: [
     { key: "ephemeris", title: "Sun and Earth azimuth/elevation (SPICE)", stage: 3, status: "validated" },
     { key: "visibility", title: "Terrain-corrected Sun/Earth visibility", stage: 5, status: "validated" },
-    { key: "scenarios", title: "Scenario comparison and delay simulator", stage: 6, status: "implemented_unvalidated" },
-    { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "implemented_unvalidated" },
+    { key: "scenarios", title: "Scenario comparison and delay simulator", stage: 6, status: "validated" },
+    { key: "engineering", title: "Solar energy availability (idealised direct-beam upper bound)", stage: 8, status: "validated" },
+    { key: "pending-example", title: "Fixture-only capability that is built but not yet approved", stage: 11, status: "implemented_unvalidated" },
     { key: "antenna", title: "Antenna masks (fixture entry for a deferred capability)", stage: 8, status: "not_implemented" },
   ],
 };
@@ -56,18 +57,18 @@ describe("App shell", () => {
     render(<App />);
     expect(await screen.findByTestId("health-status")).toHaveTextContent("ok");
     const strip = screen.getByLabelText("Capability status");
-    expect(within(strip).getAllByText("validated").length).toBe(2);
-    expect(within(strip).getAllByText("implemented unvalidated").length).toBe(2);   // scenarios, engineering (fixture)
+    expect(within(strip).getAllByText("validated").length).toBe(4);   // ephemeris, visibility, scenarios, engineering (fixture mirrors the backend)
+    expect(within(strip).getAllByText("implemented unvalidated").length).toBe(1);   // the fixture-only entry: the status still renders honestly
     expect(within(strip).getByText("not implemented")).toBeInTheDocument();
     expect(screen.getByRole("note")).toHaveTextContent(/never ranked/);
   });
 
-  it("tags panels with the status of the capability they depend on (unvalidated stays unvalidated)", async () => {
+  it("tags panels with the status of the capability they depend on", async () => {
     stubApi();
     render(<App />);
     await screen.findByTestId("health-status");
     fireEvent.click(screen.getByRole("tab", { name: "Compare" }));
-    expect(screen.getByTestId("status-scenarios")).toHaveTextContent("scenarios: implemented unvalidated");
+    expect(screen.getByTestId("status-scenarios")).toHaveTextContent("scenarios: validated");
     expect(screen.getByTestId("status-visibility")).toHaveTextContent("visibility: validated");
   });
 
