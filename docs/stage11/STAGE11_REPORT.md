@@ -12,7 +12,7 @@ Prepare a complete, stable and demonstrable project: end-to-end testing, archite
 * **End-to-end browser test** (`scripts/e2e_browser.py`, 25 checks with console and network monitoring).
 * **Attribution:** `docs/ATTRIBUTION.md` and a Credits panel in the About tab.
 * **Release metadata:** API 1.0.0, stage 11; error contract completed (`NOT_FOUND`, `SERVER_BUSY`, 413).
-* **Documentation set, demonstration script and a 14-slide .pptx presentation with speaker notes.**
+* **Documentation set, demonstration script and a 7-slide .pptx presentation with speaker notes (the Space Apps limit; first built with 14 slides, cut to 7 on the owner's instruction).**
 * A small map hardening (reserved readout line) and an About-tab count update; two defects found and fixed during the stage (below).
 
 ## 3. Files created (37 incl. screenshots; non-image listed)
@@ -43,7 +43,7 @@ Unchanged and re-confirmed by the golden-regression suites and the browser test 
 
 ## 10. Known issues
 1. **No public deployment exists** and **the container image is built and verified locally (26/26 end-to-end, 15 Nov 2026; see DOCKER_VERIFICATION.md) but has not been vulnerability-scanned**, and has not been deployed anywhere.
-2. **Presentation not visually rendered:** LibreOffice is not installed here, so the deck was checked by schema validation, a font-metric text-fit check and a wireframe drawn from the file; the two native charts (slides 5 and 6) have not been seen rendered. Open it in PowerPoint and check them.
+2. **Presentation not visually rendered:** LibreOffice is not installed here, so the deck was checked by schema validation, a font-metric text-fit check and a wireframe drawn from the file; the two native charts (slides 4 and 5) have not been seen rendered. Open it in PowerPoint and check them.
 3. **Attribution terms unconfirmed:** no Moon Trek-, PGDA- or LROC-specific licence text was found (NASA general guidance applies; credits shown). Not legal advice.
 4. **No licence declared** for the project's own code.
 5. A point nobody has computed takes about 70 s (L-P10); no per-IP rate limiting (L-P12); the security and code reviews are self-reviews.

@@ -74,7 +74,7 @@ Full test and validation report: [docs/TEST_AND_VALIDATION.md](docs/TEST_AND_VAL
 | Data provenance and attribution | [docs/ATTRIBUTION.md](docs/ATTRIBUTION.md) · [docs/stage9/PROVENANCE.md](docs/stage9/PROVENANCE.md) |
 | Deployment | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
 | Decisions, limitations, future work | [docs/DECISIONS.md](docs/DECISIONS.md) · [KNOWN_LIMITATIONS](docs/stage9/KNOWN_LIMITATIONS.md) · [FUTURE_WORK](docs/stage11/FUTURE_WORK.md) |
-| Presentation | [docs/stage11/presentation/Lunar_Landing_Site_Navigator.pptx](docs/stage11/presentation/Lunar_Landing_Site_Navigator.pptx) (14 slides with speaker notes; 11 for the pitch, 3 backup) |
+| Presentation | [docs/stage11/presentation/Lunar_Landing_Site_Navigator.pptx](docs/stage11/presentation/Lunar_Landing_Site_Navigator.pptx) (7 slides with speaker notes, the NASA Space Apps limit, including title and introduction) |
 | Stage evidence | `docs/stage0` … `docs/stage11`, `docs/stage10x` (extras), `docs/basemap` (imagery alignment) |
 
 ## Licence
