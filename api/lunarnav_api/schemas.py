@@ -15,6 +15,7 @@ class ErrorBody(BaseModel):
         "DATA_MISSING",
         "EPHEMERIS_OUT_OF_RANGE",
         "NOT_IMPLEMENTED",
+        "NOT_FOUND",
         "INTERNAL",
         "SERVER_BUSY",
     ]

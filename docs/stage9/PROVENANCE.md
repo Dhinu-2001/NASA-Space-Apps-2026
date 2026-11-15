@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 05:45 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **f4176a55721c**.
+Generated 2026-11-15 06:28 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **5dc901aa9479**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -87,6 +87,9 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+5dc901a Stage 11: deployment configuration, data provisioning, end-to-end browser test, attribution, release metadata
+dd04c4f Stage 11 security hardening: security headers, body and compute limits, bounded caches, list-size limits, one-process production entry point
+0d29541 Regenerate provenance and test reports after the Compute/profile fix
 f4176a5 Fix: Compute/Run always sends its requests; choosing a profile fills the form at once
 0257ede Regenerate provenance and test reports after the basemap merge
 3ed65a0 Merge south-pole imagery basemap and click-to-pick coordinates (owner-approved)

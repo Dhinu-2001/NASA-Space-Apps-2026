@@ -223,7 +223,7 @@ async def main() -> int:
             # ---------------------------------------------------------------- 9. data & assumptions, learn
             await click_tab("Data & assumptions")
             check("9a data page lists kernels with SHA-256, DEM windows and credits", await wait(" && ".join([text_has("de440s.bsp"), text_has("Scientific data sources"), text_has("Credits and acknowledgements")]), 60, "about page"))
-            check("9b assumptions and limitations are stated (35 items)", await js(text_has("(35 items)")))
+            check("9b assumptions and limitations are stated (38 items)", await js(text_has("(38 items)")))
             await shot("09_data_assumptions")
             await click_tab("Learn")
             check("9c Learn tab renders the glossary", await wait("document.body.innerText.toLowerCase().includes('glossary')", 30, "learn"))

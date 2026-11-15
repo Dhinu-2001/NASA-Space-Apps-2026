@@ -531,7 +531,7 @@ export interface components {
              * Code
              * @enum {string}
              */
-            code: "INVALID_INPUT" | "OUT_OF_DEM_COVERAGE" | "DATA_MISSING" | "EPHEMERIS_OUT_OF_RANGE" | "NOT_IMPLEMENTED" | "INTERNAL" | "SERVER_BUSY";
+            code: "INVALID_INPUT" | "OUT_OF_DEM_COVERAGE" | "DATA_MISSING" | "EPHEMERIS_OUT_OF_RANGE" | "NOT_IMPLEMENTED" | "NOT_FOUND" | "INTERNAL" | "SERVER_BUSY";
             /**
              * Details
              * @default {}

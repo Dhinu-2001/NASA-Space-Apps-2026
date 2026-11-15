@@ -1,16 +1,16 @@
 # Final test report
 
-Generated 2026-11-15 05:47 UTC by `scripts/build_test_report.py`. Commit tested: **f4176a55721c**. Machine: Windows 11, Python 3.12, Node 24.
+Generated 2026-11-15 06:31 UTC by `scripts/build_test_report.py`. Commit tested: **5dc901aa9479** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
 
 **Overall: ALL CHECKS PASSED**
 
 | Check | Result | Detail | Time |
 |---|---|---|---|
-| Backend tests (pytest) | PASS | 367 passed, 0 failed, 0 skipped | 114 s |
+| Backend tests (pytest) | PASS | 388 passed, 0 failed, 0 skipped | 126 s |
 | Lint (ruff) | PASS | All checks passed! | 0 s |
-| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 8 s |
-| Frontend tests (vitest) | PASS | 174 passed, 0 failed | 15 s |
-| Production build (vite) | PASS | bundle builds | 8 s |
+| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 7 s |
+| Frontend tests (vitest) | PASS | 175 passed, 0 failed | 15 s |
+| Production build (vite) | PASS | bundle builds | 7 s |
 
 ## Backend tests by file
 
@@ -25,7 +25,9 @@ Generated 2026-11-15 05:47 UTC by `scripts/build_test_report.py`. Commit tested:
 | `tests/api/test_api_stage6.py` | 5 | 0 | 0 |
 | `tests/api/test_api_stage8.py` | 9 | 0 | 0 |
 | `tests/api/test_api_stage9.py` | 5 | 0 | 0 |
+| `tests/api/test_hardening.py` | 16 | 0 | 0 |
 | `tests/engine/test_basemap_projection_golden.py` | 3 | 0 | 0 |
+| `tests/engine/test_cachecap.py` | 5 | 0 | 0 |
 | `tests/engine/test_dem.py` | 22 | 0 | 0 |
 | `tests/engine/test_engineering.py` | 30 | 0 | 0 |
 | `tests/engine/test_ephemeris.py` | 33 | 0 | 0 |
@@ -37,7 +39,7 @@ Generated 2026-11-15 05:47 UTC by `scripts/build_test_report.py`. Commit tested:
 | `tests/engine/test_visibility.py` | 20 | 0 | 0 |
 | `tests/validation/test_edge_cases.py` | 42 | 0 | 0 |
 | `tests/validation/test_regression_golden.py` | 8 | 0 | 0 |
-| **Total** | **367** | **0** | **0** |
+| **Total** | **388** | **0** | **0** |
 
 No test was skipped: all kernels and DEM windows were present, so every real-data test ran.
 

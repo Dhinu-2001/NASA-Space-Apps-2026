@@ -8,7 +8,7 @@ Machine-readable source of truth: the OpenAPI document generated from the Pydant
 
 | Topic | Rule |
 |---|---|
-| Base URL | Backend `http://127.0.0.1:8000`; frontend dev server proxies `/api/*` → backend (prefix stripped) |
+| Base URL | **Production:** one origin, the API under **`/api`** (`https://host/api/health`; docs at `/api/docs`). **Development:** backend `http://127.0.0.1:8000`; the Vite dev server proxies `/api/*` → backend (prefix stripped). Paths below are relative to the API root |
 | Format | JSON, UTF-8 |
 | Time | ISO-8601 UTC with trailing `Z` (e.g. `2027-01-15T00:00:00Z`). Local time is never accepted |
 | Angles | Degrees. Longitude **east-positive**, latitude planetocentric (south negative). Azimuth clockwise from local north, 0–360 |
@@ -31,8 +31,11 @@ Machine-readable source of truth: the OpenAPI document generated from the Pydant
 | `OUT_OF_DEM_COVERAGE` | 422 | Site/window not covered by available DEM |
 | `DATA_MISSING` | 503 | Required kernel/DEM not available locally |
 | `EPHEMERIS_OUT_OF_RANGE` | 422 | Time outside supported/validated range (2025-01-01…2035-12-31 validated) |
-| `NOT_IMPLEMENTED` | 501 | Endpoint planned but not built in the current stage |
+| `NOT_IMPLEMENTED` | 501 | Endpoint planned but not built (e.g. `POST /engineering/antenna`) |
+| `NOT_FOUND` | 404 | Unknown resource (e.g. a scenario id that is absent, or from another model/DEM version) |
 | `INTERNAL` | 500 | Unexpected error (details in server log, correlated by `request_id`) |
+| `SERVER_BUSY` | 503 | More computing requests than the server allows at once, for longer than its queue time; carries `Retry-After`. Retry |
+| `INVALID_INPUT` (413) | 413 | Request body above the size cap (`field: "body"`) |
 
 ## Endpoints
 
@@ -56,7 +59,7 @@ Machine-readable source of truth: the OpenAPI document generated from the Pydant
 | `GET /scenarios/{id}` | 6 | IMPLEMENTED | Saved scenario by id (404 `NOT_FOUND` if absent or from another model/DEM) |
 | `POST /scenarios/compare` | 6 | IMPLEMENTED | Sites x dates or explicit list; deltas vs baseline with position bands, rankings of supported scenarios only, insufficient sites listed separately |
 | `POST /scenarios/delay` | 6 | IMPLEMENTED | Baseline + day offsets; paired deltas with bands, geometric and terrain-corrected |
-| `GET /metrics/registry` | 5 | planned | Definition, method, unit, source, assumption, limitation per metric |
+| `GET /metrics/registry` | 5 | **not built (deferred)** | Planned machine-readable metric definitions; the definitions live in `docs/METHODOLOGY.md` and are returned inline by the endpoints that produce the metrics |
 
 ### `GET /health` → 200
 
@@ -178,3 +181,15 @@ Capability `status` ∈ `not_implemented` | `implemented_unvalidated` | `validat
 
 ## Versioning
 `api_version` follows semver; contract-breaking changes bump the minor version while 0.x. `model_version` changes whenever any calculation changes and is stamped into every result.
+
+## Limits and production behaviour (Stage 11)
+| Topic | Rule |
+|---|---|
+| Version | API `1.0.0` (`/version`); scientific model `MODEL_VERSION` is separate and unchanged by hardening |
+| Request body | At most 256 KB (`LUNARNAV_MAX_BODY_BYTES`); larger → `413` typed error. Real requests are well under 1 KB |
+| List sizes | `sites`, `start_utc_list`, `scenarios`: at most 12; `offsets_days`: at most 10; `bodies`: at most 2; `label`: at most 120 characters; violations → `422 INVALID_INPUT` before any computation |
+| Computing endpoints | `/horizon/profile`, `/visibility/*`, `/scenarios/evaluate|compare|delay`, `/engineering/solar` run under a concurrency limit (`LUNARNAV_MAX_HEAVY_REQUESTS`); waiting requests are served in turn or answered `503 SERVER_BUSY` after the queue time (default 90 s) |
+| Latency | Cached results: tens of milliseconds. A scenario with a new start date: about 5 s. A new map point: about 70 s ([stage11/PERFORMANCE.md](stage11/PERFORMANCE.md)). Clients and proxies must allow at least 180 s |
+| Caching | Results are deterministic and cached on the server by inputs + model version + DEM checksums; repeating a request is safe and cheap. No HTTP cache headers are set on API responses |
+| Security headers | `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Cross-Origin-Opener-Policy` on every response; CORS allows only configured origins (none needed when the UI is served from the same origin) |
+
