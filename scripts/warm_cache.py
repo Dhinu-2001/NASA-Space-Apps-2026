@@ -3,6 +3,7 @@
 Computes (and thereby caches in data/results/) everything the default UI views request:
   * terrain horizon profiles at IM-2 (landing position and pre-landing target) and at the 8 displaced positions
     used for the +/-100 m position-sensitivity band (0.25 deg azimuth step, the UI default),
+  * the same default view for Chandrayaan-3 (its terrain window is implemented_unvalidated and is labelled so in every result),
   * the default scenario comparison (4 sites x 2 dates, 30 days) and the default delay simulation (14-day window).
 Results are identical to what the API would compute on demand; nothing is precomputed by hand. Safe to re-run.
 
@@ -45,6 +46,11 @@ def via_http(base: str) -> None:
                                               "end_utc": "2027-02-14T00:00:00Z", "step_seconds": 900}),
             get(base, "/visibility/at?site_id=im2-athena&time_utc=2027-01-20T12:00:00Z"),
             get(base, "/ephemeris/position?site_id=im2-athena&time_utc=2027-01-20T12:00:00Z"))),
+        ("default view: horizon + series + positions (Chandrayaan-3)", lambda: (
+            get(base, "/horizon/profile?site_id=chandrayaan3-shiv-shakti"),
+            post(base, "/visibility/series", {"site": {"site_id": "chandrayaan3-shiv-shakti"}, "start_utc": "2027-01-15T00:00:00Z",
+                                              "end_utc": "2027-02-14T00:00:00Z", "step_seconds": 900}),
+            get(base, "/visibility/at?site_id=chandrayaan3-shiv-shakti&time_utc=2027-01-20T12:00:00Z"))),
         ("default comparison (4 sites x 2 dates, 30 d)", lambda: post(base, "/scenarios/compare", {
             "sites": [{"site_id": s} for s in SITES], "start_utc_list": list(DATES), "duration_days": 30})),
         ("default delay simulation (IM-2, 14 d window)", lambda: post(base, "/scenarios/delay", {

@@ -21,8 +21,8 @@ services:
       # First start with an empty /data volume: install the published data bundle (a few minutes; the archive is checked against the SHA-256 below,
       # then every file against its SHA256SUMS and the repository's manifests). If the bundle cannot be fetched or fails verification, the
       # container falls back to downloading directly from NASA (about 40 minutes). LUNARNAV_NASA_FALLBACK: "0" disables that fallback.
-      LUNARNAV_DATA_BUNDLE_URL: "${LUNARNAV_DATA_BUNDLE_URL:-https://github.com/Dhinu-2001/NASA-Space-Apps-2026/releases/download/data-v1/lunarnav-data.tar.gz}"
-      LUNARNAV_DATA_BUNDLE_SHA256: "${LUNARNAV_DATA_BUNDLE_SHA256:-3be42fa54d9090d87dfeb8e8938c56a4dd7e8e4378dde17c4d4edb04cbc259f3}"
+      LUNARNAV_DATA_BUNDLE_URL: "${LUNARNAV_DATA_BUNDLE_URL:-https://github.com/Dhinu-2001/NASA-Space-Apps-2026/releases/download/data-v2/lunarnav-data.tar.gz}"
+      LUNARNAV_DATA_BUNDLE_SHA256: "${LUNARNAV_DATA_BUNDLE_SHA256:-95100065fb99bb0ca254d791fed96a7574cf477425387559724321ddf37f2ece}"
       # The UI and API share one origin, so no CORS origins are needed. Add one only if you host the UI elsewhere:
       # LUNARNAV_CORS_ORIGINS: '["https://your-ui.example"]'
     restart: unless-stopped
