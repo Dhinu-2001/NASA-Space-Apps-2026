@@ -20,6 +20,12 @@ class Settings(BaseSettings):
     log_json: bool = True
     data_dir: Path = Field(default=REPO_ROOT / "data")
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    # Hardening (see hardening.py). Defaults suit a laptop; on a small public host use LUNARNAV_MAX_HEAVY_REQUESTS=2.
+    max_body_bytes: int = 262_144
+    max_heavy_requests: int = 4
+    heavy_queue_seconds: float = 90.0
+    # Built web UI served by `lunarnav_api.serve` (production mode); unused by the plain API app.
+    web_dist: Path = Field(default=REPO_ROOT / "web" / "dist")
 
 
 @lru_cache

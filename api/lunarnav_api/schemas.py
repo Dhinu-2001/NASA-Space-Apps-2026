@@ -16,6 +16,7 @@ class ErrorBody(BaseModel):
         "EPHEMERIS_OUT_OF_RANGE",
         "NOT_IMPLEMENTED",
         "INTERNAL",
+        "SERVER_BUSY",
     ]
     message: str
     field: str | None = None

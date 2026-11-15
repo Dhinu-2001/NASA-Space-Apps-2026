@@ -33,6 +33,7 @@ from typing import Any
 
 import numpy as np
 
+from .cachecap import MAX_CACHED_HORIZONS, touch, trim_oldest
 from .dem import DemRegistry, DemWindow, lonlat_to_xy
 from .errors import DataMissingError, InvalidInputError, OutOfDemCoverageError
 from .frames import enu_basis
@@ -423,6 +424,7 @@ class HorizonService:
             np.savez_compressed(tmp, meta_json=np.array(json.dumps(prof.meta)),
                                 **{n: getattr(prof, n) for n in self._ARRAYS})
             os.replace(tmp, self.cache_dir / f"{key}.npz")
+            trim_oldest(self.cache_dir, "*.npz", MAX_CACHED_HORIZONS)
         except OSError:
             pass  # the cache is an optimisation only; the computed result is still returned
 
@@ -435,6 +437,8 @@ class HorizonService:
                 meta = json.loads(str(z["meta_json"]))
                 if meta.get("cache_key") != key or meta.get("algorithm_version") != ALGORITHM_VERSION:
                     return None
-                return HorizonProfile(**{n: z[n] for n in self._ARRAYS}, meta=meta)
+                prof = HorizonProfile(**{n: z[n] for n in self._ARRAYS}, meta=meta)
+            touch(path)  # least-recently-used eviction (cachecap)
+            return prof
         except (OSError, ValueError, KeyError):
             return None  # unreadable/corrupt entry: recompute rather than trust it

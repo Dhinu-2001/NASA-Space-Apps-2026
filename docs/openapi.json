@@ -132,6 +132,7 @@
                 "items": {
                   "$ref": "#/components/schemas/ScenarioRequest"
                 },
+                "maxItems": 12,
                 "type": "array"
               },
               {
@@ -147,6 +148,7 @@
                 "items": {
                   "$ref": "#/components/schemas/SiteIn"
                 },
+                "maxItems": 12,
                 "type": "array"
               },
               {
@@ -162,6 +164,7 @@
                 "items": {
                   "type": "string"
                 },
+                "maxItems": 12,
                 "type": "array"
               },
               {
@@ -243,6 +246,7 @@
             "items": {
               "type": "number"
             },
+            "maxItems": 10,
             "title": "Offsets Days",
             "type": "array"
           },
@@ -358,7 +362,8 @@
               "DATA_MISSING",
               "EPHEMERIS_OUT_OF_RANGE",
               "NOT_IMPLEMENTED",
-              "INTERNAL"
+              "INTERNAL",
+              "SERVER_BUSY"
             ],
             "title": "Code",
             "type": "string"
@@ -636,6 +641,7 @@
           "label": {
             "anyOf": [
               {
+                "maxLength": 120,
                 "type": "string"
               },
               {
@@ -1012,6 +1018,7 @@
           "label": {
             "anyOf": [
               {
+                "maxLength": 120,
                 "type": "string"
               },
               {
@@ -1180,6 +1187,7 @@
             "items": {
               "type": "string"
             },
+            "maxItems": 2,
             "title": "Bodies",
             "type": "array"
           },

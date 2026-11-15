@@ -42,14 +42,14 @@ class ScenarioParams(BaseModel):
 class ScenarioRequest(ScenarioParams):
     site: SiteIn
     start_utc: str = Field(..., description="ISO-8601 UTC with Z; start of the window")
-    label: str | None = None
+    label: str | None = Field(None, max_length=120)
 
 
 class CompareRequest(ScenarioParams):
     scenarios: list[ScenarioRequest] | None = Field(
-        None, description="Explicit scenario list (each may override the common parameters), or use sites x dates")
-    sites: list[SiteIn] | None = Field(None, description="With start_utc_list: every site x every date")
-    start_utc_list: list[str] | None = None
+        None, max_length=12, description="Explicit scenario list (each may override the common parameters), or use sites x dates")
+    sites: list[SiteIn] | None = Field(None, max_length=12, description="With start_utc_list: every site x every date")
+    start_utc_list: list[str] | None = Field(None, max_length=12)
     baseline_index: int = Field(0, description="Scenario that deltas are measured from")
 
 
@@ -60,7 +60,7 @@ class DelayRequest(ScenarioParams):
         "delays: totals repeat, so only event times move.")
     site: SiteIn
     baseline_start_utc: str
-    offsets_days: list[float] = Field(..., description="Launch/landing delays to simulate, days (0, 365], up to 10")
+    offsets_days: list[float] = Field(..., max_length=10, description="Launch/landing delays to simulate, days (0, 365], up to 10")
 
 
 def build_scenario_router(data_dir: Path, visibility: VisibilityService, service: ScenarioService | None = None) -> APIRouter:

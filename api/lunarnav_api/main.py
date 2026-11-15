@@ -21,6 +21,7 @@ from lunarnav.visibility import VisibilityService
 
 from .config import REPO_ROOT, get_settings
 from .errors import register_error_handlers
+from .hardening import BodyLimitMiddleware, HeavyLimitMiddleware, SecurityHeadersMiddleware
 from .logging_setup import configure_logging
 from .routes_data import build_router
 from .routes_engineering import build_engineering_router
@@ -49,6 +50,10 @@ def create_app() -> FastAPI:
             "position-sensitivity bands, and scenario comparison / mission delay simulator."
         ),
     )
+    # Middleware order (innermost first): compute limiter, body limit, CORS, security headers (outermost, so even refusals carry them).
+    app.add_middleware(HeavyLimitMiddleware, limit=settings.max_heavy_requests, queue_seconds=settings.heavy_queue_seconds,
+                       on_busy=lambda path: log.warning("server_busy", path=path))
+    app.add_middleware(BodyLimitMiddleware, max_bytes=settings.max_body_bytes)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
@@ -56,6 +61,7 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
         expose_headers=["x-request-id"],
     )
+    app.add_middleware(SecurityHeadersMiddleware)
     register_error_handlers(app)
     app.include_router(build_router(settings.data_dir))
     app.include_router(build_ephemeris_router(settings.data_dir))

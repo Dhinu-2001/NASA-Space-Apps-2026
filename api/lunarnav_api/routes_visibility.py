@@ -45,7 +45,7 @@ class VisRequest(BaseModel):
     step_seconds: float = Field(900.0, description="Sampling step; transitions are refined to 1 s by bisection")
     observer_height_m: float | None = Field(
         None, description=f"Above the DEM surface. Default {DEFAULT_OBSERVER_HEIGHT_M} m is an ASSUMPTION (C9).")
-    bodies: list[str] = Field(default_factory=lambda: ["sun", "earth"])
+    bodies: list[str] = Field(default_factory=lambda: ["sun", "earth"], max_length=2)
     position_uncertainty_m: float | None = Field(
         DEFAULT_POSITION_BAND_M,
         description="Assumed observer-position uncertainty for the sensitivity band, metres (default 100). "

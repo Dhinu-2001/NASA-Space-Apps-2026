@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Any
 
 from . import MODEL_VERSION
+from .cachecap import MAX_CACHED_SCENARIOS, touch, trim_oldest
 from .ephemeris import format_utc, parse_utc
 from .errors import DataMissingError, InvalidInputError, OutOfDemCoverageError
 from .sites import load_catalogue
@@ -99,7 +100,10 @@ class ScenarioStore:
             doc = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             return None
-        return doc if doc.get("id") == scenario_id and doc.get("model_version") == MODEL_VERSION else None
+        if doc.get("id") == scenario_id and doc.get("model_version") == MODEL_VERSION:
+            touch(path)  # least-recently-used eviction (cachecap)
+            return doc
+        return None
 
     def save(self, scenario_id: str, result: dict[str, Any]) -> None:
         try:
@@ -107,6 +111,7 @@ class ScenarioStore:
             tmp = self.dir / f"{scenario_id}.tmp"
             tmp.write_text(json.dumps(result, sort_keys=True), encoding="utf-8")
             os.replace(tmp, self.dir / f"{scenario_id}.json")
+            trim_oldest(self.dir, "*.json", MAX_CACHED_SCENARIOS)
         except OSError:
             pass  # cache only; the computed result is still returned
 
