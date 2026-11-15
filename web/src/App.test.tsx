@@ -11,7 +11,7 @@ import { DelayResult } from "./views/DelayTab";
 const health = { status: "ok", service: "lunarnav-api", model_version: "0.6.0-stage6", env: "test", time_utc: "2026-11-15T00:00:00Z" };
 const version = {
   model_version: "0.6.0-stage6",
-  api_version: "0.1.0",
+  api_version: "1.0.0",
   stage: 6,
   notice: "Stage 6: scenario comparison ... Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked.",
   capabilities: [

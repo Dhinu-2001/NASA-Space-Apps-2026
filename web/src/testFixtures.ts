@@ -112,8 +112,8 @@ export const scenarioSupported = (sunFrac = 0.486, earthFrac = 0.808): ScenarioR
 });
 
 export const versionFixture = {
-  model_version: "0.10.0-stage8", api_version: "0.1.0", stage: 9,
-  notice: "Stage 9: terrain-corrected visibility ... terrain_data_insufficient and never ranked.",
+  model_version: "0.10.0-stage8", api_version: "1.0.0", stage: 11,
+  notice: "Terrain-corrected visibility ... terrain_data_insufficient and never ranked.",
   capabilities: [
     { key: "ephemeris", title: "Sun and Earth azimuth/elevation (SPICE)", stage: 3, status: "validated" },
     { key: "horizon", title: "Terrain horizon profile", stage: 4, status: "validated" },

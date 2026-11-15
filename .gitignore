@@ -17,3 +17,4 @@ data/results/*
 *.bsp
 *.bpc
 .DS_Store
+build/

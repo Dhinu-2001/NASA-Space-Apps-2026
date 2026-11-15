@@ -155,3 +155,17 @@ def test_without_a_built_ui_the_api_still_works_and_the_root_says_what_to_do(mon
         assert c.get("/api/health").status_code == 200
     finally:
         get_settings.cache_clear()
+
+
+def test_a_build_stamp_fills_the_commit_when_there_is_no_git_checkout(monkeypatch):
+    """Containers have no .git directory: LUNARNAV_GIT_COMMIT supplies the commit shown in /provenance."""
+    monkeypatch.setenv("LUNARNAV_GIT_COMMIT", "abc1234")
+    get_settings.cache_clear()
+    try:
+        c = TestClient(create_app(), raise_server_exceptions=False)
+        j = c.get("/provenance").json()
+        assert j["git_commit"]                                   # from git when present, otherwise the stamp
+        monkeypatch.setattr("lunarnav_api.main.build_provenance", lambda *a, **k: {"git_commit": None, "software": {}})
+        assert c.get("/provenance").json()["git_commit"] == "abc1234"
+    finally:
+        get_settings.cache_clear()

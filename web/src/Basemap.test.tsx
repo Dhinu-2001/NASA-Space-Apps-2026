@@ -288,6 +288,19 @@ describe("click on the map to set custom coordinates", () => {
     expect((screen.getByTestId("site-map") as unknown as SVGElement).style.cursor).toBe("");
   });
 
+  it("hovering never changes the surrounding text, so the page layout cannot shift under the cursor mid-click (regression)", () => {
+    render(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={() => undefined} onPick={() => undefined} />);
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    const help = screen.getByTestId("pick-help");
+    const before = help.textContent;
+    const figureBefore = document.querySelector("figure")!.querySelectorAll("p").length;
+    fireEvent.mouseMove(svg, at(-80, 0));
+    expect(help.textContent).toBe(before);                                                // the readout lives in its own fixed-height line
+    expect(document.querySelector("figure")!.querySelectorAll("p").length).toBe(figureBefore);
+    expect(screen.getByTestId("pointer-readout").closest("p")).not.toBe(help);
+  });
+
   it("fills the form's custom coordinates, shows the marker, and makes NO request until Compute (C4)", async () => {
     const s = stubFetch(baseRoutes());
     vi.stubGlobal("fetch", vi.fn(s.fn));

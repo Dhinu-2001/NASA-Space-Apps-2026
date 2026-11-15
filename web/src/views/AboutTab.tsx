@@ -129,6 +129,22 @@ export function AboutTab({ sites }: { sites: SitesResponse | null }) {
           </>
         )}
       </Panel>
+
+      <Panel title="Credits and acknowledgements">
+        <p className="help">
+          Built for the NASA International Space Apps Challenge 2026. An independent project: <strong>not a NASA product and not endorsed by NASA, JPL, ASU or any data provider.</strong> Calculated values are labelled calculated, assumptions are labelled assumptions, and terrain heights are labelled measured, interpolated.
+        </p>
+        <ul className="plain" data-testid="credits">
+          <li><strong>Terrain:</strong> LRO <strong>LOLA</strong> digital elevation models (NASA GSFC Planetary Geodesy Data Archive, DOI 10.60903/gsfcpgda-lola-spole).</li>
+          <li><strong>Ephemerides and lunar orientation:</strong> NASA/JPL <strong>NAIF</strong> SPICE kernels (DE440; Park et al. 2021, <em>Astronomical Journal</em> 161, 105) and the CSPICE toolkit via SpiceyPy.</li>
+          <li><strong>Landing-site coordinates:</strong> NAIF CLPS SPICE archive (IM-1, IM-2) and <strong>LROC</strong> (NASA/GSFC/Arizona State University) image pages (IM-1, IM-2, Chandrayaan-3).</li>
+          <li><strong>Validation reference:</strong> NASA/JPL <strong>Horizons</strong> (used only to check the ephemeris implementation).</li>
+          <li><strong>Map imagery:</strong> LRO LROC Wide Angle Camera mosaic (NASA/GSFC/Arizona State University) served by <strong>NASA Moon Trek</strong>. Context only; loaded live by your browser from trek.nasa.gov, which therefore sees your IP address.</li>
+        </ul>
+        <p className="help">
+          Full citations, links, checksums, usage-terms caveats and the open-source licences: <code>docs/ATTRIBUTION.md</code>. No Moon Trek-, PGDA- or LROC-specific licence text was located; confirm the providers’ terms before any use beyond a demonstration.
+        </p>
+      </Panel>
     </div>
   );
 }

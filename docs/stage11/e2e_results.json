@@ -1,0 +1,139 @@
+{
+  "base": "http://127.0.0.1:8010",
+  "checks": [
+    {
+      "name": "1a app loads and the backend is reachable",
+      "pass": true,
+      "detail": "ok"
+    },
+    {
+      "name": "1b capability strip shows 7 validated capabilities",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1c default IM-2 view computes (Sun/Earth cards, horizon plot, visibility metrics)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1d IM-2 numbers match the validated reports (Sun 48.6 %, Earth 80.8 %, geometric 53.3 % / 73.5 %)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1e advanced plots panel present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "1f basemap tiles requested (16) and credit shown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "2a solar estimate: 143.0 kWh with its band and the 'upper bound' label",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "3a clicking the map fills latitude/longitude (about -75, 100)",
+      "pass": true,
+      "detail": "-75.15, 99.43"
+    },
+    {
+      "name": "3b a point without terrain data is LABELLED 'terrain data insufficient', never estimated",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "4a choosing a mission profile fills the form at once (14 days)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "4b Compute after returning to IM-2 shows results again",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "5a compare: 6 supported scenarios and 2 'terrain data insufficient' (IM-1)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "5b compare: bands shown and no number for IM-1 rows",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "6a landing sites table appears",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "6b IM-1 column is labelled in all 9 metric rows",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "6c Chandrayaan-3 is supported but flagged 'terrain not yet approved'; IM-2 is not flagged",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "7a position-uncertainty sweep: 5 rows, Sun nominal 48.6 % in every row, bands widen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "8a delay simulator returns its table",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "9a data page lists kernels with SHA-256, DEM windows and credits",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "9b assumptions and limitations are stated (35 items)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "9c Learn tab renders the glossary",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "10a production page carries CSP, nosniff and no-framing headers",
+      "pass": true,
+      "detail": "{'csp': \"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://trek.nasa.gov; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'\", 'nosniff': 'nosniff', 'frame': 'DENY'}"
+    },
+    {
+      "name": "11a no uncaught JavaScript exceptions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "11b no console errors (apart from the browser's own notes on the expected 422s)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "11c no unexpected failed API requests",
+      "pass": true,
+      "detail": ""
+    }
+  ],
+  "expected_422": [
+    "422 /horizon/profile",
+    "422 /visibility/series",
+    "422 /visibility/at"
+  ],
+  "unexpected_api_errors": [],
+  "console_errors": [],
+  "exceptions": [],
+  "basemap_tile_failures": 0
+}

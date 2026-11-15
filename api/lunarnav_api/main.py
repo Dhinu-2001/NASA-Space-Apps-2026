@@ -31,8 +31,8 @@ from .routes_scenarios import build_scenario_router
 from .routes_visibility import build_visibility_router
 from .schemas import CapabilityOut, ErrorBody, HealthResponse, VersionResponse
 
-API_VERSION = "0.1.0"
-CURRENT_STAGE = 9
+API_VERSION = "1.0.0"
+CURRENT_STAGE = 11
 
 _ERROR_RESPONSES = {422: {"model": ErrorBody}, 500: {"model": ErrorBody}}
 
@@ -46,8 +46,8 @@ def create_app() -> FastAPI:
         title="Lunar Landing Site Navigator API",
         version=API_VERSION,
         description=(
-            "Stage 6: sites, DEM, ephemeris, terrain horizon, terrain-corrected Sun/Earth visibility with "
-            "position-sensitivity bands, and scenario comparison / mission delay simulator."
+            "Sites, DEM, ephemeris, terrain horizon, terrain-corrected Sun/Earth visibility with position-sensitivity "
+            "bands, scenario comparison, mission delay simulator and an idealised solar-energy upper bound."
         ),
     )
     # Middleware order (innermost first): compute limiter, body limit, CORS, security headers (outermost, so even refusals carry them).
@@ -108,7 +108,7 @@ def create_app() -> FastAPI:
             api_version=API_VERSION,
             stage=CURRENT_STAGE,
             notice=(
-                "Stage 9: terrain-corrected Sun/Earth visibility, scenario comparison and mission delay simulator "
+                "Terrain-corrected Sun/Earth visibility, scenario comparison and mission delay simulator "
                 "(geometric line of sight / direct illumination only; not link availability or irradiance). "
                 "Sites without supporting terrain data are reported as terrain_data_insufficient and never ranked. "
                 "Engineering is limited to an idealised direct-beam solar-energy upper bound; antenna, slope and temperature assessments are not built."
@@ -131,6 +131,8 @@ def create_app() -> FastAPI:
         except DataMissingError as e:  # partial install: report what is missing rather than failing
             eph, eph_error = None, e.message
         out = build_provenance(settings.data_dir, eph, REPO_ROOT)
+        if not out.get("git_commit") and settings.git_commit:   # installed/containerised build: there is no .git directory to read
+            out["git_commit"] = settings.git_commit
         for pkg in ("fastapi", "pydantic", "uvicorn"):  # web-layer versions are added here, not in the engine
             try:
                 out["software"][pkg] = metadata.version(pkg)

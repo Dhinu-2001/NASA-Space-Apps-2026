@@ -1,0 +1,28 @@
+# docker compose up -d --build
+# First run only: put the data into the volume (docs/DEPLOYMENT.md), e.g.
+#   docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm
+# or unpack a bundle:  docker run --rm -v lunarnav_lunarnav-data:/data -v "$PWD":/in alpine tar xzf /in/lunarnav-data.tar.gz -C /data
+services:
+  lunarnav:
+    build:
+      context: .
+      args:
+        GIT_COMMIT: ${GIT_COMMIT:-unknown}   # export GIT_COMMIT=$(git rev-parse --short HEAD) before building
+    image: lunarnav:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - lunarnav-data:/data
+    environment:
+      LUNARNAV_ENV: production
+      LUNARNAV_LOG_JSON: "true"
+      # On a small host keep this at 2: a cold scenario is about 25 s of one CPU core.
+      LUNARNAV_MAX_HEAVY_REQUESTS: "2"
+      # The UI and API share one origin, so no CORS origins are needed. Add one only if you host the UI elsewhere:
+      # LUNARNAV_CORS_ORIGINS: '["https://your-ui.example"]'
+    restart: unless-stopped
+    # about 1 GB of RAM is enough for one worker (see docs/DEPLOYMENT.md for the measured figure)
+    mem_limit: 1536m
+
+volumes:
+  lunarnav-data:

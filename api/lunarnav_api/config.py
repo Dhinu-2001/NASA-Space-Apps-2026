@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     max_body_bytes: int = 262_144
     max_heavy_requests: int = 4
     heavy_queue_seconds: float = 90.0
+    # Build stamp for deployments without a git checkout (e.g. a container): shown in /provenance and the About tab.
+    git_commit: str | None = None
     # Built web UI served by `lunarnav_api.serve` (production mode); unused by the plain API app.
     web_dist: Path = Field(default=REPO_ROOT / "web" / "dist")
 

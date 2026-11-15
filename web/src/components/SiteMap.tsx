@@ -180,7 +180,13 @@ export function SiteMap({
         <p className="help" data-testid="pick-help">
           Click the map to set custom coordinates (the map resolves about ±{(KM_PER_PX / 2).toFixed(1)} km, far coarser than the ±100 m position uncertainty; type exact values for precision).
           Terrain data exist only around IM-1, IM-2 and Chandrayaan-3; elsewhere the backend normally reports “terrain data insufficient”.
-          {hover ? <span data-testid="pointer-readout"> Pointer: {hover.lat.toFixed(1)}°, {hover.lon.toFixed(1)}°E.</span> : null}
+        </p>
+      )}
+      {onPick && (
+        // A line of fixed height: showing the pointer position must never change the page layout (a layout shift under the cursor
+        // would move the map during a click).
+        <p className="help" style={{ height: "1.3em", margin: "2px 0 0", overflow: "hidden", whiteSpace: "nowrap" }}>
+          {hover ? <span data-testid="pointer-readout">Pointer: {hover.lat.toFixed(1)}°, {hover.lon.toFixed(1)}°E</span> : " "}
         </p>
       )}
       {pickNote && <p className="help" role="status" data-testid="pick-note"><span className="assump">Not picked:</span> {pickNote}</p>}
