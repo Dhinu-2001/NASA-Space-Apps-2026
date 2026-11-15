@@ -14,6 +14,7 @@ Geometric line of sight and direct illumination only; no link budget, irradiance
 6. A proper bound on position sensitivity (denser or adaptive displacement sampling) instead of an 8-direction sample.
 
 ## 2. Product and interface
+* Sunset/Earthset countdown: **done** (15 November 2026), display-only from the backend intervals.
 * **3D terrain** was assessed and deliberately not built ([stage10x/TIER3_ASSESSMENT.md](../stage10x/TIER3_ASSESSMENT.md)): it needs a new height-patch endpoint, a rendering dependency and care with exaggeration, shading and resolution honesty.
 * Permalinks to a computed view, PDF/report export, saved scenarios, multi-site sweeps, mobile layout polish.
 * **Accessibility:** a manual screen-reader walkthrough and a formal audit (automated checks and keyboard tests exist); cross-browser testing (verified in Chrome/Chromium only).

@@ -7,8 +7,8 @@ One page that points to the evidence. Numbers are for the final tree (2026-11-15
 |---|---|---|
 | Backend (pytest) | **388 pass, 0 skip** (with data) | Engine units; API contract (every endpoint, typed errors); real-data integration (SPICE + LOLA); golden regression (8); edge cases (42: NaN/inf, boundaries, poles, ranges, malformed input); hardening (16); cache caps (5); projection golden pin (3) |
 | Backend without data (clean clone) | 273 pass, 115 skip, 0 fail | Real-data tests skip with the rebuild command |
-| Frontend (Vitest) | **175 pass** | Every view; time player; sweeps; basemap and click-to-pick; accessibility (axe-core on every tab, keyboard, contrast of design tokens); **C4 request-count tests** (a view makes exactly the requests asked for, interactions make none) and static tests (no `fetch`/trigonometry in display components); regression tests for the Compute/profile defect |
-| End-to-end (real Chrome, production build) | **25 / 25 pass** | Whole workflow with console/network monitoring ([stage11/E2E_REPORT.md](stage11/E2E_REPORT.md)) |
+| Frontend (Vitest) | **186 pass** | Every view; time player; sweeps; basemap and click-to-pick; accessibility (axe-core on every tab, keyboard, contrast of design tokens); **C4 request-count tests** (a view makes exactly the requests asked for, interactions make none) and static tests (no `fetch`/trigonometry in display components); regression tests for the Compute/profile defect |
+| End-to-end (real Chrome, production build) | **26 / 26 pass** | Whole workflow with console/network monitoring ([stage11/E2E_REPORT.md](stage11/E2E_REPORT.md)) |
 | Static | ruff clean; TypeScript strict clean; production build clean; `pip-audit` and `npm audit` no known vulnerabilities |
 
 Not measured: line coverage (no tool configured); cross-browser; manual screen-reader use.

@@ -1,16 +1,16 @@
 # Final test report
 
-Generated 2026-11-15 06:31 UTC by `scripts/build_test_report.py`. Commit tested: **5dc901aa9479** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
+Generated 2026-11-15 07:16 UTC by `scripts/build_test_report.py`. Commit tested: **b2c8d7f60542** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
 
 **Overall: ALL CHECKS PASSED**
 
 | Check | Result | Detail | Time |
 |---|---|---|---|
-| Backend tests (pytest) | PASS | 388 passed, 0 failed, 0 skipped | 126 s |
-| Lint (ruff) | PASS | All checks passed! | 0 s |
-| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 7 s |
-| Frontend tests (vitest) | PASS | 175 passed, 0 failed | 15 s |
-| Production build (vite) | PASS | bundle builds | 7 s |
+| Backend tests (pytest) | PASS | 388 passed, 0 failed, 0 skipped | 120 s |
+| Lint (ruff) | PASS | All checks passed! | 2 s |
+| Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 8 s |
+| Frontend tests (vitest) | PASS | 186 passed, 0 failed | 16 s |
+| Production build (vite) | PASS | bundle builds | 8 s |
 
 ## Backend tests by file
 

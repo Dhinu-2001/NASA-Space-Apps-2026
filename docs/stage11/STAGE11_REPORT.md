@@ -47,7 +47,7 @@ Unchanged and re-confirmed by the golden-regression suites and the browser test 
 3. **Attribution terms unconfirmed:** no Moon Trek-, PGDA- or LROC-specific licence text was found (NASA general guidance applies; credits shown). Not legal advice.
 4. **No licence declared** for the project's own code.
 5. A point nobody has computed takes about 70 s (L-P10); no per-IP rate limiting (L-P12); the security and code reviews are self-reviews.
-6. **The challenge asks for "time remaining before sunset or Earthset" (twice); the app shows event times and timelines but no countdown figure.**
+6. ~~Countdown to sunset/Earthset not shown~~ — added 15 November 2026 (see addendum).
 7. The development backend on :8000 still runs the pre-Stage 11 code (header shows API 0.1.0, stage 9) until restarted; no functional difference for the UI.
 8. Commits made after the last push are local until pushed (this agent does not push).
 
@@ -77,5 +77,9 @@ Choose hosting and deploy (guide: [../DEPLOYMENT.md](../DEPLOYMENT.md)); build a
 ## 13. Recommended next action
 1. **Deploy** using [../DEPLOYMENT.md](../DEPLOYMENT.md) (the fastest verified path is the one-process production run; Docker if your host needs it), then run `scripts/e2e_browser.py --base <url>` against it.
 2. Open the deck in PowerPoint, check the two charts, add the live URL.
-3. **Authorise a small addition: the sunset/Earthset countdown** the challenge text asks for (about an hour; display-only, built from the event times the backend already returns; with tests). It is the largest gap between the challenge text and the product.
+3. ~~Sunset/Earthset countdown~~ — done (see addendum).
 4. Decide licence and Chandrayaan-3 approval; push to GitHub.
+
+## Addendum (15 November 2026): sunset/Earthset countdown added
+Item 6 of the open issues and item 3 above are closed. The Sun and Earth cards in **Site & time** now show **"Sunset in X" / "Sunrise in X" / "Earthset in X" / "Earthrise in X"**: the time from the shown instant to the next change of the terrain-corrected state, with the position-uncertainty band of that event. Display-only (C4): remaining time = the backend's interval event time minus the shown time; no new request, no trigonometry (tests enforce both). If the state lasts to the end of the computed window the card says "stays visible/blocked for at least X (cut off)", never a prediction; an event seen at only some sampled positions is flagged "incomplete band"; nothing is shown outside the window or for sites without terrain.
+Evidence: 11 new frontend tests (frontend 186 pass); real-data check against the API's own intervals (IM-2 default: Sunset in 13.4 d, band 13.0–13.5 d, incomplete band; Earthset in 12.5 d, band 12.4–12.5 d); end-to-end check 1g, now **26/26** on the production build; screenshot `countdown_view.png`. Still the same terrain-corrected geometry: not a power, thermal or link claim.

@@ -32,7 +32,7 @@ One-process **production** mode (UI + API on one port) and Docker: see [docs/DEP
 
 ## Using it (the complete workflow)
 
-1. **Site & time** — pick a landing site on the NASA imagery map (or click anywhere to set coordinates, or type them), choose a window and an optional mission profile, press **Compute**: Sun/Earth positions, terrain horizon, sunlight/Earth-contact timelines with bands, advanced plots, a solar-energy upper bound.
+1. **Site & time** — pick a landing site on the NASA imagery map (or click anywhere to set coordinates, or type them), choose a window and an optional mission profile, press **Compute**: Sun/Earth positions with a **countdown to sunset and Earthset** (to the next time the body is hidden by terrain, with its band), terrain horizon, sunlight/Earth-contact timelines with bands, advanced plots, a solar-energy upper bound.
 2. **Compare** and **Landing sites** — scenarios and sites side by side; insufficient sites are labelled, never ranked.
 3. **Explore sweeps** — vary one parameter (start date, window length, position uncertainty, observer height, sampling step).
 4. **Delay simulator** — how a launch delay changes the result, with the position band carried into every difference.
@@ -45,8 +45,8 @@ A scripted walk-through with the exact numbers to expect is in [docs/stage11/DEM
 | Evidence | Result |
 |---|---|
 | Backend tests (engine, API, golden regression, edge cases, hardening) | 388 pass |
-| Frontend tests (including accessibility and a "no calculation in the browser" request-count suite) | 175 pass |
-| End-to-end, real browser, production build, 25 checks incl. console/network monitoring | 25 / 25 pass ([report](docs/stage11/E2E_REPORT.md)) |
+| Frontend tests (including accessibility and a "no calculation in the browser" request-count suite) | 186 pass |
+| End-to-end, real browser, production build, 26 checks incl. console/network monitoring | 26 / 26 pass ([report](docs/stage11/E2E_REPORT.md)) |
 | Ephemeris vs JPL Horizons, 220-row grid | Sun 1.4×10⁻⁸°, Earth 6×10⁻⁷° (criterion 0.01°) |
 | Horizon vs an independent implementation | 1.1×10⁻⁹° (criterion 10⁻³°) |
 | Security review, dependency audits | [SECURITY_REVIEW.md](docs/stage11/SECURITY_REVIEW.md); `pip-audit` and `npm audit` report no known vulnerabilities |

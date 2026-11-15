@@ -50,7 +50,7 @@ export function LearnToggle() {
 
 export const EXPLAIN: Record<string, string> = {
   sunEarthNow:
-    "These are the directions of the Sun and the Earth as seen from the landing site at the chosen time. Azimuth is the compass direction (0° = north, increasing clockwise); elevation is the angle above the local flat horizontal. The terrain horizon is how high the surrounding ground reaches in that same direction: a body can only be seen if it is higher than the terrain there.",
+    "These are the directions of the Sun and the Earth as seen from the landing site at the chosen time. Below each is the time until it sets (is hidden behind the terrain) or rises, with the band for the assumed position error. Azimuth is the compass direction (0° = north, increasing clockwise); elevation is the angle above the local flat horizontal. The terrain horizon is how high the surrounding ground reaches in that same direction: a body can only be seen if it is higher than the terrain there.",
   horizon:
     "The brown shape is the terrain skyline around the lander, built from laser-altimeter (LOLA) elevation data. The yellow and blue dots show where the Sun and the Earth travel across the sky during the whole window. Wherever a path dips below the brown shape, that body is hidden by terrain. Near the lunar poles the Sun stays very low in the sky, so even modest hills decide when there is sunlight.",
   player:

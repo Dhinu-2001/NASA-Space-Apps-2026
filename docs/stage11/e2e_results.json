@@ -32,6 +32,11 @@
       "detail": ""
     },
     {
+      "name": "1g sunset/Earthset countdown from the backend's intervals: Sunset in 13.4 d, Earthset in 12.5 d (with bands)",
+      "pass": true,
+      "detail": "Sunset in 13.4 d band 13.0 d to 13.5 d for a \u00b1100 m position error incomplete band"
+    },
+    {
       "name": "2a solar estimate: 143.0 kWh with its band and the 'upper bound' label",
       "pass": true,
       "detail": ""

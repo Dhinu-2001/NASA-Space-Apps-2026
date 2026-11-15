@@ -9,7 +9,8 @@ import { SiteMap } from "../components/SiteMap";
 import { SolarPanel } from "../components/SolarPanel";
 import { TimePlayer, sampleTimeUtc } from "../components/TimePlayer";
 import { Timeline, type TimelineRow } from "../components/Timeline";
-import { addSecondsIso, fmtDeg, fmtUtc, localInputToUtc } from "../format";
+import { eventName, nextChange } from "../countdown";
+import { addSecondsIso, fmtBand, fmtDeg, fmtDur, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
 import { Explain } from "../learn";
 import { ProfilePicker } from "../profiles";
@@ -243,6 +244,10 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                     const p = nowForPlot[b];
                     const s = cardSrc ? cardSrc.data.bodies[b].series : undefined;
                     const k = cardSrc ? cardSrc.idx : 0;
+                    // Time until the body is next hidden by (or clears) the terrain: event time from the backend's intervals minus the shown time.
+                    const cd = s && cardSrc && vis && !insufficient
+                      ? nextChange(vis.bodies[b], vis.window.start_utc, vis.window.end_utc, (Date.parse(cardSrc.t) - Date.parse(vis.window.start_utc)) / 1000, s.headline_visible[k])
+                      : null;
                     return (
                       <div className="card" key={b} data-testid={`now-${b}`}>
                         <h3 className={b === "sun" ? "sun-c" : "earth-c"}>{b === "sun" ? "Sun" : "Earth"}</h3>
@@ -256,6 +261,19 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                               {s.headline_state_robust_to_position && !s.headline_state_robust_to_position[k] ? <span className="flag">changes with position</span> : s.headline_state_robust_to_position ? <span className="flag good">same at all sampled positions</span> : null}
                               {!s.horizon_complete[k] && <span className="flag bad">horizon incomplete: upper bound</span>}
                             </li>
+                            {cd && (
+                              <li data-testid={`countdown-${b}`}>
+                                {cd.noEventInWindow ? (
+                                  <>{b === "sun" ? "Sun" : "Earth"} stays {cd.kind === "sets" ? "visible" : "blocked"} for at least <strong>{fmtDur(cd.atLeastS)}</strong> (to the end of the computed window)<span className="flag">cut off</span></>
+                                ) : (
+                                  <>
+                                    <strong>{eventName(b, cd.kind)} in {fmtDur(cd.remainingS)}</strong>
+                                    {cd.bandS ? <span className="band">band {fmtBand(cd.bandS, fmtDur)} for a ±{vis!.position_sensitivity.assumed_position_uncertainty_m} m position error</span> : null}
+                                    {!cd.bandComplete && <span className="flag">incomplete band</span>}
+                                  </>
+                                )}
+                              </li>
+                            )}
                             <li>Geometric (no terrain): {s.geometric_headline_above_local_horizontal[k] ? "above" : "below"} the local horizontal</li>
                           </ul>
                         ) : (
@@ -265,6 +283,11 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                     );
                   })}
                 </div>
+              )}
+              {vis && !insufficient && (
+                <p className="help" data-testid="countdown-help">
+                  Sunset and Earthset are terrain-corrected: the next time the body is hidden behind the terrain horizon (or clears it, for sunrise and Earthrise), taken from the computed visibility intervals as event time minus the time shown. The band is how far that event could move for the assumed position error; “at least” means the state lasts to the end of the computed window.
+                </p>
               )}
             </Panel>
 

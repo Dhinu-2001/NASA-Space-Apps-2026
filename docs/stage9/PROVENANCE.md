@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 06:28 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **5dc901aa9479**.
+Generated 2026-11-15 07:16 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **b2c8d7f60542**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -87,6 +87,9 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+b2c8d7f Stage 11: presentation deck, evaluation report, README/DECISIONS updates, demo script correction
+79c2b41 Refresh end-to-end evidence on the final tree (25/25, API 1.0.0, commit stamp)
+3ec5b57 Stage 11 documentation: README, architecture, methodology, deployment, security/performance/code reviews, E2E report, demo script, attribution, test and validation report, CI workflow; limitations L-P10..L-P12
 5dc901a Stage 11: deployment configuration, data provisioning, end-to-end browser test, attribution, release metadata
 dd04c4f Stage 11 security hardening: security headers, body and compute limits, bounded caches, list-size limits, one-process production entry point
 0d29541 Regenerate provenance and test reports after the Compute/profile fix

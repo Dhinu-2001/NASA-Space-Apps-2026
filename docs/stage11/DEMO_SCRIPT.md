@@ -6,7 +6,7 @@ Every number below was read from the running application on 2026-11-15 (producti
 1. **Start the app** in production mode: `.\scripts\run_production.ps1 -Port 8000` (or open the deployed URL). Wait for `READY` and the first log line.
 2. **Warm the caches** if you changed machines or cleared `data/results`: `python scripts/warm_cache.py --base http://127.0.0.1:8000` (about a minute; it computes the default views so nothing waits on stage).
 3. Open `http://127.0.0.1:8000/#view` in a clean browser window (1400 px wide or more), reload once so the first view is cached.
-4. Run the safety net once: `python scripts/e2e_browser.py --base http://127.0.0.1:8000` should end with **25/25 checks passed**.
+4. Run the safety net once: `python scripts/e2e_browser.py --base http://127.0.0.1:8000` should end with **26/26 checks passed**.
 5. **Network:** the map imagery comes live from NASA. If the Wi-Fi is poor the map falls back to rings and an "Imagery unavailable" note; everything else works offline.
 6. Avoid clicking an uncached map point on stage: a new point takes about a minute (use the one rehearsed below only if you want to show the labelled "insufficient" case, which is instant).
 
@@ -20,6 +20,7 @@ Every number below was read from the running application on 2026-11-15 (producti
 ## Beat 2: Site & time, IM-2 Athena (90 s)
 **Show:** the **Site & time** tab (IM-2 Athena, 2027-01-15, 30 days, ±100 m). Point at the map, then the Sun and Earth cards, the horizon plot with the Sun and Earth tracks, and the timelines.
 **Expect ✔:** Sun and Earth at the shown time, e.g. "az 63.6° · el +3.07°" (Sun), Earth about 9° up; terrain horizon from −1.47° to +4.07° around the compass.
+**Countdown ✔:** under each card, *Sunset in 13.4 d (band 13.0 to 13.5 d, flagged "incomplete band")* and *Earthset in 12.5 d (band 12.4 to 12.5 d)*: the time to the next moment the body is hidden behind the terrain, from the computed intervals; drag the time player and it follows (for example *Earthrise in 12.6 h* on 1 Feb 17:00).
 **Say:** "This is IM-2's landing site. The Sun stays within a few degrees of the horizon, so the terrain decides everything. The grey shape is the real horizon from the 20 m laser-altimeter terrain; the gold and blue paths are the Sun and Earth over the month."
 **Then the numbers (Section 5):** "Terrain-corrected, the Sun is visible **48.6 %** of the month, band **45.4–48.9 %**. The geometric answer, ignoring terrain, would be 53.3 %: terrain costs about five points. Earth is visible **80.8 %** (band 80.0–80.9 %) against 73.5 % geometric: here terrain actually *helps*, because the local horizontal is a poor reference on a plateau."
 **Say about the band:** "The band is how far the answer moves if the landing position is wrong by 100 m. It is a sensitivity, not an error bar. Longest period without Sun: **15.4 days** (band 15.3–16.4)."

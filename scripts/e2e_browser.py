@@ -152,6 +152,9 @@ async def main() -> int:
             check("1d IM-2 numbers match the validated reports (Sun 48.6 %, Earth 80.8 %, geometric 53.3 % / 73.5 %)", all(s in body for s in ("48.6 %", "80.8 %", "53.3 %", "73.5 %")))
             check("1e advanced plots panel present", await wait("document.querySelector('[data-testid=advanced-plots]')", 60, "advanced plots"))
             check("1f basemap tiles requested (16) and credit shown", await js("document.querySelectorAll('[data-testid=basemap] image').length") == 16 and await js("document.body.innerText.includes('LRO LROC WAC mosaic')"))
+            check("1g sunset/Earthset countdown from the backend's intervals: Sunset in 13.4 d, Earthset in 12.5 d (with bands)",
+                  await wait("document.querySelector('[data-testid=countdown-sun]')?.innerText.includes('Sunset in 13.4 d') && document.querySelector('[data-testid=countdown-earth]')?.innerText.includes('Earthset in 12.5 d')", 60, "countdown"),
+                  (await js("document.querySelector('[data-testid=countdown-sun]')?.innerText || ''")).replace("\n", " ")[:90])
             await shot("01_view_im2")
 
             # ---------------------------------------------------------------- 2. solar energy upper bound
