@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 02:06 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **22671d778472**.
+Generated 2026-11-15 03:40 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **00556f94d567**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -87,6 +87,13 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+00556f9 Docs: record that the Stage 10 extras were delivered and merged
+583a052 Merge Stage 10 extras (Tier 1 + Tier 2, owner-approved): landing-site comparison, advanced plots, explore sweeps
+41d19bd Tier 3 assessment (3D terrain): recommend not starting; no code
+42e7aa6 Stage 10 extras, Tier 2: Explore sweeps tab (parameter sweeps over the existing scenarios API, display only)
+ca682ae Tier 1 report: correct the count of edited existing tests
+a6d4ee4 Stage 10 extras, Tier 1: landing-site side-by-side tab and advanced plots (display only)
+ab55edf Provenance report: handle products registered without an exact byte size; show unvalidated status
 22671d7 Regenerate provenance and test reports after Chandrayaan-3 terrain
 8108682 Chandrayaan-3 terrain: register LDEM_60S_60MPP_ADJ 60 m window (unvalidated), label results, tests, evidence
 12360f6 Regenerate provenance and test reports after Stage 8 approval
