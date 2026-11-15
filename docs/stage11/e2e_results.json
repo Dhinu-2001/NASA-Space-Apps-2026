@@ -1,5 +1,5 @@
 {
-  "base": "http://127.0.0.1:8020",
+  "base": "http://127.0.0.1:8010",
   "checks": [
     {
       "name": "1a app loads and the backend is reachable",
@@ -7,7 +7,7 @@
       "detail": "ok"
     },
     {
-      "name": "1b capability strip shows 7 validated capabilities",
+      "name": "1b capability strip shows 8 capabilities: 7 validated and Chandrayaan-3 terrain as implemented_unvalidated",
       "pass": true,
       "detail": ""
     },
@@ -82,7 +82,7 @@
       "detail": ""
     },
     {
-      "name": "6c Chandrayaan-3 is supported but flagged 'terrain not yet approved'; IM-2 is not flagged",
+      "name": "6c Chandrayaan-3 is supported but carries the 'implemented unvalidated' terrain pill; IM-2 does not",
       "pass": true,
       "detail": ""
     },
@@ -102,7 +102,7 @@
       "detail": ""
     },
     {
-      "name": "9b assumptions and limitations are stated (38 items)",
+      "name": "9b assumptions and limitations are stated (39 items)",
       "pass": true,
       "detail": ""
     },

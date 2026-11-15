@@ -39,4 +39,7 @@ CAPABILITIES: tuple[Capability, ...] = (
                CapabilityStatus.VALIDATED),
     Capability("engineering", "Solar energy availability (idealised direct-beam upper bound)", 8,
                CapabilityStatus.VALIDATED),
+    # Integration approved by the owner 2026-11-15, but NOT validated: it has not had the independent verification pass IM-2's terrain had.
+    Capability("terrain_chandrayaan3", "Chandrayaan-3 60 m terrain (LDEM_60S_60MPP_ADJ) through the unchanged pipeline", 11,
+               CapabilityStatus.IMPLEMENTED_UNVALIDATED),
 )

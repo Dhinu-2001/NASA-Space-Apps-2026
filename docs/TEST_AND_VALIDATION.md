@@ -5,9 +5,9 @@ One page that points to the evidence. Numbers are for the final tree (2026-11-15
 ## 1. Automated tests
 | Suite | Count | Scope |
 |---|---|---|
-| Backend (pytest) | **388 pass, 0 skip** (with data) | Engine units; API contract (every endpoint, typed errors); real-data integration (SPICE + LOLA); golden regression (8); edge cases (42: NaN/inf, boundaries, poles, ranges, malformed input); hardening (16); cache caps (5); projection golden pin (3) |
+| Backend (pytest) | **404 pass, 0 skip** (with data) | Engine units; API contract (every endpoint, typed errors); real-data integration (SPICE + LOLA); golden regression (8); edge cases (42: NaN/inf, boundaries, poles, ranges, malformed input); hardening (16); cache caps (5); projection golden pin (3) |
 | Backend without data (clean clone) | 273 pass, 115 skip, 0 fail | Real-data tests skip with the rebuild command |
-| Frontend (Vitest) | **186 pass** | Every view; time player; sweeps; basemap and click-to-pick; accessibility (axe-core on every tab, keyboard, contrast of design tokens); **C4 request-count tests** (a view makes exactly the requests asked for, interactions make none) and static tests (no `fetch`/trigonometry in display components); regression tests for the Compute/profile defect |
+| Frontend (Vitest) | **188 pass** | Every view; time player; sweeps; basemap and click-to-pick; accessibility (axe-core on every tab, keyboard, contrast of design tokens); **C4 request-count tests** (a view makes exactly the requests asked for, interactions make none) and static tests (no `fetch`/trigonometry in display components); regression tests for the Compute/profile defect |
 | End-to-end (real Chrome, production build) | **26 / 26 pass** | Whole workflow with console/network monitoring ([stage11/E2E_REPORT.md](stage11/E2E_REPORT.md)) |
 | Static | ruff clean; TypeScript strict clean; production build clean; `pip-audit` and `npm audit` no known vulnerabilities |
 
@@ -28,7 +28,7 @@ Not measured: line coverage (no tool configured); cross-browser; manual screen-r
 Full report, tolerances and traceability: [stage9/VALIDATION_REPORT.md](stage9/VALIDATION_REPORT.md), [stage9/TOLERANCES.md](stage9/TOLERANCES.md), [stage9/TRACEABILITY.md](stage9/TRACEABILITY.md). Reproducibility record: [stage9/PROVENANCE.md](stage9/PROVENANCE.md).
 
 ## 3. What "validated" means here
-A capability is `validated` when it is implemented, tested, its evidence was reviewed and the project owner approved its stage gate. It does **not** mean proven against measurement. **Chandrayaan-3's terrain is not approved** and is labelled on every result. The Horizons comparison validates the implementation, not the ephemerides, and there is no physically independent illumination dataset checked yet (future work 1).
+A capability is `validated` when it is implemented, tested, its evidence was reviewed and the project owner approved its stage gate. It does **not** mean proven against measurement. **Chandrayaan-3's terrain is `implemented_unvalidated`** (integration approved by the owner 2026-11-15; it has not had the independent verification pass IM-2's terrain had) and carries that label, as the same pill used for unvalidated capabilities, on every result. The Horizons comparison validates the implementation, not the ephemerides, and there is no physically independent illumination dataset checked yet (future work 1).
 
 ## 4. How to reproduce
 ```

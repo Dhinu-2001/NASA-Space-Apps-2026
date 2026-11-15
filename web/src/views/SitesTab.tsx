@@ -3,14 +3,13 @@ import { api } from "../api/client";
 import type { ScenarioResult, Site } from "../api/types";
 import { DASH, fmtBand, fmtDeg, fmtDur, fmtPct, fmtUtc, localInputToUtc } from "../format";
 import { useAsync } from "../hooks";
-import { ErrorBox, Insufficient, Loading, Panel, StatusTag } from "../ui";
+import { ErrorBox, Insufficient, Loading, Panel, StatusTag, UnvalidatedTerrainTag } from "../ui";
 
 // Historical landing sites side by side over ONE common window, from a single POST /scenarios/compare.
 // Display only (decision C4): every number is read from the backend response; a site the backend marks
 // terrain_data_insufficient gets the label and its reason, never a figure, a rank or an estimate.
 
 const HINT = "A site's first calculation computes terrain profiles and position-sensitivity runs; several sites can take a minute or more the first time.";
-const NOT_APPROVED = /NOT yet approved/i;
 
 interface Applied {
   siteIds: string[];
@@ -48,9 +47,7 @@ function cells(s: ScenarioResult | undefined) {
     terrain: (
       <>
         {s.horizon?.windows.length ? s.horizon.windows.join(" + ") : DASH}
-        {(s.limitations ?? []).filter((l) => NOT_APPROVED.test(l)).map((l) => (
-          <span className="flag bad" key={l} title={l} data-testid="not-approved-flag">terrain not yet approved</span>
-        ))}
+        <UnvalidatedTerrainTag limitations={s.limitations} />
       </>
     ),
     horizon: hz ? `${fmtDeg(hz.horizon_min_deg as number | null)} to ${fmtDeg(hz.horizon_max_deg as number | null)}, mean ${fmtDeg(hz.horizon_mean_deg as number | null)}` : DASH,

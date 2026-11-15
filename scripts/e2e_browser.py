@@ -146,7 +146,7 @@ async def main() -> int:
             # ---------------------------------------------------------------- 1. open, default site computes
             await call("Page.navigate", url=f"{BASE}/#view")
             check("1a app loads and the backend is reachable", await wait("document.querySelector('[data-testid=health-status]')", 60, "health"), await js("document.querySelector('[data-testid=health-status]')?.textContent || ''"))
-            check("1b capability strip shows 7 validated capabilities", await js("document.querySelectorAll('.cap-list li').length") == 7 and await js("[...document.querySelectorAll('.cap-list li')].every(l => l.textContent.includes('validated'))"))
+            check("1b capability strip shows 8 capabilities: 7 validated and Chandrayaan-3 terrain as implemented_unvalidated", await js("document.querySelectorAll('.cap-list li').length") == 8 and await js("[...document.querySelectorAll('.cap-list li')].filter(l => l.classList.contains('tag-validated')).length") == 7 and await js("[...document.querySelectorAll('.cap-list li.tag-implemented_unvalidated')].map(l => l.textContent).join('|').includes('Chandrayaan-3 60 m terrain')"))
             check("1c default IM-2 view computes (Sun/Earth cards, horizon plot, visibility metrics)", await wait("document.querySelector('[data-testid=now-sun]') && " + text_has("Visible fraction"), 240, "view results"))
             body = await js("document.body.innerText")
             check("1d IM-2 numbers match the validated reports (Sun 48.6 %, Earth 80.8 %, geometric 53.3 % / 73.5 %)", all(s in body for s in ("48.6 %", "80.8 %", "53.3 %", "73.5 %")))
@@ -208,7 +208,7 @@ async def main() -> int:
             await click_button("Compare sites")
             check("6a landing sites table appears", await wait("document.querySelector('[data-testid=sites-table]')", 300, "sites table"))
             check("6b IM-1 column is labelled in all 9 metric rows", await js("document.querySelectorAll('[data-testid=cell-insufficient]').length") == 9)
-            check("6c Chandrayaan-3 is supported but flagged 'terrain not yet approved'; IM-2 is not flagged", await js("document.querySelectorAll('[data-testid=not-approved-flag]').length") == 1)
+            check("6c Chandrayaan-3 is supported but carries the 'implemented unvalidated' terrain pill; IM-2 does not", await js("document.querySelectorAll('[data-testid=terrain-unvalidated]').length") == 1)
             await shot("06_landing_sites")
 
             # ---------------------------------------------------------------- 7. sweep
@@ -226,7 +226,7 @@ async def main() -> int:
             # ---------------------------------------------------------------- 9. data & assumptions, learn
             await click_tab("Data & assumptions")
             check("9a data page lists kernels with SHA-256, DEM windows and credits", await wait(" && ".join([text_has("de440s.bsp"), text_has("Scientific data sources"), text_has("Credits and acknowledgements")]), 60, "about page"))
-            check("9b assumptions and limitations are stated (38 items)", await js(text_has("(38 items)")))
+            check("9b assumptions and limitations are stated (39 items)", await js(text_has("(39 items)")))
             await shot("09_data_assumptions")
             await click_tab("Learn")
             check("9c Learn tab renders the glossary", await wait("document.body.innerText.toLowerCase().includes('glossary')", 30, "learn"))

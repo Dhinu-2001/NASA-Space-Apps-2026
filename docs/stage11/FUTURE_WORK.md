@@ -1,6 +1,6 @@
 # Known limitations and future work (Stage 11, task 12)
 
-The authoritative list of limitations, each with its effect and evidence, is [stage9/KNOWN_LIMITATIONS.md](../stage9/KNOWN_LIMITATIONS.md) (38 items). This page groups what to do about them, in priority order for a team continuing the project.
+The authoritative list of limitations, each with its effect and evidence, is [stage9/KNOWN_LIMITATIONS.md](../stage9/KNOWN_LIMITATIONS.md) (39 items). This page groups what to do about them, in priority order for a team continuing the project.
 
 ## What the project does not claim (summary)
 Geometric line of sight and direct illumination only; no link budget, irradiance, thermal, power or battery results; "validated" means owner-approved after review, not proven against measurement; the position band is a sensitivity sample, not a proven bound; Horizons validates the implementation, not the ephemerides; terrain is interpolated LOLA data with no propagated height uncertainty; only IM-2 has 20 m terrain, Chandrayaan-3 has 60 m terrain that is registered but not owner-approved, IM-1 has too little terrain.
@@ -30,6 +30,6 @@ Geometric line of sight and direct illumination only; no link budget, irradiance
 | Decision | Why it matters |
 |---|---|
 | **Choose a licence** for the source repository | None is declared; required before others may reuse the code |
-| **Approve (or not) Chandrayaan-3 terrain as a gate** | It stays labelled "not yet approved" until then |
+| **Promote Chandrayaan-3 terrain from `implemented_unvalidated` to `validated`** | Needs the independent verification pass IM-2 had (published-height check numbers, raster header, alignment confirmation); until then it keeps the pill |
 | **Provide hosting** for the public deployment | The authors cannot create accounts ([DEPLOYMENT.md](../DEPLOYMENT.md)) |
 | Confirm provider terms for NASA imagery and data before use beyond a demonstration | No product-specific licence text was found ([ATTRIBUTION.md](../ATTRIBUTION.md)) |

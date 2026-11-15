@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 07:16 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **b2c8d7f60542**.
+Generated 2026-11-15 13:29 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **5fe6b3264f49**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -29,7 +29,7 @@ The MD5 values were published by NAIF and checked on download; the SHA-256 value
 
 * **LDEM_80S_20MPP_ADJ** — LOLA Digital Elevation Model, 80-90 deg S, 20 m/pixel, track-adjusted. Publisher: NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team. DOI `10.60903/gsfcpgda-lola-spole`. [Landing page](https://pgda.gsfc.nasa.gov/products/90); file `https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF` (2,696,082,051 bytes; header verified 2026-11-14). Never downloaded in full: windows are range-read.
   * Companion layers listed by the provider but **not used**: LDEM_80S_20MPP_ADJ_ERR.TIF (height error, m); LDEM_80S_20MPP_ADJ_EFFRES.TIF (effective resolution, m); LDSM_80S_20MPP_ADJ.TIF (slope, deg); LDSM_80S_20MPP_ADJ_ERR.TIF (slope error, deg); LDEC_80S_20MPP_ADJ.TIF (LOLA spot count per pixel); LDEM_80S_20MPP_ADJ_HILL.TIF (hillshade)
-* **LDEM_60S_60MPP_ADJ** — LOLA Digital Elevation Model, 60-90 deg S, 60 m/pixel, track-adjusted. Publisher: NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team. DOI `10.60903/gsfcpgda-lola-spole`. [Landing page](https://pgda.gsfc.nasa.gov/products/90); file `https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF` (size 2.9G (approximate; exact byte size not measured); header verified 2026-11-15). Never downloaded in full: windows are range-read. **Status: registered_unvalidated: header, CRS and one published-height check verified; NOT approved as a validation gate by the owner.**
+* **LDEM_60S_60MPP_ADJ** — LOLA Digital Elevation Model, 60-90 deg S, 60 m/pixel, track-adjusted. Publisher: NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team. DOI `10.60903/gsfcpgda-lola-spole`. [Landing page](https://pgda.gsfc.nasa.gov/products/90); file `https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF` (size 2.9G (approximate; exact byte size not measured); header verified 2026-11-15). Never downloaded in full: windows are range-read. **Status: implemented_unvalidated: integration approved by the project owner 2026-11-15; the raster header, CRS and one published-height check were done at registration, but the window has NOT had the independent verification pass the IM-2 terrain had (published-height check numbers, raster header, alignment confirmation), so it is not validated.**
   * Companion layers listed by the provider but **not used**: LDEC_60S_60MPP_ADJ.TIF (spot count); LDEM_60S_60MPP_ADJ_EFFRES.TIF; LDEM_60S_60MPP_ADJ_ERR.TIF; LDEM_60S_60MPP_ADJ_HILL.TIF; LDSM_60S_60MPP_ADJ.TIF; LDSM_60S_60MPP_ADJ_ERR.TIF
 
 ### Extracted windows used by the engine
@@ -87,6 +87,13 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+5fe6b32 Compose default: published data bundle (SHA-256 pinned, mandatory) with direct-NASA fallback; entrypoint requires complete data
+24297f9 Verify DEM windows by a hash of decoded elevations + georeferencing (platform-independent), content_sha256 in the manifest; tests and docs
+214a7fc Data bundle install (--from-bundle, verified, safe extraction), entrypoint hook, Dockerfile data links into /data volume; Docker verification findings
+b152930 Docker: libexpat1 + zlib1g fix, scan results, two-step Docker quick start in README, fresh-checkout findings; README licence line
+5e353fa Add MIT LICENSE
+77fb37e Verify the container image: build, run, 26/26 end-to-end; fix missing libexpat1 in the Dockerfile
+472b74c Add sunset/Earthset countdown to the Site & time Sun/Earth cards (display-only, from backend intervals and bands)
 b2c8d7f Stage 11: presentation deck, evaluation report, README/DECISIONS updates, demo script correction
 79c2b41 Refresh end-to-end evidence on the final tree (25/25, API 1.0.0, commit stamp)
 3ec5b57 Stage 11 documentation: README, architecture, methodology, deployment, security/performance/code reviews, E2E report, demo script, attribution, test and validation report, CI workflow; limitations L-P10..L-P12

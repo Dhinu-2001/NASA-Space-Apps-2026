@@ -14,7 +14,7 @@ import { addSecondsIso, fmtBand, fmtDeg, fmtDur, fmtUtc, localInputToUtc } from 
 import { useAsync } from "../hooks";
 import { Explain } from "../learn";
 import { ProfilePicker } from "../profiles";
-import { ErrorBox, Insufficient, Loading, Panel, StatusTag } from "../ui";
+import { ErrorBox, Insufficient, Loading, Panel, StatusTag, UnvalidatedTerrainTag, unvalidatedTerrainNote } from "../ui";
 
 interface Applied {
   sel: SiteSel;
@@ -291,7 +291,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
               )}
             </Panel>
 
-            <Panel title="4 · Terrain horizon" tags={<StatusTag cap="horizon" />}>
+            <Panel title="4 · Terrain horizon" tags={<><StatusTag cap="horizon" /><UnvalidatedTerrainTag limitations={vis?.limitations} /></>}>
               {horizon.phase === "loading" && <Loading startedAt={horizon.startedAt} label="Computing terrain horizon" hint={FIRST_CALL_HINT} />}
               {horizon.phase === "error" && (insufficientFromError(horizon.error) ? <Insufficient reason={horizon.error.message} /> : <ErrorBox error={horizon.error} what="Horizon" />)}
               <Explain id="horizon" />
@@ -307,7 +307,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
               )}
             </Panel>
 
-            <Panel title="5 · Sunlight and Earth-visibility windows" tags={<StatusTag cap="visibility" />}>
+            <Panel title="5 · Sunlight and Earth-visibility windows" tags={<><StatusTag cap="visibility" /><UnvalidatedTerrainTag limitations={vis?.limitations} /></>}>
               {series.phase === "loading" && <Loading startedAt={series.startedAt} label="Computing visibility windows and position sensitivity" hint={FIRST_CALL_HINT} />}
               {series.phase === "error" && (insufficientFromError(series.error) ? null : <ErrorBox error={series.error} what="Visibility" />)}
               {insufficient && <Insufficient reason={insufficientReason} />}
@@ -335,6 +335,9 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                       <ElevationChart series={vis.bodies[b].series!} windowS={windowS} color={b === "sun" ? "var(--sun)" : "var(--earth)"} label={b === "sun" ? "Sun" : "Earth"} cursorS={cursorShown} bandM={bandM} />
                     </div>
                   ))}
+                  {unvalidatedTerrainNote(vis.limitations) && (
+                    <p className="help" data-testid="terrain-unvalidated-note"><strong>Provisional terrain.</strong> {unvalidatedTerrainNote(vis.limitations)}</p>
+                  )}
                   <Explain id="bands" />
                   <div className="cards" style={{ marginTop: 12 }}>
                     <MetricsPanel name="sun" body={vis.bodies.sun} bandM={bandM} sensStatus={vis.position_sensitivity.status} />

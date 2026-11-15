@@ -1,22 +1,22 @@
 # Final test report
 
-Generated 2026-11-15 07:16 UTC by `scripts/build_test_report.py`. Commit tested: **b2c8d7f60542** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
+Generated 2026-11-15 13:29 UTC by `scripts/build_test_report.py`. Commit tested: **5fe6b3264f49** (+ uncommitted changes to tracked files). Machine: Windows 11, Python 3.12, Node 24.
 
 **Overall: ALL CHECKS PASSED**
 
 | Check | Result | Detail | Time |
 |---|---|---|---|
-| Backend tests (pytest) | PASS | 388 passed, 0 failed, 0 skipped | 120 s |
-| Lint (ruff) | PASS | All checks passed! | 2 s |
+| Backend tests (pytest) | PASS | 404 passed, 0 failed, 0 skipped | 124 s |
+| Lint (ruff) | PASS | All checks passed! | 0 s |
 | Frontend typecheck (tsc) | PASS | strict TypeScript, no errors | 8 s |
-| Frontend tests (vitest) | PASS | 186 passed, 0 failed | 16 s |
+| Frontend tests (vitest) | PASS | 188 passed, 0 failed | 18 s |
 | Production build (vite) | PASS | bundle builds | 8 s |
 
 ## Backend tests by file
 
 | File | Passed | Failed | Skipped |
 |---|---|---|---|
-| `tests/api/test_api_chandrayaan3.py` | 5 | 0 | 0 |
+| `tests/api/test_api_chandrayaan3.py` | 6 | 0 | 0 |
 | `tests/api/test_api_foundation.py` | 9 | 0 | 0 |
 | `tests/api/test_api_stage2.py` | 15 | 0 | 0 |
 | `tests/api/test_api_stage3.py` | 9 | 0 | 0 |
@@ -27,8 +27,9 @@ Generated 2026-11-15 07:16 UTC by `scripts/build_test_report.py`. Commit tested:
 | `tests/api/test_api_stage9.py` | 5 | 0 | 0 |
 | `tests/api/test_hardening.py` | 16 | 0 | 0 |
 | `tests/engine/test_basemap_projection_golden.py` | 3 | 0 | 0 |
+| `tests/engine/test_bundle.py` | 10 | 0 | 0 |
 | `tests/engine/test_cachecap.py` | 5 | 0 | 0 |
-| `tests/engine/test_dem.py` | 22 | 0 | 0 |
+| `tests/engine/test_dem.py` | 27 | 0 | 0 |
 | `tests/engine/test_engineering.py` | 30 | 0 | 0 |
 | `tests/engine/test_ephemeris.py` | 33 | 0 | 0 |
 | `tests/engine/test_foundation.py` | 4 | 0 | 0 |
@@ -39,7 +40,7 @@ Generated 2026-11-15 07:16 UTC by `scripts/build_test_report.py`. Commit tested:
 | `tests/engine/test_visibility.py` | 20 | 0 | 0 |
 | `tests/validation/test_edge_cases.py` | 42 | 0 | 0 |
 | `tests/validation/test_regression_golden.py` | 8 | 0 | 0 |
-| **Total** | **388** | **0** | **0** |
+| **Total** | **404** | **0** | **0** |
 
 No test was skipped: all kernels and DEM windows were present, so every real-data test ran.
 

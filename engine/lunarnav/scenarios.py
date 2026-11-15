@@ -171,6 +171,17 @@ class ScenarioService:
         wins = sorted((k, v.sha256) for k, v in self.vis.hz.registry.windows.items())
         return hashlib.sha256(json.dumps(wins).encode()).hexdigest()
 
+    def _labels_current(self, doc: dict[str, Any]) -> bool:
+        """A cached result is served only if the terrain-validation caveats it carries equal the ones its windows have NOW (a relabelled
+        terrain product, e.g. Chandrayaan-3's, is recomputed so a stale 'not approved' caveat never outlives the label change)."""
+        wins = self.vis.hz.registry.windows
+        ids = [w.get("window_id") for w in ((doc.get("provenance") or {}).get("terrain") or {}).get("dem_windows") or []]
+        expected = set(self.vis._unvalidated_terrain_notes([
+            {"window_id": i, "product_id": m.product_id, "pixel_size_m": m.pixel_size_m, "validation_status": m.raw["validation_status"]}
+            for i in ids if (m := wins.get(i)) is not None and "validation_status" in m.raw]))
+        have = {x for x in doc.get("limitations") or [] if isinstance(x, str) and x.startswith("Terrain window ")}
+        return have == expected
+
     def scenario_id(self, spec: ScenarioSpec) -> str:
         blob = json.dumps({"spec": spec.canonical(), "model_version": MODEL_VERSION,
                            "dem": self.dem_fingerprint()}, sort_keys=True)
@@ -181,7 +192,7 @@ class ScenarioService:
         sid = self.scenario_id(spec)
         if use_cache:
             hit = self.store.load(sid)
-            if hit is not None:
+            if hit is not None and self._labels_current(hit):
                 hit = {**hit, "spec": spec.public(), "served_from": "disk"}  # label may differ; id does not
                 return hit
         base = {"id": sid, "model_version": MODEL_VERSION, "spec": spec.public(), "served_from": "computed"}

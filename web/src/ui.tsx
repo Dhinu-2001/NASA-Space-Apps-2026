@@ -14,6 +14,20 @@ const STATUS_HELP: Record<string, string> = {
   not_implemented: "Not built. Nothing on screen is computed for this.",
 };
 
+// Terrain from a product whose status is implemented_unvalidated (Chandrayaan-3's 60 m window): the SAME pill as a capability with that status,
+// so it cannot be mistaken for the validated IM-2 terrain. The text comes from the backend's own caveat (visibility limitations).
+export const UNVALIDATED_TERRAIN = /implemented_unvalidated/;
+export const unvalidatedTerrainNote = (limitations?: string[]) => (limitations ?? []).find((l) => UNVALIDATED_TERRAIN.test(l));
+export function UnvalidatedTerrainTag({ limitations }: { limitations?: string[] }) {
+  const note = unvalidatedTerrainNote(limitations);
+  if (!note) return null;
+  return (
+    <span className="tag tag-implemented_unvalidated" title={note} data-testid="terrain-unvalidated">
+      terrain: {statusLabel("implemented_unvalidated")}
+    </span>
+  );
+}
+
 export function StatusTag({ cap }: { cap: string }) {
   const caps = useContext(CapabilitiesContext);
   const c = caps?.find((x) => x.key === cap);

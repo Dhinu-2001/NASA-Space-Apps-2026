@@ -115,7 +115,7 @@
       "file_url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF",
       "file_size_bytes_listed_on_landing_page": "2.9G (approximate; exact byte size not measured)",
       "verified_utc": "2026-11-15",
-      "status": "registered_unvalidated: header, CRS and one published-height check verified; NOT approved as a validation gate by the owner",
+      "status": "implemented_unvalidated: integration approved by the project owner 2026-11-15; the raster header, CRS and one published-height check were done at registration, but the window has NOT had the independent verification pass the IM-2 terrain had (published-height check numbers, raster header, alignment confirmation), so it is not validated",
       "companion_layers_listed_on_landing_page": [
         "LDEC_60S_60MPP_ADJ.TIF (spot count)",
         "LDEM_60S_60MPP_ADJ_EFFRES.TIF",

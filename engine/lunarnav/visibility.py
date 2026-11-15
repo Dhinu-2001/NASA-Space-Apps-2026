@@ -362,10 +362,11 @@ class VisibilityService:
 
     @staticmethod
     def _unvalidated_terrain_notes(windows: list[dict[str, Any]]) -> list[str]:
-        """One caveat per terrain window whose product the owner has not yet approved (manifest validation_status)."""
-        return [(f"Terrain window {w['window_id']} ({w['product_id']}, {w['pixel_size_m']:g} m pixels) is registered but "
-                 f"NOT yet approved as a validation gate. Pixels this coarse do not resolve small ridges, and the "
-                 f"position-sensitivity displacement is only a couple of pixels.")
+        """One caveat per terrain window whose manifest entry carries a validation_status (implemented_unvalidated)."""
+        return [(f"Terrain window {w['window_id']} ({w['product_id']}, {w['pixel_size_m']:g} m pixels) is implemented_unvalidated: "
+                 f"the owner approved its integration, but it has NOT had the independent verification pass the IM-2 terrain had "
+                 f"(published-height check numbers, raster header, alignment confirmation), so results that use it are provisional. "
+                 f"Pixels this coarse do not resolve small ridges, and the position-sensitivity displacement is only a couple of pixels.")
                 for w in windows if "validation_status" in w]
 
     # ---- helpers ----------------------------------------------------------

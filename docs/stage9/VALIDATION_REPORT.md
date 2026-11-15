@@ -63,7 +63,7 @@ Statuses today (`GET /version`, shown in the UI): `sites`, `dem`, `ephemeris`, `
 | 8 Permanently shadowed terrain | synthetic crater (rim ≈ 26°, floor 1.5 km below): Sun and Earth never visible for 30 days, band [0, 0], longest not-visible = whole window flagged open, while geometry says the Sun is up ~half the month (terrain removes 100 %). **No real PSR data** (L-D6) | same |
 | 9 Missing datasets | missing kernels → `DATA_MISSING` with rebuild hint; modified kernel/DEM refused by checksum; missing DEM → scenario labelled insufficient (`DATA_MISSING`), API 503 with `field: dem`; `/provenance` degrades gracefully on a partial install | `test_edge_cases.py`, `test_api_stage9.py` |
 | 10 Numerical tolerances | every criterion, achieved value, margin and rationale in one table | [TOLERANCES.md](TOLERANCES.md) |
-| 11 Known limitations | 38 limitations with effect and evidence | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
+| 11 Known limitations | 39 limitations with effect and evidence (38 at Stage 9; L-P13 added in Stage 11) | [KNOWN_LIMITATIONS.md](KNOWN_LIMITATIONS.md) |
 | 12 Data provenance | generated report: kernels, DEM windows, catalogue, Horizons fixture, software, git history | [PROVENANCE.md](PROVENANCE.md), `GET /provenance` |
 | 13 Reproducible calculation metadata | deterministic `provenance` block (model version, kernel + DEM SHA-256, frame, aberration, algorithm version, every parameter, no timestamps) in every visibility/scenario result; identical inputs ⇒ identical metadata (asserted) | `engine/lunarnav/provenance.py` |
 

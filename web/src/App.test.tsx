@@ -116,7 +116,7 @@ describe("App shell", () => {
     expect(screen.getByText(/0\.9\.0-stage9/)).toBeInTheDocument();
     expect(screen.getAllByText("Assumption:").length).toBeGreaterThanOrEqual(3);
     expect(screen.getByText(/IM-1 has only 2 km of 20 m data/)).toBeInTheDocument();
-    expect(screen.getByText(/Chandrayaan-3 has a coarser 60 m terrain window that is registered but not yet approved/)).toBeInTheDocument();
+    expect(screen.getByText(/Chandrayaan-3 has a coarser 60 m terrain window: its integration is approved, but it is implemented_unvalidated/)).toBeInTheDocument();
     expect(screen.getByText(/“proven against measurement”/)).toBeInTheDocument();
     expect(screen.getAllByText(/shares JPL’s ephemerides/).length).toBe(2);   // limitations list and the ephemeris note
   });

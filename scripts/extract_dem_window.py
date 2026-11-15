@@ -161,8 +161,9 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
         "rasterio": rasterio.__version__, "gdal": rasterio.__gdal_version__,
     }
     if product_id != PRODUCT_ID:  # products registered after Stage 9 stay labelled until the owner approves them
-        entry["validation_status"] = ("registered_unvalidated: header, CRS and one published-height check verified "
-                                      "2026-11-15; not approved by the project owner as a validation gate")
+        entry["validation_status"] = ("implemented_unvalidated: integration approved by the project owner 2026-11-15; the raster header, CRS and one "
+                                      "published-height check were done at registration, but the window has NOT had the independent verification "
+                                      "pass the IM-2 terrain had (published-height check numbers, raster header, alignment confirmation), so it is not validated")
     return entry, data, (col0, row0)
 
 

@@ -13,7 +13,9 @@ def test_capability_statuses_are_honest_for_stage_8():
     status = {c.key: c.status for c in CAPABILITIES}
     for key in ("sites", "dem", "ephemeris", "horizon", "visibility", "scenarios", "engineering"):
         assert status[key] is CapabilityStatus.VALIDATED, key
-    assert {c.key for c in CAPABILITIES} == {"sites", "dem", "ephemeris", "horizon", "visibility", "scenarios", "engineering"}
+    # Chandrayaan-3 terrain: integration approved by the owner, but NOT validated (no independent verification pass yet)
+    assert status["terrain_chandrayaan3"] is CapabilityStatus.IMPLEMENTED_UNVALIDATED
+    assert {c.key for c in CAPABILITIES} == {"sites", "dem", "ephemeris", "horizon", "visibility", "scenarios", "engineering", "terrain_chandrayaan3"}
 
 
 def test_typed_error_carries_code_field_and_details():

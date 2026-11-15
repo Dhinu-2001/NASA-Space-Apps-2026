@@ -4,6 +4,7 @@ Terrain comes from the 60 m LDEM_60S_60MPP_ADJ window ch3_60m_r200km (registered
 Real ephemeris + real DEM window; skipped if the data are absent.
 """
 
+import json
 from pathlib import Path
 
 import pytest
@@ -26,7 +27,7 @@ def test_horizon_is_complete_and_uses_only_the_60m_window():
     j = client.get("/horizon/profile", params={"site_id": SITE["site_id"], "az_step_deg": 1.0}).json()
     assert j["summary"]["n_truncated"] == 0 and j["summary"]["n_data_gap"] == 0
     assert [w["pixel_size_m"] for w in j["provenance"]["windows"]] == [60.0]
-    assert j["provenance"]["windows"][0]["validation_status"].startswith("registered_unvalidated")   # label travels with the data
+    assert j["provenance"]["windows"][0]["validation_status"].startswith("implemented_unvalidated")   # label travels with the data
     assert j["data_class"] == "calculated_from_measured_interpolated"
     assert j["observer"]["ground_height_m"] == pytest.approx(529.34, abs=0.01)
     assert j["observer"]["catalogue_reference_height_m"] == 532.0       # reported beside the DEM height, never substituted
@@ -49,7 +50,7 @@ def test_scenario_is_supported_labelled_and_banded_like_im2():
     earth = j["bodies"]["earth"]["terrain_corrected"]["visible_fraction"]
     assert earth["nominal"] == 1.0 and earth["band"] == [1.0, 1.0]              # Earth stays 11-22 deg up, horizon <= 2.5 deg
     # the not-yet-approved terrain product is named in the result's own limitations and window provenance
-    assert any("NOT yet approved" in x and "ch3_60m_r200km" in x for x in j["limitations"])
+    assert any("implemented_unvalidated" in x and "ch3_60m_r200km" in x for x in j["limitations"])
     assert j["spec"]["position_uncertainty_m"] == 100 and j["spec"]["observer_height_is_default_assumption"] is True
 
 
@@ -69,11 +70,27 @@ def test_im1_is_still_insufficient_and_the_capability_list_is_unchanged():
     j = client.post("/scenarios/evaluate", json={**BODY, "site": {"site_id": "im1-odysseus"}}).json()
     assert j["status"] == "terrain_data_insufficient" and j["reason_code"] == "TERRAIN_NOT_CERTIFIED"
     caps = {c["key"]: c["status"] for c in client.get("/version").json()["capabilities"]}
-    assert set(caps.values()) == {"validated"} and len(caps) == 7        # nothing new is claimed as validated here
+    assert len(caps) == 8 and sum(v == "validated" for v in caps.values()) == 7        # nothing new is claimed as validated here
+    assert caps["terrain_chandrayaan3"] == "implemented_unvalidated"
 
 
 @needs_data
 def test_the_approved_im2_terrain_carries_no_such_caveat():
     j = client.post("/scenarios/evaluate", json={**BODY, "site": {"site_id": "im2-athena"}, "duration_days": 10,
                                                  "step_seconds": 3600, "az_step_deg": 1.0}).json()
-    assert j["status"] == "supported" and not any("NOT yet approved" in x for x in j["limitations"])
+    assert j["status"] == "supported" and not any("implemented_unvalidated" in x for x in j["limitations"])
+
+
+@needs_data
+def test_a_cached_result_with_an_old_validation_label_is_recomputed_not_served():
+    """The relabelling to implemented_unvalidated must reach cached results too: a stale 'registered_unvalidated' result is rebuilt."""
+    j = client.post("/scenarios/evaluate", json=BODY).json()
+    path = DATA / "results" / "scenarios" / f"{j['id']}.json"
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    doc["limitations"] = [x.replace("implemented_unvalidated", "registered but NOT yet approved") for x in doc["limitations"]]
+    path.write_text(json.dumps(doc, sort_keys=True), encoding="utf-8")
+    again = client.post("/scenarios/evaluate", json=BODY).json()
+    assert again["served_from"] == "computed"                                              # not served from the stale file
+    assert any("implemented_unvalidated" in x for x in again["limitations"])
+    assert not any("registered but NOT yet approved" in x for x in again["limitations"])
+    assert client.post("/scenarios/evaluate", json=BODY).json()["served_from"] == "disk"   # and the fresh result is cached again

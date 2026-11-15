@@ -8,7 +8,7 @@ import { baseRoutes, horizonResponse, scenarioSupported, sitesFixture } from "./
 
 // ---- fixtures: three confirmed landing sites + one intended target; IM-1 insufficient, Chandrayaan-3 supported with the caveat ----
 
-const NOT_APPROVED = "Terrain window ch3_60m_r200km (LDEM_60S_60MPP_ADJ, 60 m pixels) is registered but NOT yet approved as a validation gate. Pixels this coarse do not resolve small ridges.";
+const NOT_APPROVED = "Terrain window ch3_60m_r200km (LDEM_60S_60MPP_ADJ, 60 m pixels) is implemented_unvalidated: the owner approved its integration, but it has NOT had the independent verification pass the IM-2 terrain had. Pixels this coarse do not resolve small ridges.";
 
 const sites = {
   ...sitesFixture,
@@ -152,14 +152,14 @@ describe("Landing sites tab (side-by-side comparison of the existing scenarios A
     expect(screen.getAllByTestId("no-gap")).toHaveLength(1);                              // only where the fraction is exactly 100 %
   });
 
-  it("flags terrain that is registered but not yet approved, from the backend's own limitation text", async () => {
+  it("labels implemented_unvalidated terrain with the same pill as an implemented_unvalidated capability, from the backend's own limitation text", async () => {
     renderApp();
     await screen.findByTestId("health-status");
     fireEvent.click(screen.getByRole("button", { name: "Compare sites" }));
     await screen.findByTestId("sites-table");
-    const flags = screen.getAllByTestId("not-approved-flag");
+    const flags = screen.getAllByTestId("terrain-unvalidated");
     expect(flags).toHaveLength(1);                                                           // Chandrayaan-3 only, not IM-2
-    expect(flags[0]).toHaveAttribute("title", expect.stringContaining("NOT yet approved"));
+    expect(flags[0]).toHaveAttribute("title", expect.stringContaining("implemented_unvalidated"));
     expect(within(screen.getByTestId("status-chandrayaan3-shiv-shakti")).getByText("supported")).toBeInTheDocument();
   });
 

@@ -9,16 +9,16 @@ Two independent end-to-end checks were run on 2026-11-15.
 
 | # | Check | Result |
 |---|---|---|
-| 1a–1f | App loads and reaches the backend; 7 capabilities shown, all `validated`; default IM-2 view computes; **Sun 48.6 %, Earth 80.8 %, geometric 53.3 % / 73.5 % match the validated reports**; advanced plots present; 16 basemap tiles requested and the credit shown | pass |
+| 1a–1f | App loads and reaches the backend; 8 capabilities shown: 7 `validated`, Chandrayaan-3 terrain `implemented_unvalidated`; default IM-2 view computes; **Sun 48.6 %, Earth 80.8 %, geometric 53.3 % / 73.5 % match the validated reports**; advanced plots present; 16 basemap tiles requested and the credit shown | pass |
 | 1g | **Countdown:** Sunset in 13.4 d and Earthset in 12.5 d on the default view, equal to the API's own interval and band values | pass |
 | 2a | Solar estimate **143.0 kWh** with its band, labelled UPPER BOUND | pass |
 | 3a–3b | Clicking the map fills latitude/longitude; a point without terrain data is **labelled "terrain data insufficient", never estimated** (the only expected 422 responses) | pass |
 | 4a–4b | Choosing a mission profile fills the form at once (14 d); Compute after returning to IM-2 recomputes | pass |
 | 5a–5b | Compare: 6 supported + 2 insufficient (IM-1) scenarios, no number in the insufficient rows | pass |
-| 6a–6c | Landing sites: IM-1 labelled in all 9 metric rows; Chandrayaan-3 supported with the "terrain not yet approved" flag, IM-2 not flagged | pass |
+| 6a–6c | Landing sites: IM-1 labelled in all 9 metric rows; Chandrayaan-3 supported with the "terrain: implemented unvalidated" pill, IM-2 not flagged | pass |
 | 7a | Sweep: 5 rows, Sun nominal 48.6 % in every row | pass |
 | 8a | Delay simulator returns its table | pass |
-| 9a–9c | Data page lists kernels, terrain windows with SHA-256, credits; 38 limitations stated; Learn tab renders | pass |
+| 9a–9c | Data page lists kernels, terrain windows with SHA-256, credits; 39 limitations stated; Learn tab renders | pass |
 | 10a | Production page carries CSP, `nosniff` and no-framing headers | pass |
 | 11a–11c | No uncaught exceptions; no console errors; no unexpected failed requests | pass |
 
@@ -41,4 +41,4 @@ A fresh `git clone` of the committed repository, no scientific data present, fol
 The same commands are in `.github/workflows/ci.yml` (written without GitHub access; not yet run there).
 
 ## C. Full suites on the final tree
-Backend 388 pass (with data); frontend 186 pass; typecheck and build clean; ruff clean. Details: [../TEST_AND_VALIDATION.md](../TEST_AND_VALIDATION.md).
+Backend 404 pass (with data); frontend 188 pass; typecheck and build clean; ruff clean. Details: [../TEST_AND_VALIDATION.md](../TEST_AND_VALIDATION.md).

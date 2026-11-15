@@ -299,7 +299,7 @@ def compute_horizon(
         "windows": [{"window_id": w.meta.window_id, "product_id": w.meta.product_id,
                      "pixel_size_m": w.meta.pixel_size_m, "sha256": w.meta.sha256,
                      "overview_level": w.meta.overview_level, "source_url": w.meta.source_url,
-                     # present only for windows from products the owner has not yet approved (no key = no claim)
+                     # present only for windows whose product is implemented_unvalidated (no key = no claim)
                      **({"validation_status": w.meta.raw["validation_status"]} if "validation_status" in w.meta.raw else {})}
                     for w in sampler.windows],
     }
@@ -405,7 +405,10 @@ class HorizonService:
              windows: list[DemWindow], h_unseen: float) -> str:
         blob = json.dumps({"algo": ALGORITHM_VERSION, "lat": lat, "lon": lon, "h": h, "az": az_step,
                            "step": step_m, "range": max_range_km, "unseen": h_unseen,
-                           "windows": [(w.meta.window_id, w.meta.sha256) for w in windows]}, sort_keys=True)
+                           # a window's validation_status label is part of the key (only when it has one), so a relabelled product
+                           # (e.g. Chandrayaan-3's) never serves a profile that carries the old label; windows without a label keep their keys
+                           "windows": [(w.meta.window_id, w.meta.sha256, *([w.meta.raw["validation_status"]] if "validation_status" in w.meta.raw else []))
+                                       for w in windows]}, sort_keys=True)
         return hashlib.sha256(blob.encode()).hexdigest()
 
     def _remember(self, key: str, prof: HorizonProfile) -> None:

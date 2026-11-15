@@ -15,7 +15,7 @@
 | Shows **geometric and terrain-corrected** results side by side, every banded number with its **position-uncertainty band** (default ±100 m), and flags intervals cut off by the window edge | Present a band as an error bar: it is a sensitivity to the *input position*, a sample of displacements, not a proven bound |
 | Compares sites and dates, simulates mission delays, sweeps parameters, and gives an idealised solar-energy **upper bound** | Claim more than it has: every capability carries an honest status (`validated` = reviewed and approved by the owner, **not** proven against measurement) |
 
-Coverage today: **IM-2 Athena** (20 m terrain to 80 km) is fully supported; **Chandrayaan-3** (60 m terrain) is supported with a visible "terrain not yet approved" flag; **IM-1** has too little terrain data and is labelled as such. See [known limitations](docs/stage9/KNOWN_LIMITATIONS.md) (38 items with their effect).
+Coverage today: **IM-2 Athena** (20 m terrain to 80 km) is fully supported; **Chandrayaan-3** (60 m terrain) is integrated and supported but its terrain is **`implemented_unvalidated`** (owner-approved integration, no independent verification pass yet) and carries the same "implemented unvalidated" pill as any unvalidated capability on every result; **IM-1** has too little terrain data and is labelled as such. See [known limitations](docs/stage9/KNOWN_LIMITATIONS.md) (39 items with their effect).
 
 ## Quick start
 
@@ -55,8 +55,8 @@ A scripted walk-through with the exact numbers to expect is in [docs/stage11/DEM
 
 | Evidence | Result |
 |---|---|
-| Backend tests (engine, API, golden regression, edge cases, hardening) | 388 pass |
-| Frontend tests (including accessibility and a "no calculation in the browser" request-count suite) | 186 pass |
+| Backend tests (engine, API, golden regression, edge cases, hardening, data bundle) | 404 pass |
+| Frontend tests (including accessibility and a "no calculation in the browser" request-count suite) | 188 pass |
 | End-to-end, real browser, production build, 26 checks incl. console/network monitoring | 26 / 26 pass ([report](docs/stage11/E2E_REPORT.md)) |
 | Ephemeris vs JPL Horizons, 220-row grid | Sun 1.4×10⁻⁸°, Earth 6×10⁻⁷° (criterion 0.01°) |
 | Horizon vs an independent implementation | 1.1×10⁻⁹° (criterion 10⁻³°) |

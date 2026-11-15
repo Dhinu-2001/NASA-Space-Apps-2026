@@ -33,8 +33,8 @@ Every number below was read from the running application on 2026-11-15 (producti
 
 ## Beat 4: compare sites (60 s)
 **Show:** **Landing sites** tab → **Compare sites**.
-**Expect ✔:** IM-2 Sun **48.6 %**; Chandrayaan-3 Sun **49.1 %** (band 48.5–49.4 %) with the red **"terrain not yet approved"** flag, Earth **100 %** ("none: visible throughout the window"); IM-1 column reads "terrain data insufficient" in every row.
-**Say:** "Chandrayaan-3's terrain is a coarser 60 m product that we have registered but not yet approved, and the tool says so on every result."
+**Expect ✔:** IM-2 Sun **48.6 %**; Chandrayaan-3 Sun **49.1 %** (band 48.5–49.4 %) with the amber **"terrain: implemented unvalidated"** pill, Earth **100 %** ("none: visible throughout the window"); IM-1 column reads "terrain data insufficient" in every row.
+**Say:** "Chandrayaan-3's terrain is a coarser 60 m product. We integrated it with the owner's approval, but it has not had the independent verification pass IM-2's terrain had, so it is labelled implemented_unvalidated on every result."
 
 ## Beat 5: how a schedule change matters (75 s)
 **Show:** **Compare** tab (defaults: sites × two dates) or keep to **Delay simulator** → **Simulate delays**.
