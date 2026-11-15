@@ -146,6 +146,7 @@ export function SitesTab({ sites }: { sites: Site[] }) {
   const [band, setBand] = useState("100");
   const [err, setErr] = useState<string | null>(null);
   const [applied, setApplied] = useState<Applied | null>(null);
+  const [runId, setRunId] = useState(0); // every press of the run button is a new run, even with unchanged inputs (the backend caches, so a repeat is cheap)
 
   const run = () => {
     const d = Number(days);
@@ -155,6 +156,7 @@ export function SitesTab({ sites }: { sites: Site[] }) {
     if (!Number.isFinite(d) || d <= 0 || d > 60) return setErr("Duration must be between 0 and 60 days.");
     if (!Number.isFinite(b) || b <= 0) return setErr("Position uncertainty must be above 0 m.");
     setErr(null);
+    setRunId((n) => n + 1);
     setApplied({ siteIds: landing.map((s) => s.id).filter((id) => chosen.includes(id)), startUtc: localInputToUtc(startLocal), days: d, bandM: b });
   };
 
@@ -163,7 +165,7 @@ export function SitesTab({ sites }: { sites: Site[] }) {
 
   const state = useAsync(
     applied ? (s) => api.compare(applied.siteIds.map((id) => ({ site_id: id })), [applied.startUtc], { duration_days: applied.days, position_uncertainty_m: applied.bandM }, 0, s) : null,
-    applied ? JSON.stringify(applied) : null,
+    applied ? `${JSON.stringify(applied)}#${runId}` : null,
   );
 
   return (

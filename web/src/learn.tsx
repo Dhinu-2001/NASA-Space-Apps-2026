@@ -66,7 +66,7 @@ export const EXPLAIN: Record<string, string> = {
   solar:
     "This estimate is an upper bound: it assumes a panel that always faces the Sun and counts a partly visible Sun as full light. It is not a power budget and not a battery state.",
   profiles:
-    "Mission profiles only fill in the form with illustrative settings (window length, observer height, position uncertainty). They are examples for exploring the tool, not real mission requirements.",
+    "Mission profiles only fill in the form (as soon as you choose one) with illustrative settings (window length, observer height, position uncertainty). They are examples for exploring the tool, not real mission requirements.",
 };
 
 export function Explain({ id }: { id: keyof typeof EXPLAIN | string }) {

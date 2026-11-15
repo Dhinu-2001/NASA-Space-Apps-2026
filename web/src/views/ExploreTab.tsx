@@ -169,6 +169,7 @@ export function ExploreTab({ sites }: { sites: Site[] }) {
   const [baseline, setBaseline] = useState(0);
   const [err, setErr] = useState<string | null>(null);
   const [applied, setApplied] = useState<Applied | null>(null);
+  const [runId, setRunId] = useState(0); // every press of the run button is a new run, even with unchanged inputs (the backend caches, so a repeat is cheap)
 
   const parsed = useMemo(() => {
     if (param === "start") return parseDateList(listText);
@@ -217,6 +218,7 @@ export function ExploreTab({ sites }: { sites: Site[] }) {
     if (h !== null && !Number.isFinite(h)) return setErr("Observer height must be a number of metres (or empty for the 2.0 m default assumption).");
     setErr(null);
     const sel = useCustom ? { lat: Number(lat), lon: Number(lon) } : { site_id: siteId };
+    setRunId((n) => n + 1);
     setApplied({
       base: { site: sel, siteLabel: useCustom ? `custom (${Number(lat).toFixed(4)}°, ${Number(lon).toFixed(4)}°E)` : (sites.find((s) => s.id === siteId)?.name ?? siteId), startUtc, days: lengthDays, bandM: b, heightM: h, stepS: st },
       param, values: parsed.value, baseline: Math.min(baseline, parsed.value.length - 1),
@@ -229,7 +231,7 @@ export function ExploreTab({ sites }: { sites: Site[] }) {
 
   const state = useAsync(
     applied ? (s) => api.compareScenarios(buildScenarios(applied.base, applied.param, applied.values), applied.baseline, s) : null,
-    applied ? JSON.stringify(applied) : null,
+    applied ? `${JSON.stringify(applied)}#${runId}` : null,
   );
   const meta = SWEEP_PARAMS.find((p) => p.id === param)!;
 

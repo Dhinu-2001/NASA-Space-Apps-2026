@@ -39,6 +39,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
   const [bandStr, setBandStr] = useState("100");
   const [formError, setFormError] = useState<string | null>(null);
   const [applied, setApplied] = useState<Applied | null>(null);
+  const [runId, setRunId] = useState(0); // every press of the run button is a new run, even with unchanged inputs (the backend caches, so a repeat is cheap)
   const [timeUtc, setTimeUtc] = useState("2027-01-20T12:00:00Z");
   const [scrub, setScrub] = useState<number | null>(null);   // sample index chosen with the time player (null = the chosen time)
 
@@ -57,6 +58,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
     setFormError(null);
     setScrub(null);
     setTimeUtc(localInputToUtc(timeLocal));
+    setRunId((n) => n + 1);
     setApplied({
       sel: useCustom ? { lat: Number(lat), lon: Number(lon) } : { site_id: siteId },
       siteLabel: useCustom ? `custom (${Number(lat).toFixed(4)}°, ${Number(lon).toFixed(4)}°E)` : (site?.name ?? siteId),
@@ -76,7 +78,7 @@ export function ViewTab({ sites }: { sites: Site[] }) {
     if (Number.isInteger(n) && n >= 0) setScrub(n);   // demo deep link: ?scrub=<sample index>
   }, []);
 
-  const key = applied ? JSON.stringify(applied) : null;
+  const key = applied ? `${JSON.stringify(applied)}#${runId}` : null;
   const horizon = useAsync(applied ? (s) => api.horizon(applied.sel, applied.height, s) : null, key);
   const series = useAsync(
     applied

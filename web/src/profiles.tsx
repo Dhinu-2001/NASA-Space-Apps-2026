@@ -91,9 +91,15 @@ export function ProfilePicker({
   const all = [...BUILTIN_PROFILES, ...saved];
   const chosen = all.find((p) => p.id === sel) ?? null;
 
-  const apply = () => {
-    if (!chosen) return;
-    onApply({ days: String(chosen.days), height: showHeight ? chosen.height : current.height, band: String(chosen.band) });
+  const applyProfile = (p: Profile | null | undefined) => {
+    if (!p) return;
+    onApply({ days: String(p.days), height: showHeight ? p.height : current.height, band: String(p.band) });
+  };
+  const apply = () => applyProfile(chosen);
+  // Choosing a profile fills the form immediately: selecting one and pressing Compute/Run must use it.
+  const choose = (id: string) => {
+    setSel(id);
+    applyProfile(all.find((p) => p.id === id));
   };
   const save = () => {
     const d = Number(current.days);
@@ -113,7 +119,7 @@ export function ProfilePicker({
       <legend>Mission profile (illustrative)</legend>
       <Explain id="profiles" />
       <label htmlFor={`${idPrefix}-select`}>Profile</label>
-      <select id={`${idPrefix}-select`} value={sel} onChange={(e) => setSel(e.target.value)}>
+      <select id={`${idPrefix}-select`} value={sel} onChange={(e) => choose(e.target.value)}>
         <optgroup label="Built-in (illustrative)">
           {BUILTIN_PROFILES.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
         </optgroup>
@@ -138,7 +144,7 @@ export function ProfilePicker({
       </div>
       {err && <p className="error" role="alert">{err}</p>}
       <p className="help">
-        Profiles only fill in the form below. The built-in ones are <span className="assump">illustrative assumptions</span>, not real mission requirements; an empty observer height means the 2.0 m default assumption.
+        Choosing a profile fills in the form below at once (press Apply profile to re-apply it after editing the fields). The built-in ones are <span className="assump">illustrative assumptions</span>, not real mission requirements; an empty observer height means the 2.0 m default assumption.
       </p>
     </fieldset>
   );

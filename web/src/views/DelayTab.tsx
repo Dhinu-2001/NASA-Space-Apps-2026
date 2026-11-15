@@ -132,6 +132,7 @@ export function DelayTab({ sites }: { sites: Site[] }) {
   const [duration, setDuration] = useState("14");
   const [band, setBand] = useState("100");
   const [err, setErr] = useState<string | null>(null);
+  const [runId, setRunId] = useState(0); // every press of the run button is a new run, even with unchanged inputs (the backend caches, so a repeat is cheap)
   const [applied, setApplied] = useState<{ site: string; start: string; offsets: number[]; duration: number; band: number } | null>(null);
 
   const run = () => {
@@ -144,6 +145,7 @@ export function DelayTab({ sites }: { sites: Site[] }) {
     if (!Number.isFinite(b) || b <= 0) return setErr("Position uncertainty must be above 0 m.");
     if (!start) return setErr("Choose the baseline start (UTC).");
     setErr(null);
+    setRunId((n) => n + 1);
     setApplied({ site: siteId, start: localInputToUtc(start), offsets: o, duration: d, band: b });
   };
 
@@ -153,7 +155,7 @@ export function DelayTab({ sites }: { sites: Site[] }) {
 
   const state = useAsync(
     applied ? (s) => api.delay({ site_id: applied.site }, applied.start, applied.offsets, { duration_days: applied.duration, position_uncertainty_m: applied.band }, s) : null,
-    applied ? JSON.stringify(applied) : null,
+    applied ? `${JSON.stringify(applied)}#${runId}` : null,
   );
 
   return (

@@ -163,6 +163,7 @@ export function CompareTab({ sites }: { sites: Site[] }) {
   const [baseSite, setBaseSite] = useState(0);
   const [baseDate, setBaseDate] = useState(0);
   const [err, setErr] = useState<string | null>(null);
+  const [runId, setRunId] = useState(0); // every press of the run button is a new run, even with unchanged inputs (the backend caches, so a repeat is cheap)
   const [applied, setApplied] = useState<{ sites: string[]; dates: string[]; duration: number; band: number; baseline: number } | null>(null);
 
   const run = () => {
@@ -174,6 +175,7 @@ export function CompareTab({ sites }: { sites: Site[] }) {
     if (!Number.isFinite(d) || d <= 0 || d > 60) return setErr("Duration must be between 0 and 60 days.");
     if (!Number.isFinite(b) || b <= 0) return setErr("Position uncertainty must be above 0 m.");
     setErr(null);
+    setRunId((n) => n + 1);
     setApplied({ sites: chosen, dates: dates.map(localInputToUtc), duration: d, band: b, baseline: Math.min(baseSite, chosen.length - 1) * dates.length + Math.min(baseDate, dates.length - 1) });
   };
 
@@ -183,7 +185,7 @@ export function CompareTab({ sites }: { sites: Site[] }) {
 
   const state = useAsync(
     applied ? (s) => api.compare(applied.sites.map((id) => ({ site_id: id })), applied.dates, { duration_days: applied.duration, position_uncertainty_m: applied.band }, applied.baseline, s) : null,
-    applied ? JSON.stringify(applied) : null,
+    applied ? `${JSON.stringify(applied)}#${runId}` : null,
   );
 
   return (
