@@ -1,0 +1,146 @@
+{
+  "projection": "engine lunarnav.dem.lonlat_to_xy; sphere radius 1737400 m; tiles placed with TopLeftCorner (-1095930, 1095930) m",
+  "A_seams": {
+    "horizontal_seam_y_m": 0.0,
+    "vertical_seam_x_m": 0.0,
+    "pixel_m": 267.56103515625,
+    "note": "seam boundaries sit on pixel edges; expected at exactly 0 m (the pole)"
+  },
+  "B_pole_vs_dem": {
+    "correlation": 0.5590946177680202,
+    "illumination_phi_deg": 315,
+    "shift_m": [
+      87.45239225837794,
+      98.70988606105891
+    ],
+    "grid_m": 320.0,
+    "interpretation": "WAC minus DEM registration shift with the tiles placed at the WMTS origin"
+  },
+  "B_origin_error_sensitivity": {
+    "origin_x_plus_230m": {
+      "shift_m": [
+        318.90604595605856,
+        90.79704669726745
+      ],
+      "correlation": 0.5611082080701733
+    },
+    "origin_x_minus_230m": {
+      "shift_m": [
+        -133.2258582498223,
+        77.92922549442933
+      ],
+      "correlation": 0.5553919965608358
+    },
+    "origin_y_plus_230m": {
+      "shift_m": [
+        59.521136485453255,
+        -122.12182446960456
+      ],
+      "correlation": 0.5562454408005779
+    },
+    "origin_y_minus_230m": {
+      "shift_m": [
+        77.4127342044981,
+        331.10501141247136
+      ],
+      "correlation": 0.5627353230385681
+    }
+  },
+  "C_shackleton": {
+    "published_centre_m": [
+      7690.243761836868,
+      -6402.723035824135
+    ],
+    "published_diameter_km": 20.92,
+    "image_rim_centre_m": [
+      7587.093816182329,
+      -7021.65917353751
+    ],
+    "image_rim_radius_km": 10.542422357523382,
+    "offset_m": [
+      -103.1499456545389,
+      -618.9361377133746
+    ],
+    "offset_px_267m": 2.3451568414998123,
+    "published_coordinate_precision_m": 303.2335042414948,
+    "rim_points": 180,
+    "rim_points_before_trimming": 570,
+    "fit_history": [
+      {
+        "points": 570,
+        "centre_m": [
+          7633.009849100701,
+          -6879.723437869762
+        ],
+        "radius_km": 10.604950308398678
+      },
+      {
+        "points": 186,
+        "centre_m": [
+          7583.473872196601,
+          -6999.655814265323
+        ],
+        "radius_km": 10.541446177224751
+      },
+      {
+        "points": 182,
+        "centre_m": [
+          7578.792625384,
+          -7018.432618412092
+        ],
+        "radius_km": 10.54810777552203
+      },
+      {
+        "points": 181,
+        "centre_m": [
+          7584.305199550642,
+          -7018.730211385398
+        ],
+        "radius_km": 10.544500454252432
+      },
+      {
+        "points": 180,
+        "centre_m": [
+          7587.093816182329,
+          -7021.65917353751
+        ],
+        "radius_km": 10.542422357523382
+      }
+    ]
+  },
+  "D_chandrayaan3": {
+    "distance_from_pole_km": 632.2895300371222,
+    "correlation": 0.6788627770757081,
+    "shift_m": [
+      148.81149199212726,
+      -98.44301424231918
+    ],
+    "scale_error_test": {
+      "0.999": {
+        "residual_m": [
+          451.2835751473819,
+          -576.1598661441369
+        ],
+        "correlation": 0.6588899329220774
+      },
+      "1.001": {
+        "residual_m": [
+          -154.497233996406,
+          495.3287076756151
+        ],
+        "correlation": 0.6850263047112924
+      }
+    },
+    "note": "a 0.1 % radial scale error would move this area by about 0.63 km"
+  },
+  "E_im2": {
+    "marker_m": [
+      77108.31749877523,
+      137993.57589701674
+    ],
+    "dem_height_m": 5319.99365234375,
+    "catalogue_height_m": 5321.0,
+    "massif_area_km2": 3819.9296,
+    "marker_to_massif_edge_km": 19.528962491567288
+  }
+}
