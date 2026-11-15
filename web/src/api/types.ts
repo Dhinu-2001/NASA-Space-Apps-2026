@@ -66,6 +66,8 @@ export interface HorizonResponse {
   azimuth_deg: number[];
   horizon_elevation_deg: (number | null)[];
   horizon_distance_km: (number | null)[];
+  /** pixel size of the DEM window that supplied the limiting terrain sample at each azimuth (returned by the API, shown as-is) */
+  limiting_pixel_size_m?: (number | null)[];
   truncated: boolean[];
   data_gap: boolean[];
   summary: Record<string, number | null>;
@@ -299,8 +301,13 @@ export interface ScenarioResult {
   status: "supported" | "terrain_data_insufficient";
   spec: ScenarioSpecOut;
   reason?: string;
+  reason_code?: string;
   note?: string;
   bodies?: Record<"sun" | "earth", ScenarioBody>;
+  /** present on supported results (already returned by the API; read-only here) */
+  observer?: { ground_height_m: number; observer_height_above_surface_m: number };
+  horizon?: { az_step_deg: number; windows: string[]; summary: Record<string, number | null> };
+  limitations?: string[];
   served_from: string;
 }
 
