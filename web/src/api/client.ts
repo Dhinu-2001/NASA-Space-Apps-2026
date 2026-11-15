@@ -76,6 +76,17 @@ export interface ScenarioCommon {
   az_step_deg?: number;
 }
 
+/** One explicit scenario for POST /scenarios/compare (the endpoint's existing `scenarios` form). */
+export interface ScenarioReq {
+  site: { site_id: string | null; lat: number | null; lon: number | null };
+  start_utc: string;
+  duration_days: number;
+  position_uncertainty_m: number;
+  observer_height_m: number | null;
+  step_seconds: number;
+  label: string;
+}
+
 export const api = {
   health: (signal?: AbortSignal) => request<Health>("GET", "/health", undefined, signal),
   version: (signal?: AbortSignal) => request<VersionInfo>("GET", "/version", undefined, signal),
@@ -187,6 +198,8 @@ export const api = {
       },
       signal,
     ),
+  compareScenarios: (scenarios: ScenarioReq[], baselineIndex: number, signal?: AbortSignal) =>
+    request<CompareResponse>("POST", "/scenarios/compare", { scenarios, baseline_index: baselineIndex }, signal),
   delay: (site: SiteSel, baselineStartUtc: string, offsetsDays: number[], common: ScenarioCommon, signal?: AbortSignal) =>
     request<DelayResponse>(
       "POST",

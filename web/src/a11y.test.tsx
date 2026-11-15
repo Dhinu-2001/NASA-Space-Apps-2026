@@ -31,7 +31,7 @@ describe("Keyboard navigation and landmarks", () => {
     renderApp();
     await screen.findByTestId("health-status");
     const tabs = screen.getAllByRole("tab");
-    expect(tabs.map((t) => t.textContent)).toEqual(["Site & time", "Compare", "Delay simulator", "Learn", "Data & assumptions"]);
+    expect(tabs.map((t) => t.textContent)).toEqual(["Site & time", "Compare", "Landing sites", "Explore sweeps", "Delay simulator", "Learn", "Data & assumptions"]);
     expect(tabs.filter((t) => t.getAttribute("tabindex") === "0")).toHaveLength(1);       // only the selected tab is in the tab order
     const first = screen.getByRole("tab", { name: "Site & time" });
     first.focus();

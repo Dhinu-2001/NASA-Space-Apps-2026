@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { api, ApiError, type SiteSel } from "../api/client";
 import type { Site, VisibilityResponse } from "../api/types";
+import { AdvancedPlots } from "../components/AdvancedPlots";
 import { ElevationChart } from "../components/ElevationChart";
 import { HorizonPlot, type NowPoint } from "../components/HorizonPlot";
 import { MetricsPanel } from "../components/MetricsPanel";
@@ -319,6 +320,12 @@ export function ViewTab({ sites }: { sites: Site[] }) {
                 </>
               )}
             </Panel>
+            {horizon.phase === "ready" && (
+              <Panel title="Advanced plots (display only)" tags={<><StatusTag cap="horizon" /><StatusTag cap="visibility" /></>}>
+                <p className="help">Sky chart, horizon detail and a zoomable Sun/Earth elevation chart, drawn from the horizon profile and visibility series already loaded above. Nothing is recalculated and no request is made when you use these controls.</p>
+                <AdvancedPlots profile={horizon.data} vis={vis && !insufficient ? vis : null} />
+              </Panel>
+            )}
             <SolarPanel scenario={{ sel: applied.sel, startUtc: applied.startUtc, days: applied.days, height: applied.height, bandM: applied.bandM }} />
           </>
         )}

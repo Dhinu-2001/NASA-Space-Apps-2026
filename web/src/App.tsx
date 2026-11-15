@@ -6,6 +6,8 @@ import { CapabilitiesContext, CapabilityStrip, Loading } from "./ui";
 import { AboutTab } from "./views/AboutTab";
 import { CompareTab } from "./views/CompareTab";
 import { DelayTab } from "./views/DelayTab";
+import { ExploreTab } from "./views/ExploreTab";
+import { SitesTab } from "./views/SitesTab";
 import { ViewTab } from "./views/ViewTab";
 
 type State =
@@ -16,6 +18,8 @@ type State =
 const TABS = [
   { id: "view", label: "Site & time" },
   { id: "compare", label: "Compare" },
+  { id: "sites", label: "Landing sites" },
+  { id: "explore", label: "Explore sweeps" },
   { id: "delay", label: "Delay simulator" },
   { id: "learn", label: "Learn" },
   { id: "about", label: "Data & assumptions" },
@@ -100,6 +104,8 @@ export default function App() {
             <div id={`panel-${tab}`} tabIndex={-1} role="tabpanel" aria-labelledby={`tab-${tab}`}>
               {tab === "view" && <ViewTab sites={state.sites.sites} />}
               {tab === "compare" && <CompareTab sites={state.sites.sites} />}
+              {tab === "sites" && <SitesTab sites={state.sites.sites} />}
+              {tab === "explore" && <ExploreTab sites={state.sites.sites} />}
               {tab === "delay" && <DelayTab sites={state.sites.sites} />}
               {tab === "learn" && <LearnTab />}
               {tab === "about" && <AboutTab sites={state.sites} />}
