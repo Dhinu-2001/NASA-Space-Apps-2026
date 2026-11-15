@@ -1,0 +1,90 @@
+{
+  "note": "Generated from engine/lunarnav/dem.py lonlat_to_xy (sphere radius 1737400 m, latitude_of_origin -90). Do not edit by hand; tests/engine/test_basemap_projection_golden.py keeps this file equal to the engine.",
+  "sphere_radius_m": 1737400.0,
+  "points": [
+    {
+      "name": "im2-athena",
+      "lat_deg": -84.79059,
+      "lon_deg_east": 29.19567,
+      "x_m": 77108.31749877523,
+      "y_m": 137993.57589701674
+    },
+    {
+      "name": "im2-intended",
+      "lat_deg": -84.78,
+      "lon_deg_east": 29.13,
+      "x_m": 77106.74964669526,
+      "y_m": 138362.9528972543
+    },
+    {
+      "name": "im1-odysseus",
+      "lat_deg": -80.12759,
+      "lon_deg_east": 1.44587,
+      "x_m": 7572.464506664952,
+      "y_m": 300011.8644716575
+    },
+    {
+      "name": "chandrayaan3-shiv-shakti",
+      "lat_deg": -69.3741,
+      "lon_deg_east": 32.32,
+      "x_m": 338051.9335983022,
+      "y_m": 534332.2374562608
+    },
+    {
+      "name": "shackleton-published",
+      "lat_deg": -89.67,
+      "lon_deg_east": 129.78,
+      "x_m": 7690.243761836868,
+      "y_m": -6402.723035824135
+    },
+    {
+      "name": "pole-limit",
+      "lat_deg": -89.999,
+      "lon_deg_east": 0.0,
+      "x_m": 0.0,
+      "y_m": 30.32335042506402
+    },
+    {
+      "name": "lat-85-lon-0",
+      "lat_deg": -85.0,
+      "lon_deg_east": 0.0,
+      "x_m": 0.0,
+      "y_m": 151713.0444184977
+    },
+    {
+      "name": "lat-80-lon-neg135",
+      "lat_deg": -80.0,
+      "lon_deg_east": -135.0,
+      "x_m": -214964.42694959714,
+      "y_m": -214964.4269495971
+    },
+    {
+      "name": "lat-75-lon-90",
+      "lat_deg": -75.0,
+      "lon_deg_east": 90.0,
+      "x_m": 457466.09861668304,
+      "y_m": 2.8011719669467416e-11
+    },
+    {
+      "name": "lat-70-lon-180",
+      "lat_deg": -70.0,
+      "lon_deg_east": 180.0,
+      "x_m": 7.503423093800816e-11,
+      "y_m": -612700.9925657741
+    },
+    {
+      "name": "lat-60-lon-270",
+      "lat_deg": -60.0,
+      "lon_deg_east": 270.0,
+      "x_m": -931069.8538596651,
+      "y_m": -1.710347574467749e-10
+    },
+    {
+      "name": "lat-55.1-lon-45",
+      "lat_deg": -55.1,
+      "lon_deg_east": 45.0,
+      "x_m": 772349.6558772108,
+      "y_m": 772349.6558772108
+    }
+  ]
+}

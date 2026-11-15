@@ -29,6 +29,7 @@ const FIRST_CALL_HINT = "The first calculation for a site computes terrain profi
 export function ViewTab({ sites }: { sites: Site[] }) {
   const [siteId, setSiteId] = useState<string>("im2-athena");
   const [useCustom, setUseCustom] = useState(false);
+  const [picked, setPicked] = useState(false); // the custom coordinates came from a click on the map
   const [lat, setLat] = useState("-84.79059");
   const [lon, setLon] = useState("29.19567");
   const [heightStr, setHeightStr] = useState("");
@@ -160,7 +161,14 @@ export function ViewTab({ sites }: { sites: Site[] }) {
     <div className="layout">
       <div className="stack">
         <Panel title="1 · Landing location">
-          <SiteMap sites={sites} selectedId={useCustom ? null : siteId} custom={customPoint} onSelect={(id) => { setSiteId(id); setUseCustom(false); }} />
+          <SiteMap
+            sites={sites}
+            selectedId={useCustom ? null : siteId}
+            custom={customPoint}
+            onSelect={(id) => { setSiteId(id); setUseCustom(false); }}
+            onPick={(la, lo) => { setUseCustom(true); setLat(String(la)); setLon(String(lo)); setPicked(true); }}
+          />
+          {picked && useCustom && <p className="help" data-testid="picked-note">Coordinates set from the map. Press <strong>Compute</strong> to calculate for this point.</p>}
           <label htmlFor="site-select">Catalogue site</label>
           <select id="site-select" value={siteId} disabled={useCustom} onChange={(e) => setSiteId(e.target.value)}>
             {sites.map((s) => (
@@ -177,11 +185,11 @@ export function ViewTab({ sites }: { sites: Site[] }) {
           <div className="row">
             <div>
               <label htmlFor="lat">Latitude (°, planetocentric, south negative)</label>
-              <input id="lat" inputMode="decimal" value={lat} disabled={!useCustom} onChange={(e) => setLat(e.target.value)} />
+              <input id="lat" inputMode="decimal" value={lat} disabled={!useCustom} onChange={(e) => { setLat(e.target.value); setPicked(false); }} />
             </div>
             <div>
               <label htmlFor="lon">Longitude (°, east positive)</label>
-              <input id="lon" inputMode="decimal" value={lon} disabled={!useCustom} onChange={(e) => setLon(e.target.value)} />
+              <input id="lon" inputMode="decimal" value={lon} disabled={!useCustom} onChange={(e) => { setLon(e.target.value); setPicked(false); }} />
             </div>
           </div>
           <p className="help">Custom points need LOLA terrain coverage; without it the result is labelled “terrain data insufficient”.</p>
