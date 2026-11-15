@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 03:40 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **00556f94d567**.
+Generated 2026-11-15 05:23 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **3ed65a0c289c**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -87,6 +87,10 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+3ed65a0 Merge south-pole imagery basemap and click-to-pick coordinates (owner-approved)
+9083f83 Basemap: click the map to set custom coordinates (inverse projection pinned to the engine; no new API calls)
+5ab28f1 South-pole imagery basemap (NASA Moon Trek LRO WAC mosaic) under the site map, with measured alignment
+2401c60 Regenerate provenance and test reports after the Stage 10 extras merge
 00556f9 Docs: record that the Stage 10 extras were delivered and merged
 583a052 Merge Stage 10 extras (Tier 1 + Tier 2, owner-approved): landing-site comparison, advanced plots, explore sweeps
 41d19bd Tier 3 assessment (3D terrain): recommend not starting; no code
