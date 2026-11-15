@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 
 import pytest
-from lunarnav.dem import R, lonlat_to_xy
+from lunarnav.dem import R, lonlat_to_xy, xy_to_lonlat
 
 GOLDEN = Path(__file__).resolve().parents[2] / "web" / "src" / "polarGolden.json"
 
@@ -29,3 +29,16 @@ def test_golden_table_covers_the_catalogue_sites_and_the_ring_latitudes():
     # the four parallels the map draws are present as points on a known axis, so the UI test can derive their radii
     assert math.hypot(g["lat-85-lon-0"]["x_m"], g["lat-85-lon-0"]["y_m"]) == pytest.approx(2 * R * math.tan(math.radians(2.5)), abs=1e-6)
     assert {"lat-80-lon-neg135", "lat-70-lon-180", "lat-60-lon-270"} <= set(g)
+
+
+def _wrap(lon):
+    return (lon + 180.0) % 360.0 - 180.0
+
+
+def test_engine_inverse_returns_the_golden_coordinates():
+    """The map's click-to-coordinates uses the inverse (TypeScript `polarLonLat`); the golden x/y must invert to the same lat/lon."""
+    g = json.loads(GOLDEN.read_text(encoding="utf-8"))
+    for p in g["points"]:
+        lat, lon = xy_to_lonlat(p["x_m"], p["y_m"])
+        assert lat == pytest.approx(p["lat_deg"], abs=1e-9), p["name"]
+        assert _wrap(lon) == pytest.approx(_wrap(p["lon_deg_east"]), abs=1e-7), p["name"]

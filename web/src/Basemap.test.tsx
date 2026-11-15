@@ -6,7 +6,7 @@ import App from "./App";
 import type { Site } from "./api/types";
 import { SiteMap } from "./components/SiteMap";
 import golden from "./polarGolden.json";
-import { BASEMAP, polarXY, ringRadiusM, tilesFor } from "./polar";
+import { BASEMAP, polarLonLat, polarXY, ringRadiusM, tilesFor } from "./polar";
 import { baseRoutes, stubFetch } from "./testFixtures";
 
 // Map geometry as drawn by SiteMap (kept in step with its constants; the assertions below derive expectations from the
@@ -198,6 +198,132 @@ describe("the basemap adds no API calls (C4), consistent with the scrubbing test
 describe("accessibility of the map", () => {
   it("has no axe violations with the imagery on", async () => {
     render(<main><SiteMap sites={SITES} selectedId="im2-athena" custom={{ lat: -75, lon: 100 }} onSelect={() => undefined} /></main>);
+    const res = await axe.run(document.body, { rules: { "color-contrast": { enabled: false } } });
+    expect(res.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+  });
+});
+
+
+// ------------------------------------------------------------------ click the map to set coordinates
+
+const wrap = (lon: number) => ((((lon + 180) % 360) + 360) % 360) - 180;
+/** Give the SVG a 1:1 client box so client pixels equal SVG user units (jsdom has no layout). */
+function fakeBox(svg: Element) {
+  (svg as unknown as { getBoundingClientRect: () => DOMRect }).getBoundingClientRect = () => ({ left: 0, top: 0, width: 340, height: 340, right: 340, bottom: 340, x: 0, y: 0, toJSON: () => ({}) });
+}
+/** Client position of a latitude/longitude on the map, derived from the golden-pinned forward projection. */
+function at(lat: number, lon: number) {
+  const p = polarXY(lat, lon)!;
+  return { clientX: svgX(p.x), clientY: svgY(p.y) };
+}
+
+describe("click on the map to set custom coordinates", () => {
+  it("the inverse projection returns the engine's golden latitude/longitude", () => {
+    for (const p of golden.points) {
+      const ll = polarLonLat(p.x_m, p.y_m)!;
+      expect(Math.abs(ll.lat - p.lat_deg), p.name).toBeLessThan(1e-9);
+      expect(Math.abs(wrap(ll.lon) - wrap(p.lon_deg_east)), p.name).toBeLessThan(1e-7);
+    }
+    expect(polarLonLat(0, 0)).toEqual({ lat: -90, lon: 0 });
+    expect(polarLonLat(Number.NaN, 1)).toBeNull();
+  });
+
+  it("reports the clicked latitude and longitude, rounded to 0.01 degree, with 0°E at the top and east to the right", () => {
+    const onPick = vi.fn();
+    render(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={() => undefined} onPick={onPick} />);
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    fireEvent.click(svg, at(-75, 100));
+    expect(onPick).toHaveBeenLastCalledWith(-75, 100);
+    fireEvent.click(svg, at(-70, 0));                                                    // straight up from the pole = 0°E
+    expect(onPick).toHaveBeenLastCalledWith(-70, 0);
+    fireEvent.click(svg, at(-80, 90));                                                   // right of the pole = 90°E
+    expect(onPick).toHaveBeenLastCalledWith(-80, 90);
+    fireEvent.click(svg, { clientX: C, clientY: C + (R * 0.5) });                         // below the pole, half way to the rim = 180°
+    const [la, lo] = onPick.mock.calls.at(-1)!;
+    expect(Math.abs(Math.abs(lo) - 180)).toBeLessThan(0.01);
+    expect(la).toBeGreaterThan(-75);
+    expect(la).toBeLessThan(-70);
+  });
+
+  it("a click lands within one screen pixel of where it was aimed (the stated map resolution)", () => {
+    const onPick = vi.fn();
+    render(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={() => undefined} onPick={onPick} />);
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    const target = polarXY(-72, 200)!;
+    fireEvent.click(svg, { clientX: svgX(target.x) + 0.4, clientY: svgY(target.y) - 0.4 });
+    const [la, lo] = onPick.mock.calls.at(-1)!;
+    const back = polarXY(la, lo)!;
+    expect(Math.hypot(back.x - target.x, back.y - target.y)).toBeLessThan(1_000_000 / R);   // within one pixel (about 6.3 km)
+  });
+
+  it("ignores clicks outside the disc with a visible note, and a marker click selects the site instead of picking", () => {
+    const onPick = vi.fn();
+    const onSelect = vi.fn();
+    render(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={onSelect} onPick={onPick} />);
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    fireEvent.click(svg, { clientX: 4, clientY: 4 });
+    expect(onPick).not.toHaveBeenCalled();
+    expect(screen.getByTestId("pick-note")).toHaveTextContent(/outside the map/);
+    fireEvent.click(screen.getByRole("button", { name: /Select IM-1 Odysseus/ }));
+    expect(onSelect).toHaveBeenCalledWith("im1-odysseus");
+    expect(onPick).not.toHaveBeenCalled();
+    expect(screen.queryByTestId("pick-note")).toBeNull();
+  });
+
+  it("states the resolution and the terrain-coverage caveat, shows a pointer readout, and is inert without onPick", () => {
+    const { rerender } = render(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={() => undefined} onPick={() => undefined} />);
+    expect(screen.getByTestId("pick-help")).toHaveTextContent("about ±3.2 km");
+    expect(screen.getByTestId("pick-help")).toHaveTextContent("terrain data insufficient");
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    fireEvent.mouseMove(svg, at(-80, 0));
+    expect(screen.getByTestId("pointer-readout")).toHaveTextContent("Pointer: -80.0°, 0.0°E");
+    fireEvent.mouseLeave(svg);
+    expect(screen.queryByTestId("pointer-readout")).toBeNull();
+    rerender(<SiteMap sites={SITES} selectedId={null} custom={null} onSelect={() => undefined} />);
+    expect(screen.queryByTestId("pick-help")).toBeNull();
+    expect((screen.getByTestId("site-map") as unknown as SVGElement).style.cursor).toBe("");
+  });
+
+  it("fills the form's custom coordinates, shows the marker, and makes NO request until Compute (C4)", async () => {
+    const s = stubFetch(baseRoutes());
+    vi.stubGlobal("fetch", vi.fn(s.fn));
+    window.history.replaceState(null, "", "/#view");
+    render(<App />);
+    await screen.findByTestId("health-status");
+    const svg = screen.getByTestId("site-map");
+    fakeBox(svg);
+    const before = s.calls.length;
+    fireEvent.click(svg, at(-75, 100));
+    expect(screen.getByLabelText(/Use custom coordinates/)).toBeChecked();
+    expect(screen.getByLabelText(/^Latitude/)).toHaveValue("-75");
+    expect(screen.getByLabelText(/^Longitude/)).toHaveValue("100");
+    expect(screen.getByTestId("custom-marker")).toBeInTheDocument();
+    expect(screen.getByTestId("picked-note")).toHaveTextContent(/Press Compute/);
+    expect(s.calls.length).toBe(before);                                                  // picking asks the backend nothing
+    fireEvent.click(screen.getByRole("button", { name: "Compute" }));
+    await screen.findByTestId("now-sun");
+    const horizon = s.calls.find((c) => c.includes("/horizon/profile"));
+    expect(horizon).toBeDefined();
+    const urls = (fetch as unknown as { mock: { calls: [string][] } }).mock.calls.map(([u]) => u).filter((u) => u.includes("/horizon/profile"));
+    expect(urls[0]).toContain("lat=-75");
+    expect(urls[0]).toContain("lon=100");
+    fireEvent.change(screen.getByLabelText(/^Latitude/), { target: { value: "-76" } });  // typing takes over: the note goes away
+    expect(screen.queryByTestId("picked-note")).toBeNull();
+  });
+
+  it("the click handling adds no fetch and no trigonometry to the component", () => {
+    const map = readFileSync("src/components/SiteMap.tsx", "utf-8");
+    expect(map).not.toMatch(/\bfetch\s*\(/);
+    expect(map).not.toMatch(/Math\.(sin|cos|tan|atan|acos|asin)/);
+    expect(map).toContain("polarLonLat");
+  });
+
+  it("has no axe violations with picking enabled", async () => {
+    render(<main><SiteMap sites={SITES} selectedId={null} custom={{ lat: -75, lon: 100 }} onSelect={() => undefined} onPick={() => undefined} /></main>);
     const res = await axe.run(document.body, { rules: { "color-contrast": { enabled: false } } });
     expect(res.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   });

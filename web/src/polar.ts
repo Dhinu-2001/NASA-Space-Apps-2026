@@ -22,6 +22,16 @@ export function polarXY(latDeg: number, lonDeg: number): XY | null {
   return { x: rho * Math.sin(lon), y: rho * Math.cos(lon) };
 }
 
+/**
+ * Inverse of `polarXY` (mirror of engine/lunarnav/dem.py `xy_to_lonlat`): grid metres -> planetocentric latitude and
+ * east-positive longitude in [-180, 180]. Used only to turn a click on the map into coordinates for the existing form.
+ */
+export function polarLonLat(xM: number, yM: number): { lat: number; lon: number } | null {
+  if (!Number.isFinite(xM) || !Number.isFinite(yM)) return null;
+  const rho = Math.hypot(xM, yM);
+  return { lat: (2 * Math.atan(rho / (2 * SPHERE_RADIUS_M)) * 180) / Math.PI - 90, lon: rho === 0 ? 0 : (Math.atan2(xM, yM) * 180) / Math.PI };
+}
+
 /** Radius of a parallel in the same grid, metres. */
 export function ringRadiusM(latDeg: number): number {
   return 2 * SPHERE_RADIUS_M * Math.tan(((latDeg + 90) * Math.PI) / 360);

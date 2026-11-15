@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Site } from "../api/types";
-import { BASEMAP, levelPixelM, polarXY, ringRadiusM, tilesFor } from "../polar";
+import { BASEMAP, levelPixelM, polarLonLat, polarXY, ringRadiusM, tilesFor } from "../polar";
 
 // Map of the catalogue sites around the lunar south pole, drawn on real imagery.
 //   * Basemap: NASA Moon Trek WMTS tiles of the LRO LROC WAC south-pole mosaic (ASU/NASA). Context only: no value is read
@@ -17,6 +17,9 @@ const LEVEL = 2; // 2.1 km/pixel tiles: 16 requests cover the disc and are alrea
 const RINGS = [-85, -80, -70, -60]; // southern latitudes, as polarXY and ringRadiusM expect
 
 const px = (m: number) => (m / EXTENT_M) * R;
+const KM_PER_PX = EXTENT_M / R / 1000; // map scale: how far one screen pixel is on the Moon
+// A click is only good to about half a pixel; round the coordinates to 0.01 deg (about 300 m) so the form does not show false precision.
+const round2 = (v: number) => Math.round(v * 100) / 100;
 const short = (s: Site) => s.name.split(" (")[0].replace(" landing site", "").replace(" intended", " target");
 
 const halo = { paintOrder: "stroke", stroke: "var(--surface)", strokeWidth: 3, strokeLinejoin: "round" } as const;
@@ -35,21 +38,60 @@ export function SiteMap({
   selectedId,
   custom,
   onSelect,
+  onPick,
 }: {
   sites: Site[];
   selectedId: string | null;
   custom: { lat: number; lon: number } | null;
   onSelect: (id: string) => void;
+  /** If given, clicking the map (not a site marker) reports the clicked latitude/longitude (planetocentric, east positive). */
+  onPick?: (lat: number, lon: number) => void;
 }) {
   const [showImagery, setShowImagery] = useState(true);
   const [showRings, setShowRings] = useState(true);
   const [failed, setFailed] = useState(0);
+  const [hover, setHover] = useState<{ lat: number; lon: number } | null>(null);
+  const [pickNote, setPickNote] = useState<string | null>(null);
+
+  /** Pointer position -> grid metres -> latitude/longitude, or null outside the imagery disc. */
+  const locate = (e: { clientX: number; clientY: number; currentTarget: SVGSVGElement }) => {
+    const box = e.currentTarget.getBoundingClientRect();
+    if (!box.width || !box.height) return null;
+    const sx = ((e.clientX - box.left) / box.width) * SIZE;
+    const sy = ((e.clientY - box.top) / box.height) * SIZE;
+    const xM = ((sx - C) / R) * EXTENT_M;
+    const yM = ((C - sy) / R) * EXTENT_M; // screen y grows downward; grid y grows "up" (0°E at the top)
+    if (Math.hypot(xM, yM) > EXTENT_M) return null;
+    return polarLonLat(xM, yM);
+  };
   const tiles = tilesFor(LEVEL, EXTENT_M);
   const placed = new Map<string, number>();
   const cp = custom ? place(custom.lat, custom.lon) : null;
   return (
     <figure style={{ margin: 0 }}>
-      <svg className="plot" viewBox={`0 0 ${SIZE} ${SIZE}`} role="group" aria-label="Map of catalogue sites around the lunar south pole on LRO imagery: select a site with Enter or Space, or use the Catalogue site list">
+      <svg
+        className="plot"
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        role="group"
+        aria-label={`Map of catalogue sites around the lunar south pole on LRO imagery: select a site with Enter or Space, or use the Catalogue site list${onPick ? "; click the map to set custom coordinates, or type them in the fields" : ""}`}
+        style={onPick ? { cursor: "crosshair" } : undefined}
+        data-testid="site-map"
+        onMouseMove={onPick ? (e) => setHover(locate(e)) : undefined}
+        onMouseLeave={onPick ? () => setHover(null) : undefined}
+        onClick={
+          onPick
+            ? (e) => {
+                const p = locate(e);
+                if (!p) {
+                  setPickNote("That point is outside the map (north of about 58°S); click inside the map or type coordinates.");
+                  return;
+                }
+                setPickNote(null);
+                onPick(round2(p.lat), round2(p.lon));
+              }
+            : undefined
+        }
+      >
         <defs>
           <clipPath id="basemap-disc"><circle cx={C} cy={C} r={R} /></clipPath>
         </defs>
@@ -105,7 +147,11 @@ export function SiteMap({
               aria-pressed={sel}
               data-site={s.id}
               style={{ cursor: "pointer" }}
-              onClick={() => onSelect(s.id)}
+              onClick={(e) => {
+                e.stopPropagation(); // choosing a catalogue site is not a map pick
+                setPickNote(null);
+                onSelect(s.id);
+              }}
               onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelect(s.id)}
             >
               <circle cx={p.x} cy={p.y} r={sel ? 6 : 4.5} fill={sel ? "var(--accent)" : "var(--surface)"} stroke={sel ? "var(--surface)" : "var(--accent)"} strokeWidth={2} data-marker={s.id} />
@@ -130,6 +176,14 @@ export function SiteMap({
           <input type="checkbox" checked={showRings} onChange={(e) => setShowRings(e.target.checked)} /> Parallel rings
         </label>
       </div>
+      {onPick && (
+        <p className="help" data-testid="pick-help">
+          Click the map to set custom coordinates (the map resolves about ±{(KM_PER_PX / 2).toFixed(1)} km, far coarser than the ±100 m position uncertainty; type exact values for precision).
+          Terrain data exist only around IM-1, IM-2 and Chandrayaan-3; elsewhere the backend normally reports “terrain data insufficient”.
+          {hover ? <span data-testid="pointer-readout"> Pointer: {hover.lat.toFixed(1)}°, {hover.lon.toFixed(1)}°E.</span> : null}
+        </p>
+      )}
+      {pickNote && <p className="help" role="status" data-testid="pick-note"><span className="assump">Not picked:</span> {pickNote}</p>}
       {showImagery && failed > 0 && (
         <p className="help" role="status" data-testid="basemap-failed">
           <span className="assump">Imagery unavailable:</span> {failed} map tile(s) could not be loaded from NASA Moon Trek (offline or blocked?). The rings and sites are still correct.
