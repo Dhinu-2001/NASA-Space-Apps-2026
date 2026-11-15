@@ -47,9 +47,12 @@ COPY docs/openapi.json ./docs/openapi.json
 COPY --from=web /web/dist ./web/dist
 COPY deploy/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
+# The data folders are links into the /data volume, made here (not only in the entrypoint) so that ANY command run in the image,
+# including `--entrypoint python scripts/provision_data.py`, writes into the volume and not into the container's throwaway layer.
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
  && useradd --system --uid 10001 --home /app lunarnav \
- && mkdir -p /data /app/data/kernels /app/data/dem_cache /app/data/results \
+ && mkdir -p /data/kernels /data/dem_cache /data/results \
+ && for d in kernels dem_cache results; do rm -rf "/app/data/$d"; ln -s "/data/$d" "/app/data/$d"; done \
  && chown -R lunarnav /app /data
 USER lunarnav
 

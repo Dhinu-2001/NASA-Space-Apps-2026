@@ -28,19 +28,16 @@ python -m venv .venv ; .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 cd web ; npm ci ; npm run dev                                                # UI at http://localhost:5173
 ```
 
-**With Docker** (the data is not in git, so this is a two-step process: the container refuses to start until its `/data` volume holds the NASA data; it does not download it by itself):
+**With Docker.** The scientific data (~300 MB) is not in git. The container installs it from a **data bundle** and verifies every file before use:
 
 ```bash
 export GIT_COMMIT=$(git rev-parse --short HEAD)
-docker compose build
-# Step 1: download the data into the volume (kernels + all terrain windows, ~290 MB; 30-60 min the first time; re-run if NASA's server drops a connection, it resumes)
-docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm
-# Step 2: start the app, then open http://localhost:8000
-docker compose up -d
-curl http://localhost:8000/api/health
+# set the bundle location (docker-compose.yml, environment section; the bundle is made with scripts/pack_data.py and hosted by the project owner):
+#   LUNARNAV_DATA_BUNDLE_URL, LUNARNAV_DATA_BUNDLE_SHA256
+docker compose up -d --build      # first start: downloads and verifies the bundle (a few minutes), then serves http://localhost:8000
 ```
 
-If you run `docker compose up` before step 1 the container exits with "Data not ready" and restarts in a loop: that is expected; run step 1, then `docker compose restart lunarnav`. The IM-2 results need the 80 km terrain window (141 MB), which is part of step 1; a partial download (`--skip-large`) starts the app but IM-2 then reports "terrain data insufficient".
+**Known issue (found 15 Nov 2026):** downloading the terrain from NASA *inside the Linux container* (`provision_data.py`) produces files with the same elevation values as the project's reference files (checked pixel for pixel) but different bytes, so the app's file-checksum check refuses them ("DEM window checksum does not match the recorded manifest"). Until the check is changed to compare the elevation content, use the bundle in Docker; the from-NASA download is verified for the machine the reference data was made on (Windows). Details: [docs/stage11/DOCKER_VERIFICATION.md](docs/stage11/DOCKER_VERIFICATION.md).
 
 One-process **production** mode (UI + API on one port) and more Docker detail: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Development details: [docs/DEV_SETUP.md](docs/DEV_SETUP.md).
 

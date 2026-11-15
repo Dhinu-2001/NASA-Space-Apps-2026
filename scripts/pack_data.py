@@ -45,7 +45,12 @@ def main(argv: list[str]) -> int:
         info = tarfile.TarInfo("SHA256SUMS")
         info.size = len(body)
         tar.addfile(info, io.BytesIO(body))
-    print(f"packed {len(files)} files into {out} ({out.stat().st_size / 1e6:.0f} MB)")
+    h = hashlib.sha256()
+    with out.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    Path(str(out) + ".sha256").write_text(f"{h.hexdigest()}  {out.name}\n")
+    print(f"packed {len(files)} files into {out} ({out.stat().st_size / 1e6:.0f} MB); archive SHA-256 {h.hexdigest()} (also in {out.name}.sha256)")
     return 0
 
 

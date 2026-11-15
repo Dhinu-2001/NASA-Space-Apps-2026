@@ -33,7 +33,7 @@ Check the result: `python scripts/verify_data.py` prints `READY` and each window
 export GIT_COMMIT=$(git rev-parse --short HEAD)          # shown in /api/provenance and the About tab
 docker compose up -d --build
 # first run: put data into the volume (REQUIRED: the container does not download it itself and exits with "Data not ready" until you do)
-docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm
+docker compose run --rm --no-deps --entrypoint python lunarnav scripts/provision_data.py --warm   # NOTE: in Docker this currently yields files the app refuses (see stage11/DOCKER_VERIFICATION.md); prefer the bundle
 #   or unpack a bundle:  docker run --rm -v <volume-name>:/data -v "$PWD":/in alpine tar xzf /in/lunarnav-data.tar.gz -C /data
 #   (find <volume-name> with `docker volume ls`; compose names it <project>_lunarnav-data)
 docker compose restart lunarnav
