@@ -39,7 +39,7 @@ Every number below was read from the running application on 2026-11-15 (producti
 **Show:** **Compare** tab (defaults: sites × two dates) or keep to **Delay simulator** → **Simulate delays**.
 **Expect ✔ (Compare, IM-2 Jan 15 vs Mar 15, paired):** Sun fraction **−6.12 percentage points** (band −6.43 to −4.79), "distinguishable from zero"; Earth +2.22 points. **IM-2 landing vs intended target** (different position): Sun +0.40 points, band −0.14 to +3.67, **"NOT distinguishable from zero given ±100 m"**.
 **Expect ✔ (Delay, 14-day window from 15 Jan):** Sun **95.6 %** baseline; delay 1 day 88.5 %, 3 days 74.2 %, 7 days 45.6 %, **14 days 0.0 %**; Earth 89.0 % → 81.8 → 67.6 → 58.8 → 69.8 %.
-**Say:** "A two-month slip costs six points of Sun, and the tool can tell that is real. The difference between the landing point and the intended target, 1 to 2 kilometres apart at this scale, is within what a 100 m position error could produce, and it says that too. A 14-day delay moves the whole window into the dark half of the lunar month."
+**Say:** "A two-month slip costs six points of Sun, and the tool can tell that is real. The difference between the landing point and the intended target, about 370 m apart, gives results whose position bands overlap, so the tool says they are not distinguishable. A 14-day delay moves the whole window into the dark half of the lunar month."
 
 ## Beat 6: power and engineering (45 s)
 **Show:** back in **Site & time**, scroll to **Idealised solar energy**, press **Use example**, **Estimate energy**.
