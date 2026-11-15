@@ -18,10 +18,11 @@ services:
       LUNARNAV_LOG_JSON: "true"
       # On a small host keep this at 2: a cold scenario is about 25 s of one CPU core.
       LUNARNAV_MAX_HEAVY_REQUESTS: "2"
-      # Fast first start: set these to a published data bundle (made with scripts/pack_data.py, hosted e.g. as a GitHub Release asset) and
-      # the container installs and verifies it by itself when its /data volume is empty (see docs/DEPLOYMENT.md):
-      # LUNARNAV_DATA_BUNDLE_URL: "https://github.com/<owner>/<repo>/releases/download/<tag>/lunarnav-data.tar.gz"
-      # LUNARNAV_DATA_BUNDLE_SHA256: "<contents of lunarnav-data.tar.gz.sha256>"
+      # First start with an empty /data volume: install the published data bundle (a few minutes; the archive is checked against the SHA-256 below,
+      # then every file against its SHA256SUMS and the repository's manifests). If the bundle cannot be fetched or fails verification, the
+      # container falls back to downloading directly from NASA (about 40 minutes). LUNARNAV_NASA_FALLBACK: "0" disables that fallback.
+      LUNARNAV_DATA_BUNDLE_URL: "${LUNARNAV_DATA_BUNDLE_URL:-https://github.com/Dhinu-2001/NASA-Space-Apps-2026/releases/download/data-v1/lunarnav-data.tar.gz}"
+      LUNARNAV_DATA_BUNDLE_SHA256: "${LUNARNAV_DATA_BUNDLE_SHA256:-3be42fa54d9090d87dfeb8e8938c56a4dd7e8e4378dde17c4d4edb04cbc259f3}"
       # The UI and API share one origin, so no CORS origins are needed. Add one only if you host the UI elsewhere:
       # LUNARNAV_CORS_ORIGINS: '["https://your-ui.example"]'
     restart: unless-stopped
