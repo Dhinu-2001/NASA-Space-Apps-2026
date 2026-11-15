@@ -62,8 +62,10 @@ def main() -> None:
     a("## 3. Terrain (LOLA digital elevation models, NASA GSFC PGDA)\n")
     for pid, p in products["products"].items():
         a(f"* **{pid}** — {p['title']}. Publisher: {p['publisher']}. DOI `{p.get('doi', '—')}`. "
-          f"[Landing page]({p['landing_page']}); file `{p['file_url']}` ({p['file_size_bytes']:,} bytes; "
-          f"header verified {p['verified_utc']}). Never downloaded in full: windows are range-read.")
+          f"[Landing page]({p['landing_page']}); file `{p['file_url']}` ("
+          + (f"{p['file_size_bytes']:,} bytes" if "file_size_bytes" in p else f"size {p['file_size_bytes_listed_on_landing_page']}")
+          + f"; header verified {p['verified_utc']}). Never downloaded in full: windows are range-read."
+          + (f" **Status: {p['status']}.**" if "status" in p else ""))
         a("  * Companion layers listed by the provider but **not used**: " + "; ".join(p["companion_layers_listed_on_landing_page"]))
     a("\n### Extracted windows used by the engine\n")
     a("| Window | Product | Pixel | Size | Overview | Valid | Height range (m) | SHA-256 |\n|---|---|---|---|---|---|---|---|")

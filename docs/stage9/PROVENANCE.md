@@ -1,6 +1,6 @@
 # Data provenance report
 
-Generated 2026-11-15 01:08 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **e41248424d55**.
+Generated 2026-11-15 02:06 UTC by `scripts/build_provenance_report.py` from the manifests in `data/manifests/` and the live `GET /provenance` record. Model version **0.10.0-stage8**, code commit **22671d778472**.
 
 Heavy scientific data (SPICE kernels, DEM windows) are **not in Git** (decision G1); they are rebuilt by script and **verified by SHA-256 at load**. A file whose checksum differs is refused (`DATA_MISSING`), never used.
 
@@ -29,11 +29,14 @@ The MD5 values were published by NAIF and checked on download; the SHA-256 value
 
 * **LDEM_80S_20MPP_ADJ** — LOLA Digital Elevation Model, 80-90 deg S, 20 m/pixel, track-adjusted. Publisher: NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team. DOI `10.60903/gsfcpgda-lola-spole`. [Landing page](https://pgda.gsfc.nasa.gov/products/90); file `https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF` (2,696,082,051 bytes; header verified 2026-11-14). Never downloaded in full: windows are range-read.
   * Companion layers listed by the provider but **not used**: LDEM_80S_20MPP_ADJ_ERR.TIF (height error, m); LDEM_80S_20MPP_ADJ_EFFRES.TIF (effective resolution, m); LDSM_80S_20MPP_ADJ.TIF (slope, deg); LDSM_80S_20MPP_ADJ_ERR.TIF (slope error, deg); LDEC_80S_20MPP_ADJ.TIF (LOLA spot count per pixel); LDEM_80S_20MPP_ADJ_HILL.TIF (hillshade)
+* **LDEM_60S_60MPP_ADJ** — LOLA Digital Elevation Model, 60-90 deg S, 60 m/pixel, track-adjusted. Publisher: NASA Goddard Space Flight Center, Planetary Geodesy Data Archive (PGDA); LRO LOLA team. DOI `10.60903/gsfcpgda-lola-spole`. [Landing page](https://pgda.gsfc.nasa.gov/products/90); file `https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF` (size 2.9G (approximate; exact byte size not measured); header verified 2026-11-15). Never downloaded in full: windows are range-read. **Status: registered_unvalidated: header, CRS and one published-height check verified; NOT approved as a validation gate by the owner.**
+  * Companion layers listed by the provider but **not used**: LDEC_60S_60MPP_ADJ.TIF (spot count); LDEM_60S_60MPP_ADJ_EFFRES.TIF; LDEM_60S_60MPP_ADJ_ERR.TIF; LDEM_60S_60MPP_ADJ_HILL.TIF; LDSM_60S_60MPP_ADJ.TIF; LDSM_60S_60MPP_ADJ_ERR.TIF
 
 ### Extracted windows used by the engine
 
 | Window | Product | Pixel | Size | Overview | Valid | Height range (m) | SHA-256 |
 |---|---|---|---|---|---|---|---|
+| `ch3_60m_r200km` | LDEM_60S_60MPP_ADJ | 60 m | 6667×6667 | — (native) | 1.0000 | -5043 … 6059 | `4ec7fcbc04ec9f5310b0c8f4c3b0bd801dada74ce2cf0905fdcf574b3c2c72c4` |
 | `im1_20m_r2km` | LDEM_80S_20MPP_ADJ | 20 m | 200×200 | — (native) | 1.0000 | 2479 … 2796 | `fab276cb219710fe836550cae4ba9531790a6019134e30043be20fdd8f93e7ae` |
 | `im2_20m_r10km` | LDEM_80S_20MPP_ADJ | 20 m | 1000×1000 | — (native) | 1.0000 | 4594 … 6297 | `fdde504503437429605c7c9b784b831544c6a50c1d71a268bd66f7914bddf4e8` |
 | `im2_20m_r80km` | LDEM_80S_20MPP_ADJ | 20 m | 8000×8000 | — (native) | 1.0000 | -3958 … 7027 | `3e2051a9b79719c0ef6f495cb741c4aedf650fccb3bfc1b1dfd637661b693183` |
@@ -41,7 +44,7 @@ The MD5 values were published by NAIF and checked on download; the SHA-256 value
 
 Each window is a **real extract** of the cited LOLA product (HTTP range reads; nothing resampled by this project). Overview windows are area-averaged by the data provider (verified in Stage 4: 1.0 m rms against a 16×16 mean of the 20 m data). Heights are metres above the 1737.4 km reference sphere; grid is south-polar stereographic in `MOON_ME` (DE421).
 
-Source URL for all windows: https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF
+Source URL for all windows: https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_60S_60MPP_ADJ.TIF, https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_20MPP_ADJ.TIF
 
 ## 4. Landing-site catalogue
 
@@ -84,6 +87,9 @@ Pinned dependency list: `requirements.lock.txt` (backend), `web/package-lock.jso
 ## 8. Code history (Git)
 
 ```
+22671d7 Regenerate provenance and test reports after Chandrayaan-3 terrain
+8108682 Chandrayaan-3 terrain: register LDEM_60S_60MPP_ADJ 60 m window (unvalidated), label results, tests, evidence
+12360f6 Regenerate provenance and test reports after Stage 8 approval
 e412484 Stage 8 gate approved: engineering capability validated (owner approval 2026-11-15)
 940c851 docs: regenerate provenance and test reports at the Stage 10 commit
 74cd73e feat: Stage 10 (core) time player, Learn mode, mission profiles, accessibility pass
