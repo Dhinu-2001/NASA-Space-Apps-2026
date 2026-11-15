@@ -37,7 +37,7 @@ export GIT_COMMIT=$(git rev-parse --short HEAD)
 docker compose up -d --build      # first start: downloads and verifies the bundle (a few minutes), then serves http://localhost:8000
 ```
 
-**Known issue (found 15 Nov 2026):** downloading the terrain from NASA *inside the Linux container* (`provision_data.py`) produces files with the same elevation values as the project's reference files (checked pixel for pixel) but different bytes, so the app's file-checksum check refuses them ("DEM window checksum does not match the recorded manifest"). Until the check is changed to compare the elevation content, use the bundle in Docker; the from-NASA download is verified for the machine the reference data was made on (Windows). Details: [docs/stage11/DOCKER_VERIFICATION.md](docs/stage11/DOCKER_VERIFICATION.md).
+**Integrity check:** the app verifies each terrain window by a hash of its decoded elevations and georeferencing (`content_sha256` in `data/manifests/dem_windows.json`), not of the file bytes, so a window downloaded from NASA inside the Linux container is accepted exactly like the reference files (found and fixed 15 Nov 2026; see [docs/stage11/DOCKER_VERIFICATION.md](docs/stage11/DOCKER_VERIFICATION.md)). A changed elevation or shifted georeferencing is still refused.
 
 One-process **production** mode (UI + API on one port) and more Docker detail: see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). Development details: [docs/DEV_SETUP.md](docs/DEV_SETUP.md).
 

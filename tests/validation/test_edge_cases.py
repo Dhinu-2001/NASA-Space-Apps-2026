@@ -293,8 +293,11 @@ def test_a_modified_dem_window_is_refused_by_checksum(tmp_path):
     _copy_manifests(tmp_path)
     (tmp_path / "dem_cache").mkdir()
     shutil.copy(DATA / "dem_cache" / "im2_20m_r10km.tif", tmp_path / "dem_cache" / "im2_20m_r10km.tif")
-    with (tmp_path / "dem_cache" / "im2_20m_r10km.tif").open("ab") as f:
-        f.write(b"\x00")
+    # change ONE elevation (the integrity check covers the decoded elevations and georeferencing, not the file bytes)
+    with rasterio.open(tmp_path / "dem_cache" / "im2_20m_r10km.tif", "r+") as ds:
+        a = ds.read(1)
+        a[10, 10] += 1.0
+        ds.write(a, 1)
     with pytest.raises(DataMissingError) as e:
         HorizonService(tmp_path).profile(*IM2, 2.0, window_ids=["im2_20m_r10km"], use_cache=False)
     assert "checksum" in e.value.message and e.value.field == "dem"

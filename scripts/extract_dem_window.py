@@ -20,6 +20,7 @@ from pathlib import Path
 
 import numpy as np
 import rasterio
+from lunarnav.dem import content_sha256
 from rasterio.env import Env
 from rasterio.windows import Window
 
@@ -58,6 +59,12 @@ SPECS = [
 def lonlat_to_xy(lat: float, lon: float) -> tuple[float, float]:
     rho = 2 * R * math.tan(math.radians(lat + 90) / 2)
     return rho * math.sin(math.radians(lon)), rho * math.cos(math.radians(lon))
+
+
+def _content_hash_of_file(p: Path) -> str:
+    """Hash of the decoded elevations + georeferencing as the application will read them back (see lunarnav.dem.content_sha256)."""
+    with rasterio.open(p) as ds:
+        return content_sha256(ds.read(1), ds.transform)
 
 
 def sha256_file(p: Path) -> str:
@@ -136,6 +143,7 @@ def extract(window_id: str, centre: tuple[float, float], half_m: float, overview
         "product_id": product_id,
         "file": f"dem_cache/{window_id}.tif",
         "sha256": sha256_file(out),
+        "content_sha256": _content_hash_of_file(out),
         "size_bytes": out.stat().st_size,
         "source_url": src_url,
         "overview_level": overview,

@@ -7,7 +7,6 @@ Two kinds, labelled explicitly:
     to create them, when the windows are not present.
 """
 
-import hashlib
 import json
 import math
 from pathlib import Path
@@ -19,6 +18,7 @@ from lunarnav.dem import (
     DemRegistry,
     DemWindow,
     DemWindowMeta,
+    content_sha256,
     lonlat_to_xy,
     sha256_file,
     xy_to_lonlat,
@@ -276,7 +276,9 @@ def test_manifest_checksums_match_files_and_windows_are_fully_valid():
         assert np.isfinite(w.data).all() and meta.valid_fraction == 1.0
         assert w.data.min() == pytest.approx(meta.z_min_m)
         assert w.data.max() == pytest.approx(meta.z_max_m)
-        assert hashlib.sha256((DATA / meta.file).read_bytes()).hexdigest() == meta.sha256, wid
+        assert meta.content_sha256, wid   # every shipped window carries the platform-independent content hash
+        with rasterio.open(DATA / meta.file) as ds:
+            assert content_sha256(ds.read(1), ds.transform) == meta.content_sha256, wid
 
 
 @needs_data
@@ -321,3 +323,70 @@ def test_chandrayaan_site_is_covered_by_the_60m_product_and_the_published_height
 def test_forced_coarse_window_returns_its_own_resolution_label():
     r = DemRegistry(DATA).elevation(-84.79059, 29.19567, window_id="im2_320m_r160km")
     assert r.pixel_size_m == 320.0 and r.window_id == "im2_320m_r160km"
+
+
+# ---------------------------------------------------------------- content checksum (platform-independent integrity check)
+
+def _write(path: Path, data: np.ndarray, transform, **opts):
+    with rasterio.open(path, "w", driver="GTiff", dtype="float32", count=1, width=data.shape[1], height=data.shape[0],
+                       transform=transform, nodata=float("nan"), **opts) as dst:
+        dst.write(data.astype("float32"), 1)
+
+
+def _content_registry(tmp_path, **opts):
+    data, (left, top, res) = _plane()
+    entry = _make_window(tmp_path, "w", data, left, top, res)
+    f = tmp_path / entry["file"]
+    _write(f, data, from_origin(left, top, res, res), **opts)
+    with rasterio.open(f) as ds:
+        entry["content_sha256"] = content_sha256(ds.read(1), ds.transform)
+    entry["sha256"] = sha256_file(f)
+    return _registry(tmp_path, {"w": entry}), entry, data, (left, top, res)
+
+
+def test_same_elevations_written_by_a_different_encoder_load_even_though_the_file_bytes_differ(tmp_path):
+    """The Linux-vs-Windows case: identical pixels and georeferencing, different compression, different file bytes."""
+    _reg, entry, data, (left, top, res) = _content_registry(tmp_path, compress="deflate", predictor=3, tiled=True, blockxsize=16, blockysize=16)
+    f = tmp_path / entry["file"]
+    before = sha256_file(f)
+    _write(f, data, from_origin(left, top, res, res), compress="lzw")           # same values, different bytes
+    assert sha256_file(f) != before
+    assert sha256_file(f) != entry["sha256"]
+    w = DemWindow.load(DemRegistry(tmp_path).windows["w"], tmp_path)             # still accepted: the content is the same
+    assert np.array_equal(w.data, data.astype("float32"))
+
+
+def test_a_single_changed_elevation_is_refused(tmp_path):
+    _reg, entry, data, (left, top, res) = _content_registry(tmp_path)
+    changed = data.copy()
+    changed[3, 4] += 0.01
+    _write(tmp_path / entry["file"], changed, from_origin(left, top, res, res))
+    with pytest.raises(DataMissingError) as e:
+        DemWindow.load(DemRegistry(tmp_path).windows["w"], tmp_path)
+    assert "content checksum" in e.value.message
+
+
+def test_changed_georeferencing_is_refused(tmp_path):
+    _reg, entry, data, (left, top, res) = _content_registry(tmp_path)
+    _write(tmp_path / entry["file"], data, from_origin(left + 20.0, top, res, res))      # shifted by one pixel
+    with pytest.raises(DataMissingError) as e:
+        DemWindow.load(DemRegistry(tmp_path).windows["w"], tmp_path)
+    assert "content checksum" in e.value.message
+
+
+def test_an_unreadable_file_is_refused_not_crashed_on(tmp_path):
+    _reg, entry, *_ = _content_registry(tmp_path)
+    (tmp_path / entry["file"]).write_bytes(b"not a tiff")
+    with pytest.raises(DataMissingError) as e:
+        DemWindow.load(DemRegistry(tmp_path).windows["w"], tmp_path)
+    assert "cannot be read" in e.value.message
+
+
+def test_content_hash_ignores_nan_bit_patterns_and_depends_on_shape():
+    tr = from_origin(0.0, 0.0, 20.0, 20.0)
+    a = np.array([[1.0, np.nan], [3.0, 4.0]], dtype="float32")
+    b = a.copy()
+    b.view("uint32")[0, 1] = 0x7FC00001            # a different NaN payload
+    assert content_sha256(a, tr) == content_sha256(b, tr)
+    assert content_sha256(a, tr) != content_sha256(a.reshape(1, 4), tr)
+    assert content_sha256(a, tr) != content_sha256(a + 1.0, tr)

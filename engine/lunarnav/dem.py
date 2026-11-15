@@ -66,7 +66,7 @@ class DemWindowMeta:
     window_id: str
     product_id: str
     file: str  # path relative to the data directory
-    sha256: str
+    sha256: str  # SHA-256 of the reference file's bytes (provenance; platform-dependent, so NOT what is verified when content_sha256 exists)
     pixel_size_m: float
     left_m: float
     top_m: float
@@ -78,6 +78,7 @@ class DemWindowMeta:
     source_url: str
     overview_level: int | None
     raw: dict[str, Any]
+    content_sha256: str | None = None  # SHA-256 of the decoded elevations + georeferencing (platform-independent); verified on load
 
     @property
     def right_m(self) -> float:
@@ -95,7 +96,7 @@ class DemWindowMeta:
             top_m=float(d["top_m"]), width=int(d["width"]), height=int(d["height"]),
             valid_fraction=float(d["valid_fraction"]), z_min_m=float(d["z_min_m"]),
             z_max_m=float(d["z_max_m"]), source_url=d["source_url"],
-            overview_level=d.get("overview_level"), raw=d,
+            overview_level=d.get("overview_level"), raw=d, content_sha256=d.get("content_sha256"),
         )
 
 
@@ -104,6 +105,24 @@ def sha256_file(path: Path) -> str:
     with path.open("rb") as f:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
+    return h.hexdigest()
+
+
+def content_sha256(data: np.ndarray, transform: Any) -> str:
+    """Platform-independent fingerprint of a DEM window: the decoded elevations and their georeferencing, not the file bytes.
+
+    The same elevations written by a different GDAL/zlib build (e.g. Linux vs Windows) are different files but give the same
+    value here. Covers: shape, float32 little-endian values (every NaN canonicalised), and the six affine transform terms.
+    """
+    a = np.ascontiguousarray(data, dtype="<f4")
+    if np.isnan(a).any():
+        a = np.where(np.isnan(a), np.float32("nan"), a).astype("<f4", copy=False)
+    h = hashlib.sha256()
+    h.update(b"lunarnav-dem-content-v1\n")
+    h.update(f"{a.shape[0]}x{a.shape[1]} float32\n".encode())
+    h.update(repr(tuple(float(v) for v in tuple(transform)[:6])).encode())
+    h.update(b"\n")
+    h.update(a.tobytes())
     return h.hexdigest()
 
 
@@ -129,7 +148,7 @@ class ElevationResult:
 # ---------------------------------------------------------------- window
 
 class DemWindow:
-    """A raster window held in memory, verified against its recorded SHA-256."""
+    """A raster window held in memory, verified against its recorded content SHA-256 (elevations + georeferencing)."""
 
     def __init__(self, meta: DemWindowMeta, data: np.ndarray) -> None:
         self.meta = meta
@@ -144,15 +163,32 @@ class DemWindow:
                 "Run scripts/extract_dem_window.py to create it.",
                 field="dem", details={"window_id": meta.window_id, "file": meta.file},
             )
-        actual = sha256_file(path)
-        if actual != meta.sha256:
+        if meta.content_sha256 is None:
+            # legacy manifest entry without a content hash: fall back to the byte-level file hash
+            actual = sha256_file(path)
+            if actual != meta.sha256:
+                raise DataMissingError(
+                    "DEM window checksum does not match the recorded manifest; refusing to use it.",
+                    field="dem",
+                    details={"window_id": meta.window_id, "expected": meta.sha256, "actual": actual},
+                )
+        try:
+            with rasterio.open(path) as ds:
+                data = ds.read(1).astype(np.float32, copy=False)
+                transform = ds.transform
+        except Exception as e:
             raise DataMissingError(
-                "DEM window checksum does not match the recorded manifest; refusing to use it.",
-                field="dem",
-                details={"window_id": meta.window_id, "expected": meta.sha256, "actual": actual},
-            )
-        with rasterio.open(path) as ds:
-            data = ds.read(1).astype(np.float32, copy=False)
+                f"DEM window file cannot be read: {meta.file} ({type(e).__name__}); refusing to use it.",
+                field="dem", details={"window_id": meta.window_id, "file": meta.file},
+            ) from e
+        if meta.content_sha256 is not None:
+            actual = content_sha256(data, transform)
+            if actual != meta.content_sha256:
+                raise DataMissingError(
+                    "DEM window content checksum (elevations and georeferencing) does not match the recorded manifest; refusing to use it.",
+                    field="dem",
+                    details={"window_id": meta.window_id, "expected": meta.content_sha256, "actual": actual},
+                )
         if data.shape != (meta.height, meta.width):
             raise DataMissingError("DEM window shape disagrees with manifest.", field="dem",
                                    details={"window_id": meta.window_id})
