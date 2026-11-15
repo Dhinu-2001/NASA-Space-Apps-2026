@@ -23,7 +23,7 @@ Base: `main` at `ab55edf`. This branch contains display-layer changes only: **no
 
 ## 4. Verification
 * `npm run typecheck` clean; `npm run build` clean.
-* Frontend tests: **127 pass** (108 existing — two edited for the extra tab and a distinct legend wording — plus 19 new). axe-core: no violations on the Landing sites tab (empty and with results) or on the View tab with the advanced panel.
+* Frontend tests: **127 pass** (108 existing — one edited, the tab-list expectation in `a11y.test.tsx` — plus 19 new). axe-core: no violations on the Landing sites tab (empty and with results) or on the View tab with the advanced panel.
 * Real browser against the live backend (Chrome headless, real IM-1/IM-2/Chandrayaan-3 results): `tier1_sites.png`, `tier1_advanced_plots.png`. Observed: IM-1 label in every row; IM-2 Sun 48.6 % [45.4, 48.9] vs 53.3 % geometric (same as the validated reports); Chandrayaan-3 49.1 % [48.5, 49.4] with the not-approved flag; horizon ranges −1.47…4.07° (IM-2) and 0.53…2.47° (Chandrayaan-3).
 * Backend untouched, so the 364 backend tests are unaffected (not re-run on this branch for that reason).
 
